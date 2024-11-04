@@ -1,0 +1,100 @@
+## Gestão do Sistema e Login
+Descrição: Este diagrama foca no controle de acesso ao sistema através de login, além do gerenciamento de usuários e permissões.
+
+Atores:
+
+Administrador
+Arquiteto/Engenheiro
+Cliente
+Usuário Convidado
+Casos de Uso e Detalhamento:
+
+Sistema de Login e Permissões
+Atores: Todos
+Descrição: Permite o login dos usuários no sistema e verifica as permissões de acordo com o perfil de cada um.
+Cadastro de Usuários
+Atores: Administrador
+Descrição: O administrador pode cadastrar, editar e excluir usuários e definir suas permissões.
+Relacionamentos:
+
+Include: O caso de uso Sistema de Login e Permissões inclui Verificar Permissões para verificar o acesso do usuário antes de permitir o login.
+Generalization: Os atores Arquiteto/Engenheiro, Cliente e Usuário Convidado são especializados do ator Usuário.
+
+Gestão de Projetos e Clientes
+Descrição: Mostra o cadastro e o gerenciamento de projetos, clientes, terrenos, e o uso de relatórios para acompanhamento.
+
+Atores:
+
+Arquiteto/Engenheiro
+Administrador (para relatórios e monitoramento)
+Casos de Uso e Detalhamento:
+
+## Cadastro de Projetos
+
+Atores: Arquiteto/Engenheiro
+Descrição: Permite ao arquiteto ou engenheiro cadastrar e gerenciar os projetos.
+Cadastro de Clientes
+
+Atores: Arquiteto/Engenheiro, Administrador
+Descrição: Permite o cadastro e gerenciamento das informações dos clientes.
+Cadastro de Terrenos
+
+Atores: Arquiteto/Engenheiro
+Descrição: Permite o registro de informações detalhadas sobre o terreno.
+Relatórios de Gastos e Acompanhamento
+
+Atores: Arquiteto/Engenheiro, Administrador
+Descrição: Gera relatórios para monitorar os custos e o progresso dos projetos.
+Relacionamentos:
+
+Include: O caso Cadastro de Projetos inclui Cadastro de Clientes e Cadastro de Terrenos, pois um projeto pode estar associado a um cliente e a um terreno específico.
+Extend: O caso de uso Cadastro de Projetos pode ser estendido pelo Relatórios de Gastos e Acompanhamento quando o arquiteto ou administrador deseja visualizar dados financeiros e de progresso.
+
+## Interação Cliente e Visualização de Projetos
+Descrição: Este diagrama cobre as interações do cliente com o sistema, como a visualização de projetos em 3D, o feedback do cliente, e o histórico de projetos.
+
+Atores:
+
+Cliente
+Arquiteto/Engenheiro
+Casos de Uso e Detalhamento:
+
+Feedback dos Clientes
+Atores: Cliente
+Descrição: O cliente fornece feedback sobre o projeto, que pode ser visualizado pelo arquiteto/engenheiro responsável.
+Visualização 3D dos Projetos
+Atores: Arquiteto/Engenheiro, Cliente
+Descrição: Permite que o cliente e o arquiteto/engenheiro visualizem o projeto em 3D.
+Histórico de Projetos por Cliente
+Atores: Cliente, Arquiteto/Engenheiro
+Descrição: Permite a visualização do histórico de projetos do cliente, incluindo status e detalhes.
+Relacionamentos:
+
+Include: Visualização 3D dos Projetos inclui Visualizar Detalhes do Projeto, pois para uma visualização completa, é importante mostrar detalhes específicos.
+Association: O Feedback dos Clientes é associado ao Histórico de Projetos por Cliente para que os comentários sobre projetos anteriores possam ser visualizados pelo arquiteto.
+
+## Relatórios e Acompanhamento
+Descrição: Este diagrama cobre a geração de relatórios financeiros e de progresso, oferecendo aos usuários, especialmente ao administrador e ao arquiteto, uma visão mais clara sobre os status e os custos dos projetos.
+
+Atores:
+
+Arquiteto/Engenheiro
+Administrador
+Casos de Uso e Detalhamento:
+
+Gerar Relatório de Gastos
+Atores: Arquiteto/Engenheiro, Administrador
+Descrição: Permite ao arquiteto/engenheiro ou administrador gerar relatórios financeiros sobre o projeto, detalhando gastos e previsões de orçamento.
+Gerar Relatório de Progresso
+Atores: Arquiteto/Engenheiro, Administrador
+Descrição: Gera relatórios de acompanhamento com o status e progresso atual do projeto, incluindo marcos concluídos e etapas pendentes.
+Exportar Relatórios
+Atores: Arquiteto/Engenheiro, Administrador
+Descrição: Permite que os relatórios de gastos e de progresso sejam exportados em formatos como PDF ou Excel, possibilitando uma análise fora do sistema.
+Monitoramento em Tempo Real
+Atores: Arquiteto/Engenheiro, Administrador
+Descrição: Permite acompanhar o andamento dos projetos em tempo real, utilizando um painel ou dashboard para atualizações instantâneas.
+Relacionamentos:
+
+Include: Gerar Relatório de Gastos e Gerar Relatório de Progresso incluem o caso Exportar Relatórios, pois uma vez que o relatório é gerado, é possível exportá-lo.
+Extend: Monitoramento em Tempo Real estende Gerar Relatório de Progresso, pois é uma funcionalidade adicional que complementa o acompanhamento do progresso com atualizações em tempo real.
