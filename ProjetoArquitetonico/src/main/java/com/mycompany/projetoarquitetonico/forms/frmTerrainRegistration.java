@@ -4,18 +4,49 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.TerrainRegistrationController;
+
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
+
+
 public class frmTerrainRegistration extends javax.swing.JDialog {
 
     /**
      * Creates new form frmTerrainRegistration
      */
+    
+    
     public frmTerrainRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new TerrainRegistrationController(this); // Associar o controlador à view
+    }
+    // Getters para os componentes da view
+    public javax.swing.JButton getBtnRegister() {
+        return btnRegister;
+    }
+
+    public javax.swing.JButton getBtnClose() {
+        return btnClose;
+    }
+
+    public javax.swing.JTextField getTxtTerrainName() {
+        return txtTerrainName;
+    }
+
+    public javax.swing.JTextField getTxtOwnerCPF() {
+        return txtOwnerCPF;
+    }
+
+    public javax.swing.JTextField getTxtTerrainArea() {
+        return txtTerrainArea;
+    }
+
+    public javax.swing.JTextField getTxtTerrainLocation() {
+        return txtTerrainLocation;
     }
 
     /**
@@ -42,15 +73,49 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
 
         jLabel1.setText("Nome do terreno");
 
+        txtTerrainName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTerrainNameActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("CPF do proprietário");
+
+        txtOwnerCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOwnerCPFActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Área do terreno");
 
+        txtTerrainArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTerrainAreaActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Localização");
 
+        txtTerrainLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTerrainLocationActionPerformed(evt);
+            }
+        });
+
         btnRegister.setText("Cadastrar");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         btnClose.setText("Fechar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,6 +170,30 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtOwnerCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOwnerCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOwnerCPFActionPerformed
+
+    private void txtTerrainNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTerrainNameActionPerformed
+
+    private void txtTerrainAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainAreaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTerrainAreaActionPerformed
+
+    private void txtTerrainLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTerrainLocationActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**
      * @param args the command line arguments

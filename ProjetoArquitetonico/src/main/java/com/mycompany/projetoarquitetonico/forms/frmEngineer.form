@@ -74,31 +74,49 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cadastro de projetos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterProjectActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegisterClient">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cadastro de clientes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterClientActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegisterTerrain">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cadastro de terrenos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterTerrainActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn3DView">
       <Properties>
         <Property name="text" type="java.lang.String" value="Visualiza&#xe7;&#xe3;o 3D"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn3DViewActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnProjectHistory">
       <Properties>
         <Property name="text" type="java.lang.String" value="Hist&#xf3;rico de projetos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProjectHistoryActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnLogout">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sair"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="txtLoginName">
       <Properties>

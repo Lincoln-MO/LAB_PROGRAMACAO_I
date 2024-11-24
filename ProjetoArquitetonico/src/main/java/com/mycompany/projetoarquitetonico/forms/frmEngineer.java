@@ -4,10 +4,14 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.EngineerController;
+
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
+
+
 public class frmEngineer extends javax.swing.JFrame {
 
     /**
@@ -15,6 +19,29 @@ public class frmEngineer extends javax.swing.JFrame {
      */
     public frmEngineer() {
         initComponents();
+    }
+    public javax.swing.JButton getBtnRegisterProject() {
+        return btnRegisterProject;
+    }
+
+    public javax.swing.JButton getBtnRegisterClient() {
+        return btnRegisterClient;
+    }
+
+    public javax.swing.JButton getBtnRegisterTerrain() {
+        return btnRegisterTerrain;
+    }
+
+    public javax.swing.JButton getBtn3DView() {
+        return btn3DView;
+    }
+
+    public javax.swing.JButton getBtnProjectHistory() {
+        return btnProjectHistory;
+    }
+
+    public javax.swing.JButton getBtnLogout() {
+        return btnLogout;
     }
 
     /**
@@ -37,16 +64,46 @@ public class frmEngineer extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnRegisterProject.setText("Cadastro de projetos");
+        btnRegisterProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterProjectActionPerformed(evt);
+            }
+        });
 
         btnRegisterClient.setText("Cadastro de clientes");
+        btnRegisterClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterClientActionPerformed(evt);
+            }
+        });
 
         btnRegisterTerrain.setText("Cadastro de terrenos");
+        btnRegisterTerrain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterTerrainActionPerformed(evt);
+            }
+        });
 
         btn3DView.setText("Visualização 3D");
+        btn3DView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3DViewActionPerformed(evt);
+            }
+        });
 
         btnProjectHistory.setText("Histórico de projetos");
+        btnProjectHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProjectHistoryActionPerformed(evt);
+            }
+        });
 
         btnLogout.setText("Sair");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         txtLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 
@@ -93,6 +150,30 @@ public class frmEngineer extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnProjectHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectHistoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProjectHistoryActionPerformed
+
+    private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn3DViewActionPerformed
+
+    private void btnRegisterTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterTerrainActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterTerrainActionPerformed
+
+    private void btnRegisterClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterClientActionPerformed
+
+    private void btnRegisterProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterProjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterProjectActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments

@@ -68,16 +68,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de gastos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSpendReportActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSendFeedback">
       <Properties>
         <Property name="text" type="java.lang.String" value="Enviar feedback"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSendFeedbackActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn3DView">
       <Properties>
         <Property name="text" type="java.lang.String" value="Visualiza&#xe7;&#xe3;o 3D"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn3DViewActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="txtLoginName">
       <Properties>
@@ -88,6 +97,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Sair"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

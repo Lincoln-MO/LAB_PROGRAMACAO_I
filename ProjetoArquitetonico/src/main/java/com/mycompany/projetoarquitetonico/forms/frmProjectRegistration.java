@@ -6,7 +6,7 @@ package com.mycompany.projetoarquitetonico.forms;
 
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
 public class frmProjectRegistration extends javax.swing.JDialog {
 
@@ -16,6 +16,25 @@ public class frmProjectRegistration extends javax.swing.JDialog {
     public frmProjectRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    public javax.swing.JButton getBtnRegister() {
+    return btnRegister;
+    }
+
+    public javax.swing.JTextField getTxtProjectName() {
+        return txtProjectName;
+    }
+
+    public javax.swing.JFormattedTextField getTxtStartDate() {
+        return txtStartDate;
+    }
+
+    public javax.swing.JComboBox<String> getComboResponsible() {
+        return comboResponsible;
+    }
+
+    public javax.swing.JComboBox<String> getComboTerrain() {
+        return comboTerrain;
     }
 
     /**
@@ -41,19 +60,45 @@ public class frmProjectRegistration extends javax.swing.JDialog {
 
         jLabel1.setText("Nome do projeto");
 
+        txtProjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProjectNameActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Data de início");
 
         txtStartDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtStartDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStartDateActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Responsável");
 
         comboResponsible.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboResponsible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboResponsibleActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Terreno");
 
         comboTerrain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTerrain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTerrainActionPerformed(evt);
+            }
+        });
 
         btnRegister.setText("Cadastrar");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +149,26 @@ public class frmProjectRegistration extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProjectNameActionPerformed
+
+    private void txtStartDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStartDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStartDateActionPerformed
+
+    private void comboResponsibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboResponsibleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboResponsibleActionPerformed
+
+    private void comboTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTerrainActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTerrainActionPerformed
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**
      * @param args the command line arguments

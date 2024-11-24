@@ -4,6 +4,8 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.ProjectHistoryController;
+
 /**
  *
  * @author yurit
@@ -13,9 +15,30 @@ public class frmProjectHistory extends javax.swing.JDialog {
     /**
      * Creates new form frmProjectHistory
      */
+    
+    private ProjectHistoryController controller;
+    
     public frmProjectHistory(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        // Instanciando o controlador
+        controller = new ProjectHistoryController(this);
+    }
+    // Métodos getter para os componentes da view, caso necessário
+    public javax.swing.JTextField getTxtClientCPF() {
+        return txtClientCPF;
+    }
+
+    public javax.swing.JComboBox<String> getComboProject() {
+        return comboProject;
+    }
+
+    public javax.swing.JList<String> getListClientProjects() {
+        return listClientProjects;
+    }
+
+    public javax.swing.JButton getBtnClose() {
+        return btnClose;
     }
 
     /**
@@ -39,9 +62,20 @@ public class frmProjectHistory extends javax.swing.JDialog {
 
         jLabel1.setText("Cliente (CPF)");
 
+        txtClientCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtClientCPFActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Projeto");
 
         comboProject.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboProjectActionPerformed(evt);
+            }
+        });
 
         listClientProjects.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -92,6 +126,14 @@ public class frmProjectHistory extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboProjectActionPerformed
+
+    private void txtClientCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClientCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtClientCPFActionPerformed
 
     /**
      * @param args the command line arguments

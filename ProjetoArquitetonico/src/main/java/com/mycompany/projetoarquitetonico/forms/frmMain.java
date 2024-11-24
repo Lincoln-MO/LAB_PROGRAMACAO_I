@@ -6,16 +6,47 @@ package com.mycompany.projetoarquitetonico.forms;
 
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
+
+import javax.swing.JOptionPane;
+import com.mycompany.projetoarquitetonico.Controllers.LoginController;
+
 public class frmMain extends javax.swing.JFrame {
 
     /**
      * Creates new form frmMain
      */
+    private LoginController loginController;
+    
     public frmMain() {
         initComponents();
+        loginController = new LoginController(this);
     }
+    public javax.swing.JTextField getTxtLogin() {
+        return txtLogin;
+    }
+
+    public javax.swing.JPasswordField getTxtPassword() {
+        return txtPassword;
+    }
+
+    public javax.swing.JButton getBtnSubmit() {
+        return btnSubmit;
+    }
+
+    public javax.swing.JRadioButton getRadioClient() {
+        return radioClient;
+    }
+
+    public javax.swing.JRadioButton getRadioEngineer() {
+        return radioEngineer;
+    }
+
+    public javax.swing.JRadioButton getRadioAdmin() {
+        return radioAdmin;
+    }  
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,20 +72,51 @@ public class frmMain extends javax.swing.JFrame {
 
         jLabel1.setText("Login (CPF)");
 
+        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Senha");
 
         txtPassword.setText("jPasswordField1");
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
 
         btnSubmit.setText("Entrar");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         groupAccountType.add(radioClient);
         radioClient.setText("Cliente");
+        radioClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioClientActionPerformed(evt);
+            }
+        });
 
         groupAccountType.add(radioEngineer);
         radioEngineer.setText("Engenheiro");
+        radioEngineer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioEngineerActionPerformed(evt);
+            }
+        });
 
         groupAccountType.add(radioAdmin);
         radioAdmin.setText("Administrador");
+        radioAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAdminActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Tipo de conta");
 
@@ -108,6 +170,42 @@ public class frmMain extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+        // Delegar ao controlador
+        loginController.handleLoginInput();     
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
+        // TODO add your handling code here:
+        // Delegar ao controlador
+        loginController.handlePasswordInput();
+    }//GEN-LAST:event_txtLoginActionPerformed
+
+    private void radioClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioClientActionPerformed
+        // TODO add your handling code here:
+         // Delegar ao controlador
+        loginController.handleAccountTypeSelection("Client");
+    }//GEN-LAST:event_radioClientActionPerformed
+
+    private void radioEngineerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEngineerActionPerformed
+        // TODO add your handling code here:
+        // Delegar ao controlador
+        loginController.handleAccountTypeSelection("Engineer");
+    }//GEN-LAST:event_radioEngineerActionPerformed
+
+    private void radioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdminActionPerformed
+        // TODO add your handling code here:
+        // Delegar ao controlador
+        loginController.handleAccountTypeSelection("Admin");
+    }//GEN-LAST:event_radioAdminActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        // TODO add your handling code here:
+        // Delegar ao controlador
+        loginController.handleSubmit();
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
     /**
      * @param args the command line arguments

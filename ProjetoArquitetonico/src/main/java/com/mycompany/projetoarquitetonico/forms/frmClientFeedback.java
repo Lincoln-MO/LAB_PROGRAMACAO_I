@@ -4,18 +4,40 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.FeedbackController;
+
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
+
 public class frmClientFeedback extends javax.swing.JDialog {
 
     /**
      * Creates new form frmClientFeedback
      */
+    
+    private FeedbackController feedbackController;  // Declaração da variável feedbackController
+    
+    
     public frmClientFeedback(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        // Inicializa o controlador, passando o próprio formulário (this)
+        feedbackController = new FeedbackController(this);
+    }
+    
+    
+    public javax.swing.JTextArea getTextAreaFeedback() {
+        return jTextArea1;
+    }
+    public javax.swing.JButton getBtnSubmit() {
+        return btnSubmit;
+    }
+
+    public javax.swing.JButton getBtnCancel() {
+        return btnCancel;
     }
 
     /**
@@ -42,8 +64,18 @@ public class frmClientFeedback extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTextArea1);
 
         btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnSubmit.setText("Enviar");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,6 +112,16 @@ public class frmClientFeedback extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+         feedbackController.handleCancel(); 
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        // TODO add your handling code here:
+        feedbackController.handleSubmitFeedback();
+    }//GEN-LAST:event_btnSubmitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -106,7 +148,18 @@ public class frmClientFeedback extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(frmClientFeedback.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+         
+        /*  Defina a aparencia e o comportamento do Nimbus  */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(frmClientFeedback.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }        
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -125,10 +178,6 @@ public class frmClientFeedback extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSubmit;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

@@ -4,6 +4,8 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.SpendReportController;
+
 /**
  *
  * @author yurit
@@ -13,9 +15,34 @@ public class frmSpendReport extends javax.swing.JDialog {
     /**
      * Creates new form frmSpendDialog
      */
+    
+    private SpendReportController spendReportController;  // Declaração do controlador
+    
     public frmSpendReport(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        // Inicializa o controlador
+        spendReportController = new SpendReportController(this);
+    }
+    public javax.swing.JButton getBtnSave() {
+        return btnSave;
+    }
+
+    public javax.swing.JButton getBtnClose() {
+        return btnClose;
+    }
+
+    public javax.swing.JComboBox<String> getComboTerrain() {
+        return comboTerrain;
+    }
+
+    public javax.swing.JTextArea getTxtSpend() {
+        return txtSpend;
+    }
+
+    public javax.swing.JTextField getTxtTotal() {
+        return txtTotal;
     }
 
     /**
@@ -42,6 +69,11 @@ public class frmSpendReport extends javax.swing.JDialog {
         jLabel1.setText("Terreno");
 
         comboTerrain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTerrain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTerrainActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Gastos");
 
@@ -51,9 +83,25 @@ public class frmSpendReport extends javax.swing.JDialog {
 
         jLabel3.setText("Total");
 
+        txtTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalActionPerformed(evt);
+            }
+        });
+
         btnSave.setText("Salvar");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnClose.setText("Fechar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +140,7 @@ public class frmSpendReport extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
@@ -102,6 +150,25 @@ public class frmSpendReport extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTerrainActionPerformed
+        // TODO add your handling code here:
+        spendReportController.handleTerrainSelection();  // Chama o método para lidar com a seleção do terreno
+    }//GEN-LAST:event_comboTerrainActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        spendReportController.handleClose();  // Chama o método para fechar a janela
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        spendReportController.handleSave();  // Chama o método para salvar os gastos
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalActionPerformed
 
     /**
      * @param args the command line arguments

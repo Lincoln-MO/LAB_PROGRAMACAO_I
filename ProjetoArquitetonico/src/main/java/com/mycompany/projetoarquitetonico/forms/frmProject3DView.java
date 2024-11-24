@@ -3,20 +3,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.mycompany.projetoarquitetonico.forms;
-
+import com.mycompany.projetoarquitetonico.Controllers.Project3DController;
 /**
  *
- * @author yurit
+ * @author yurit lincoln
  */
+
 public class frmProject3DView extends javax.swing.JDialog {
 
     /**
      * Creates new form frmProject3DView
      */
+    
+     private Project3DController project3DController;  // Declaração do controlador
+     
     public frmProject3DView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        // Inicializa o controlador
+        project3DController = new Project3DController(this);
     }
+    
+    public javax.swing.JButton getBtnSave() {
+        return btnSave;
+    }
+
+    public javax.swing.JButton getBtnClose() {
+        return btnClose;
+    }
+                                    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,8 +52,18 @@ public class frmProject3DView extends javax.swing.JDialog {
         jLabel1.setText("Visualização");
 
         btnSave.setText("Salvar");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnClose.setText("Fechar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,6 +94,16 @@ public class frmProject3DView extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        // TODO add your handling code here:
+        project3DController.handleClose();  // Chama o método para fechar a janela
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        project3DController.handleSave();  // Chama o método para salvar o projeto 3D
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,9 +4,11 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.ClientController;
+
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
 public class frmClient extends javax.swing.JFrame {
 
@@ -15,7 +17,27 @@ public class frmClient extends javax.swing.JFrame {
      */
     public frmClient() {
         initComponents();
+        new ClientController(this); // Criando e associando o controlador à view
     }
+    public javax.swing.JLabel getTxtLoginName() {
+        return txtLoginName;
+    }
+    public javax.swing.JButton getBtnSpendReport() {
+        return btnSpendReport;
+    }
+
+    public javax.swing.JButton getBtnSendFeedback() {
+        return btnSendFeedback;
+    }
+
+    public javax.swing.JButton getBtn3DView() {
+        return btn3DView;
+    }
+
+    public javax.swing.JButton getBtnLogout() {
+        return btnLogout;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,14 +57,34 @@ public class frmClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnSpendReport.setText("Relatório de gastos");
+        btnSpendReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSpendReportActionPerformed(evt);
+            }
+        });
 
         btnSendFeedback.setText("Enviar feedback");
+        btnSendFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendFeedbackActionPerformed(evt);
+            }
+        });
 
         btn3DView.setText("Visualização 3D");
+        btn3DView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3DViewActionPerformed(evt);
+            }
+        });
 
         txtLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 
         btnLogout.setText("Sair");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,6 +123,22 @@ public class frmClient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSpendReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpendReportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSpendReportActionPerformed
+
+    private void btnSendFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendFeedbackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSendFeedbackActionPerformed
+
+    private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn3DViewActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
