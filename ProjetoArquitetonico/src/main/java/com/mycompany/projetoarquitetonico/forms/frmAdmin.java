@@ -16,6 +16,30 @@ public class frmAdmin extends javax.swing.JFrame {
     public frmAdmin() {
         initComponents();
     }
+    // Métodos para acessar componentes da interface
+    public javax.swing.JButton getBtnSave() {
+        return btnSave;
+    }
+
+    public javax.swing.JButton getBtnLogout() {
+        return btnLogout;
+    }
+
+    public javax.swing.JTextField getTxtCPF() {
+        return txtCPF;
+    }
+
+    public javax.swing.JCheckBox getCheckClient() {
+        return checkClient;
+    }
+
+    public javax.swing.JCheckBox getCheckEngineer() {
+        return checkEngineer;
+    }
+
+    public javax.swing.JCheckBox getCheckAdmin() {
+        return checkAdmin;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,6 +167,7 @@ public class frmAdmin extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new frmAdmin().setVisible(true);
             }
