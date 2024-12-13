@@ -12,14 +12,14 @@ package com.mycompany.projetoarquitetonico.forms;
 import javax.swing.JOptionPane;
 import com.mycompany.projetoarquitetonico.Controllers.LoginController;
 
-public class frmMain extends javax.swing.JFrame {
+public class frmLogin extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmMain
+     * Creates new form frmLogin
      */
     private LoginController loginController;
     
-    public frmMain() {
+    public frmLogin() {
         initComponents();
         loginController = new LoginController(this);
     }
@@ -186,61 +186,25 @@ public class frmMain extends javax.swing.JFrame {
     private void radioClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioClientActionPerformed
         // TODO add your handling code here:
          // Delegar ao controlador
-        loginController.handleAccountTypeSelection("Client");
+        loginController.handleAccountTypeSelection("client");
     }//GEN-LAST:event_radioClientActionPerformed
 
     private void radioEngineerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEngineerActionPerformed
         // TODO add your handling code here:
         // Delegar ao controlador
-        loginController.handleAccountTypeSelection("Engineer");
+        loginController.handleAccountTypeSelection("engineer");
     }//GEN-LAST:event_radioEngineerActionPerformed
 
     private void radioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdminActionPerformed
         // TODO add your handling code here:
         // Delegar ao controlador
-        loginController.handleAccountTypeSelection("Admin");
+        loginController.handleAccountTypeSelection("admin");
     }//GEN-LAST:event_radioAdminActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        // TODO add your handling code here:
-        // Delegar ao controlador
         loginController.handleSubmit();
     }//GEN-LAST:event_btnSubmitActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmMain().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;

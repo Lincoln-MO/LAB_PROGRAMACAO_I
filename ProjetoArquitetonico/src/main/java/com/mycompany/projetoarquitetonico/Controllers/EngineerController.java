@@ -94,7 +94,7 @@ public class EngineerController {
         // Fecha a tela atual e volta para a tela de login (se existir)
         view.dispose();
         // Aqui podemos abrir a tela de login, se necessário:
-        frmMain loginView = new frmMain();
+        frmLogin loginView = new frmLogin();
         loginView.setVisible(true);
     }
 }

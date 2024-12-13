@@ -1,51 +1,72 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.AdminAccountDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClient;
 import com.mycompany.projetoarquitetonico.forms.frmEngineer;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
-import com.mycompany.projetoarquitetonico.forms.frmMain;
+import com.mycompany.projetoarquitetonico.forms.frmLogin;
 import javax.swing.JOptionPane;
 
 public class LoginController {
-    private final frmMain mainView;
+    private final frmLogin mainView;
     private String selectedAccountType = null; // Armazena o tipo de conta selecionado
+    private AccountDAO accountDao = new AccountDAO();
+    
 
-    public LoginController(frmMain mainView) {
+    public LoginController(frmLogin mainView) {
         this.mainView = mainView;
         initializeActions();
     }
 
     // Inicializa os listeners da interface principal
     private void initializeActions() {
-        mainView.getBtnSubmit().addActionListener(e -> handleSubmit());
+        //??????????????
+        //mainView.getBtnSubmit().addActionListener(e -> handleSubmit());
     }
 
     // Método para processar o botão "Entrar"
     public void handleSubmit() {
-        String cpf = mainView.getTxtLogin().getText().trim();
-        String senha = new String(mainView.getTxtPassword().getPassword()).trim();
-
+        String login = mainView.getTxtLogin().getText().trim();
+        System.out.println("Login attempt");
+        String password = new String(mainView.getTxtPassword().getPassword()); 
+        
+        JOptionPane.showMessageDialog(mainView, "Login: " + login + "\nPassword: " + password);
+        accountDao.find(login, password, "admin");
+        
+        AdminAccountDAO acc = new AdminAccountDAO();
+        acc.setLogin(login);
+        acc.setPassword(password);
+        acc.save();
+        
+        
+        
+        
+        
+        /*
+        
         if (selectedAccountType == null) {
             JOptionPane.showMessageDialog(mainView, "Selecione um tipo de conta.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (cpf.isEmpty() || senha.isEmpty()) {
+        if (login.isEmpty() || login.isEmpty()) {
             JOptionPane.showMessageDialog(mainView, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (!isCPFValid(cpf)) {
+        if (!isCPFValid(login)) {
             JOptionPane.showMessageDialog(mainView, "CPF inválido! Insira no formato XXX.XXX.XXX-XX", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (validateLogin(cpf, senha, selectedAccountType)) {
+        if (validateLogin(login, password, selectedAccountType)) {
             JOptionPane.showMessageDialog(mainView, "Login bem-sucedido!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            redirectUser(selectedAccountType, cpf);
+            redirectUser(selectedAccountType, login);
         } else {
             JOptionPane.showMessageDialog(mainView, "CPF ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        */
     }
 
     // Lida com a entrada no campo de login
@@ -67,7 +88,7 @@ public class LoginController {
     // Lida com a seleção do tipo de conta
     public void handleAccountTypeSelection(String accountType) {
         this.selectedAccountType = accountType;
-        JOptionPane.showMessageDialog(mainView, "Tipo de conta selecionado: " + accountType, "Informação", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(mainView, "Tipo de conta selecionado: " + accountType, "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Valida o formato do CPF

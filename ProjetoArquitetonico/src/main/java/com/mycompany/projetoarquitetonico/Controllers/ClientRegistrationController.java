@@ -41,7 +41,7 @@ public class ClientRegistrationController {
                 return;
             }
 
-            Client client = new Client(name, cpf, birthDate, sex);
+            Client client = new Client(name, cpf, birthDate, sex, "", "");
             clientService.save(client);
 
             JOptionPane.showMessageDialog(view, "Cliente cadastrado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

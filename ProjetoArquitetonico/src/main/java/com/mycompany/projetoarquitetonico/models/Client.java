@@ -9,29 +9,12 @@ package com.mycompany.projetoarquitetonico.models;
  * @author linco
  */
 
-public class Client {
-    private String name;
-    private String cpf;
-    private String birthDate;
-    private String sex;
-
-    public Client(String name, String cpf, String birthDate, String sex) {
-        this.name = name;
-        this.cpf = cpf;
-        this.birthDate = birthDate;
-        this.sex = sex;
+public class Client extends Account{
+    public Client(){
+        super();
     }
-
-    // Getters e Setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
-
-    public String getBirthDate() { return birthDate; }
-    public void setBirthDate(String birthDate) { this.birthDate = birthDate; }
-
-    public String getSex() { return sex; }
-    public void setSex(String sex) { this.sex = sex; }
+    
+    public Client(String name, String cpf, String birthDate, String sex, String password, String accessLevel){
+        super(name, cpf, birthDate, sex, password, accessLevel);
+    }
 }
