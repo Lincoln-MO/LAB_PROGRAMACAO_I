@@ -46,6 +46,8 @@ public class TerrainRegistrationController {
         // Aqui depois vamos adicionar validações e persistência de dados, 
         // como verificar se os campos não estão vazios e se o CPF é válido.
         
+        
+        /*
         if (terrainName.isEmpty() || ownerCPF.isEmpty() || terrainArea.isEmpty() || terrainLocation.isEmpty()) {
             // Exibe uma mensagem de erro se algum campo estiver vazio
             System.out.println("Por favor, preencha todos os campos.");
@@ -56,6 +58,8 @@ public class TerrainRegistrationController {
             // Fechar a janela após o cadastro
             view.dispose();
         }
+
+*/
     }
 
     private void closeForm() {

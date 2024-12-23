@@ -4,22 +4,24 @@
  */
 package com.mycompany.projetoarquitetonico.models;
 
+import com.mycompany.projetoarquitetonico.DAO.AdminAccountDAO;
 import com.sun.jdi.connect.spi.Connection;
+import javax.persistence.Entity;
 
 /**
  *
  * @author tainope
  */
+
 public class AdminAccount extends Account{
     public AdminAccount(){
         super();
     }
     
-    public AdminAccount(String name, String cpf, String birthDate, String sex, String password, String accessLevel){
-        super(name, cpf, birthDate, sex, password, accessLevel);
+    public AdminAccount(String name, String cpf, String birthDate, String sex, String password){
+        super(name, cpf, birthDate, sex, password);
     }
-    
-    public void save(){
-        
+    public static void save(AdminAccount account){
+        AdminAccountDAO.save(account);
     }
 }

@@ -4,31 +4,19 @@
  */
 package com.mycompany.projetoarquitetonico.models;
 
+import javax.persistence.Entity;
+
 /**
  *
  * @author tainope
  */
+
 public class Account {
-
-    /**
-     * @return the accessLevel
-     */
-    public String getAccessLevel() {
-        return accessLevel;
-    }
-
-    /**
-     * @param accessLevel the accessLevel to set
-     */
-    public void setAccessLevel(String accessLevel) {
-        this.accessLevel = accessLevel;
-    }
     private String name;
     private String cpf;
     private String password = "";
     private String birthDate;
     private String sex;
-    private String accessLevel;
     
     public Account() {
         this.name = "";
@@ -36,16 +24,14 @@ public class Account {
         this.birthDate = "";
         this.sex = "";
         this.password = "";
-        this.accessLevel = "";
     }
     
-    public Account(String name, String cpf, String birthDate, String sex, String password, String accessLevel) {
+    public Account(String name, String cpf, String birthDate, String sex, String password) {
         this.name = name;
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.sex = sex;
         this.password = password;
-        this.accessLevel = accessLevel;
     }
 
     /**
@@ -77,6 +63,20 @@ public class Account {
     }
 
     /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
      * @return the birthDate
      */
     public String getBirthDate() {
@@ -104,19 +104,5 @@ public class Account {
         this.sex = sex;
     }
 
-    /**
-     * @return the accessLevel
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param accessLevel the accessLevel to set
-     */
-    public void setPassword(String accessLevel) {
-        this.password = accessLevel;
-    }
-    
     
 }

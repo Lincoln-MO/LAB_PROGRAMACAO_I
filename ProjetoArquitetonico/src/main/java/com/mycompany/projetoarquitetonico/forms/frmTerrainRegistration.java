@@ -5,6 +5,18 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.TerrainRegistrationController;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.Connection;
+import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.models.Client;
+import com.mycompany.projetoarquitetonico.models.ClientAccount;
+import com.mycompany.projetoarquitetonico.models.Terrain;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Query;
 
 /**
  *
@@ -13,17 +25,13 @@ import com.mycompany.projetoarquitetonico.Controllers.TerrainRegistrationControl
 
 
 public class frmTerrainRegistration extends javax.swing.JDialog {
-
-    /**
-     * Creates new form frmTerrainRegistration
-     */
-    
-    
     public frmTerrainRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         new TerrainRegistrationController(this); // Associar o controlador à view
     }
+
+    
     // Getters para os componentes da view
     public javax.swing.JButton getBtnRegister() {
         return btnRegister;
@@ -79,7 +87,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("CPF do proprietário");
+        jLabel2.setText("Proprietário (CPF)");
 
         txtOwnerCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +133,13 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtTerrainName)
-                    .addComponent(txtOwnerCPF)
                     .addComponent(txtTerrainArea)
+                    .addComponent(txtTerrainLocation)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 230, Short.MAX_VALUE)
+                        .addComponent(btnClose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegister))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -134,12 +147,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtTerrainLocation)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 230, Short.MAX_VALUE)
-                        .addComponent(btnClose)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRegister)))
+                    .addComponent(txtOwnerCPF))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -192,7 +200,20 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // TODO add your handling code here:
+        String name = txtTerrainName.getText();
+        String ownerCPF = txtOwnerCPF.getText();
+        String area = txtTerrainArea.getText();
+        String location = txtTerrainLocation.getText();
+        
+        ClientAccountDAO owner = ClientAccountDAO.findByCPF(ownerCPF);
+        
+        TerrainDAO t = new TerrainDAO();
+        t.setName(name);
+        t.setOwner(owner);
+        t.setArea(area);
+        t.setLocation(location);
+        
+        TerrainDAO.save(t);
     }//GEN-LAST:event_btnRegisterActionPerformed
 
 

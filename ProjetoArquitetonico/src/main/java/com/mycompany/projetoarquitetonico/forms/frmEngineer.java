@@ -17,8 +17,9 @@ public class frmEngineer extends javax.swing.JFrame {
     /**
      * Creates new form frmEngineer
      */
-    public frmEngineer() {
+    public frmEngineer(java.awt.Frame parent, boolean modal) {
         initComponents();
+        
     }
     public javax.swing.JButton getBtnRegisterProject() {
         return btnRegisterProject;
@@ -152,23 +153,33 @@ public class frmEngineer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProjectHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectHistoryActionPerformed
-        // TODO add your handling code here:
+        frmProjectHistory form = new frmProjectHistory(this, true);
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnProjectHistoryActionPerformed
 
     private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
-        // TODO add your handling code here:
+        frmProject3DView form = new frmProject3DView(this, true);
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn3DViewActionPerformed
 
     private void btnRegisterTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterTerrainActionPerformed
-        // TODO add your handling code here:
+        frmTerrainRegistration form = new frmTerrainRegistration(this, true);
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegisterTerrainActionPerformed
 
     private void btnRegisterClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterClientActionPerformed
-        // TODO add your handling code here:
+        frmClientRegistration form = new frmClientRegistration(this, true);
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegisterClientActionPerformed
 
     private void btnRegisterProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterProjectActionPerformed
-        // TODO add your handling code here:
+        frmProjectRegistration form = new frmProjectRegistration(this, true);
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegisterProjectActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

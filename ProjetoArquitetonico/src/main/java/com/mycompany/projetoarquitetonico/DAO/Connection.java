@@ -46,7 +46,8 @@ public class Connection {
         manager.close();
     }
     
-    public static void exists(){
-        
+    
+    public static EntityManager getEntityManager(){
+        return manager;
     }
 }

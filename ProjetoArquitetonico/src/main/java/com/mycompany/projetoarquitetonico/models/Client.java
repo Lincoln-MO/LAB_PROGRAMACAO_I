@@ -14,7 +14,7 @@ public class Client extends Account{
         super();
     }
     
-    public Client(String name, String cpf, String birthDate, String sex, String password, String accessLevel){
-        super(name, cpf, birthDate, sex, password, accessLevel);
+    public Client(String name, String cpf, String birthDate, String sex, String password){
+        super(name, cpf, birthDate, sex, password);
     }
 }

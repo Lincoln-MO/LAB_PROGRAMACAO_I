@@ -9,15 +9,22 @@ package com.mycompany.projetoarquitetonico.forms;
  * @author yurit e lincoln
  */
 
-import javax.swing.JOptionPane;
 import com.mycompany.projetoarquitetonico.Controllers.LoginController;
+import java.util.Arrays;
 
 public class frmLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form frmLogin
      */
-    private LoginController loginController;
+    private final LoginController loginController;
+    
+    // stuff used in login
+    private String selectedAccountType = null;
+    private String cpf = null;
+    private String password = null;
+    
+    
     
     public frmLogin() {
         initComponents();
@@ -72,15 +79,8 @@ public class frmLogin extends javax.swing.JFrame {
 
         jLabel1.setText("Login (CPF)");
 
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Senha");
 
-        txtPassword.setText("jPasswordField1");
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordActionPerformed(evt);
@@ -96,6 +96,7 @@ public class frmLogin extends javax.swing.JFrame {
 
         groupAccountType.add(radioClient);
         radioClient.setText("Cliente");
+        radioClient.setName("client"); // NOI18N
         radioClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioClientActionPerformed(evt);
@@ -104,6 +105,7 @@ public class frmLogin extends javax.swing.JFrame {
 
         groupAccountType.add(radioEngineer);
         radioEngineer.setText("Engenheiro");
+        radioEngineer.setName("engineer"); // NOI18N
         radioEngineer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioEngineerActionPerformed(evt);
@@ -112,6 +114,7 @@ public class frmLogin extends javax.swing.JFrame {
 
         groupAccountType.add(radioAdmin);
         radioAdmin.setText("Administrador");
+        radioAdmin.setName("admin"); // NOI18N
         radioAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioAdminActionPerformed(evt);
@@ -171,39 +174,32 @@ public class frmLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-        // Delegar ao controlador
-        loginController.handleLoginInput();     
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
-        // TODO add your handling code here:
-        // Delegar ao controlador
-        loginController.handlePasswordInput();
-    }//GEN-LAST:event_txtLoginActionPerformed
-
+    
     private void radioClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioClientActionPerformed
-        // TODO add your handling code here:
-         // Delegar ao controlador
-        loginController.handleAccountTypeSelection("client");
+        this.selectedAccountType = "client";
     }//GEN-LAST:event_radioClientActionPerformed
 
+    
     private void radioEngineerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEngineerActionPerformed
-        // TODO add your handling code here:
-        // Delegar ao controlador
-        loginController.handleAccountTypeSelection("engineer");
+        this.selectedAccountType = "engineer";
     }//GEN-LAST:event_radioEngineerActionPerformed
 
+    
     private void radioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdminActionPerformed
-        // TODO add your handling code here:
-        // Delegar ao controlador
-        loginController.handleAccountTypeSelection("admin");
+        this.selectedAccountType = "admin";
+        System.out.println("acc adm");
     }//GEN-LAST:event_radioAdminActionPerformed
 
+    
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        loginController.handleSubmit();
+        this.cpf = txtLogin.getText();
+        this.password = txtPassword.getText();
+        loginController.handleSubmit(this.cpf, this.password, this.selectedAccountType);
     }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

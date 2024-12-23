@@ -4,6 +4,9 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
+import com.mycompany.projetoarquitetonico.DAO.EngineerAccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
+import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
 import javax.swing.JOptionPane;
 
@@ -27,9 +30,18 @@ public class ProjectRegistrationController {
         // Obter os valores dos campos
         String projectName = view.getTxtProjectName().getText();
         String startDate = view.getTxtStartDate().getText();
-        String responsible = (String) view.getComboResponsible().getSelectedItem();
-        String terrain = (String) view.getComboTerrain().getSelectedItem();
+        int responsible = Integer.parseInt(view.getResponsibleCPF());
+        int terrain = Integer.parseInt(view.getTerrainId());
 
+        ProjectDAO p = new ProjectDAO();
+        
+        p.setName(projectName);
+        p.setStartDate(startDate);
+        p.setResponsible(EngineerAccountDAO.findById(responsible)); ///////
+        p.setTerrain(TerrainDAO.findById(terrain));
+        
+        ProjectDAO.save(p);
+        /*
         // Validar os campos
         if (projectName.isEmpty() || startDate.isEmpty() || responsible == null || terrain == null) {
             JOptionPane.showMessageDialog(view, "Por favor, preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -38,6 +50,9 @@ public class ProjectRegistrationController {
             // mas como ainda não tem a DAO ou a classe Project apenas exibimos uma mensagem de sucesso.
             JOptionPane.showMessageDialog(view, "Projeto cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         }
+        */
+        
+        
     }
     
 }

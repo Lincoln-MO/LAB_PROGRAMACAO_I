@@ -5,6 +5,7 @@
 package com.mycompany.projetoarquitetonico;
 
 
+
 /**
  *
  * @author lincoln
@@ -18,10 +19,24 @@ public class ProjetoArquitetonico {
     public static void main(String[] args) {
         Connection.openConnection();
         
-        
+        // main form
+        /*
         frmLogin mainView = new frmLogin();
         LoginController loginController = new LoginController(mainView);  // Conecta a view ao controlador
         mainView.setVisible(true);
+        */
+        
+        /* terrain reg. test
+        frmTerrainRegistration frm = new frmTerrainRegistration(null, false); 
+        frm.setVisible(true);
+        */
+        
+        //project reg. test
+        frmProjectRegistration frm = new frmProjectRegistration(null, false);
+        frm.setVisible(true);
+        
+        
+        
         
         /*
         java.awt.EventQueue.invokeLater(() -> {

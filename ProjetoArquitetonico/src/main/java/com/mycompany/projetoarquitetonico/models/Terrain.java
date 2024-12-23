@@ -4,27 +4,88 @@
  */
 package com.mycompany.projetoarquitetonico.models;
 
+import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author tainope
  */
 public class Terrain {
-    protected String name;
-    protected String owner_id; // change with hibernate
-    protected float area;
-    protected String address;
+    private ClientAccountDAO owner;
+    private String name;
+    private String area;
+    private String location;
     
     
     public Terrain(){
         this.name = "";
-        //this.owner_id = "";
-        this.area = 0.0f;
-        this.address = "";
+        this.owner = null;
+        this.area = "";
+        this.location = "";
     }
     
-    public Terrain(String name, Float area, String address){
+    public Terrain(String name, String area, String address){
         this.name = name;
         this.area = area;
-        this.address = address;
+        this.location = address;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the owner
+     */
+    public ClientAccountDAO getOwner() {
+        return owner;
+    }
+
+    /**
+     * @param owner the owner to set
+     */
+    public void setOwner(ClientAccountDAO owner) {
+        this.owner = owner;
+    }
+
+    /**
+     * @return the area
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * @param area the area to set
+     */
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    /**
+     * @return the address
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setLocation(String address) {
+        this.location = address;
     }
 }

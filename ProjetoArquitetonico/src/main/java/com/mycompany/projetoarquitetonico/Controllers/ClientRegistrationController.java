@@ -16,13 +16,17 @@ import javax.swing.JOptionPane;
 
 
 public class ClientRegistrationController {
-    private final frmClientRegistration view;
-    private final ClientService clientService;
+    private frmClientRegistration view;
+    private ClientService clientService;
 
     public ClientRegistrationController(frmClientRegistration view) {
         this.view = view;
         this.clientService = new ClientService();
         initController();
+    }
+
+    public ClientRegistrationController() {
+        
     }
 
     private void initController() {
@@ -41,7 +45,7 @@ public class ClientRegistrationController {
                 return;
             }
 
-            Client client = new Client(name, cpf, birthDate, sex, "", "");
+            Client client = new Client(name, cpf, birthDate, sex, "");
             clientService.save(client);
 
             JOptionPane.showMessageDialog(view, "Cliente cadastrado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

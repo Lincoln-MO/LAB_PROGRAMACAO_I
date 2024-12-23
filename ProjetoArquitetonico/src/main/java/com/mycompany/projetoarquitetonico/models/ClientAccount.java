@@ -6,14 +6,10 @@ package com.mycompany.projetoarquitetonico.models;
 
 /**
  *
- * @author tainope
+ * @author yurit
  */
-public class Engineer extends Account {
-    public Engineer(){
+public class ClientAccount extends Account{
+    public ClientAccount(){
         super();
-    }
-    
-    public Engineer(String name, String cpf, String birthDate, String sex, String password){
-        super(name, cpf, birthDate, sex, password);
     }
 }

@@ -6,6 +6,7 @@ package com.mycompany.projetoarquitetonico.DAO;
 
 import com.mycompany.projetoarquitetonico.models.Account;
 import com.mycompany.projetoarquitetonico.models.AdminAccount;
+import com.mycompany.projetoarquitetonico.models.EngineerAccount;
 import java.util.List;
 
 import javax.persistence.*;
@@ -16,21 +17,21 @@ import javax.persistence.*;
  * @author yurit
  */
 
-@Entity(name = "admin_account")
-public class AdminAccountDAO extends AccountDAO{
-    public AdminAccountDAO(){
+@Entity(name = "engineer_account")
+public class EngineerAccountDAO extends AccountDAO{
+    public EngineerAccountDAO(){
         
     }
     
     
-    public AdminAccountDAO(Account account){
+    public EngineerAccountDAO(Account account){
         this.cpf = account.getCpf();
         this.password = account.getPassword();
     }
     
     
-    public AdminAccount toAdminAccount(){
-        AdminAccount acc = new AdminAccount();
+    public EngineerAccount toEngineerAccount(){
+        EngineerAccount acc = new EngineerAccount();
         acc.setName(this.name);
         acc.setCpf(this.cpf);
         acc.setPassword(this.password);
@@ -38,6 +39,10 @@ public class AdminAccountDAO extends AccountDAO{
         acc.setSex(this.sex);
         
         return acc;
+    }
+    
+    public static EngineerAccountDAO findById(int id){
+        return Connection.getEntityManager().find(EngineerAccountDAO.class, id);
     }
     
     
@@ -51,16 +56,16 @@ public class AdminAccountDAO extends AccountDAO{
     }
     
     
-    public static AdminAccount find(String login, String password){       
-        String sql = "SELECT account FROM admin_account account WHERE cpf = :cpf AND password = :password";
+    public static EngineerAccount find(String login, String password){       
+        String sql = "SELECT account FROM engineer_account account WHERE cpf = :cpf AND password = :password";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("cpf", login);
         query.setParameter("password", password);
         
-        List<AdminAccountDAO> result = query.getResultList();;
+        List<EngineerAccountDAO> result = query.getResultList();
 
         if( !result.isEmpty() ){
-            return result.get(0).toAdminAccount();
+            return result.get(0).toEngineerAccount();
         }else{
             return null;
         }

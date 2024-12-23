@@ -1,5 +1,6 @@
 package com.mycompany.projetoarquitetonico.DAO;
 
+import com.mycompany.projetoarquitetonico.models.Account;
 import javax.persistence.*;
 
 /*
@@ -17,24 +18,30 @@ public class AccountDAO extends GenericDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Integer id;
-    protected String login;
-    protected String password;
+    protected String name;
+    protected String cpf;
+    protected String password = "";
+    protected String birthDate;
+    protected String sex;
     
     
     public AccountDAO(){
-        this.login = "";
+        this.name = "";
+        this.cpf = "";
+        this.birthDate = "";
+        this.sex = "";
         this.password = "";
     }
     
-    // GenericDAO interface implementation
-    
-    @Override
-    public void save(){
-        System.out.println("Saving Account...");
-        Connection.beginTransaction();
-        Connection.persist(this);
-        Connection.commitTransaction();
+    public AccountDAO(Account account){
+        this.name = account.getName();
+        this.cpf = account.getCpf();
+        this.birthDate = account.getBirthDate();
+        this.sex = account.getSex();
+        this.password = account.getPassword();
     }
+    
+    // GenericDAO interface implementation
 
     
     public AccountDAO load(Object obj){
@@ -57,11 +64,20 @@ public class AccountDAO extends GenericDAO{
         + "Access lvl: " + accessLevel);
     }
     
-    public void setLogin(String login){
-        this.login = login;
+    public void setCpf(String cpf){
+        this.cpf = cpf;
     }
     
     public void setPassword(String password){
         this.password = password;
+    }
+
+    @Override
+    public void save() {
+        
+    }
+    
+    public int getID(){
+        return this.id;
     }
 }

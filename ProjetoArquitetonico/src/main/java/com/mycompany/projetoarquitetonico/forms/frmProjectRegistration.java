@@ -4,6 +4,9 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.ProjectRegistrationController;
+import javax.swing.JTextField;
+
 /**
  *
  * @author yurit e lincoln
@@ -16,7 +19,9 @@ public class frmProjectRegistration extends javax.swing.JDialog {
     public frmProjectRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new ProjectRegistrationController(this);
     }
+    
     public javax.swing.JButton getBtnRegister() {
     return btnRegister;
     }
@@ -27,14 +32,6 @@ public class frmProjectRegistration extends javax.swing.JDialog {
 
     public javax.swing.JFormattedTextField getTxtStartDate() {
         return txtStartDate;
-    }
-
-    public javax.swing.JComboBox<String> getComboResponsible() {
-        return comboResponsible;
-    }
-
-    public javax.swing.JComboBox<String> getComboTerrain() {
-        return comboTerrain;
     }
 
     /**
@@ -51,10 +48,10 @@ public class frmProjectRegistration extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtStartDate = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
-        comboResponsible = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        comboTerrain = new javax.swing.JComboBox<>();
         btnRegister = new javax.swing.JButton();
+        txtResponsibleCPF = new javax.swing.JTextField();
+        txtTerrainID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,21 +74,7 @@ public class frmProjectRegistration extends javax.swing.JDialog {
 
         jLabel3.setText("Responsável");
 
-        comboResponsible.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboResponsible.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboResponsibleActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Terreno");
-
-        comboTerrain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboTerrain.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboTerrainActionPerformed(evt);
-            }
-        });
 
         btnRegister.setText("Cadastrar");
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +92,6 @@ public class frmProjectRegistration extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtProjectName)
                     .addComponent(txtStartDate)
-                    .addComponent(comboResponsible, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -117,10 +99,11 @@ public class frmProjectRegistration extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(0, 297, Short.MAX_VALUE))
-                    .addComponent(comboTerrain, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRegister)))
+                        .addComponent(btnRegister))
+                    .addComponent(txtResponsibleCPF)
+                    .addComponent(txtTerrainID))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,11 +120,11 @@ public class frmProjectRegistration extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboResponsible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtResponsibleCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTerrainID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addComponent(btnRegister)
                 .addContainerGap())
@@ -158,28 +141,27 @@ public class frmProjectRegistration extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStartDateActionPerformed
 
-    private void comboResponsibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboResponsibleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboResponsibleActionPerformed
-
-    private void comboTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTerrainActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboTerrainActionPerformed
-
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegisterActionPerformed
 
+    public String getResponsibleCPF(){
+        return this.txtResponsibleCPF.getText();
+    }
+    
+    public String getTerrainId(){
+        return this.txtTerrainID.getText();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegister;
-    private javax.swing.JComboBox<String> comboResponsible;
-    private javax.swing.JComboBox<String> comboTerrain;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txtProjectName;
+    private javax.swing.JTextField txtResponsibleCPF;
     private javax.swing.JFormattedTextField txtStartDate;
+    private javax.swing.JTextField txtTerrainID;
     // End of variables declaration//GEN-END:variables
 }

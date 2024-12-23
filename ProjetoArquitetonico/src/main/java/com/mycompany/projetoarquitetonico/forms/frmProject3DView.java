@@ -24,6 +24,10 @@ public class frmProject3DView extends javax.swing.JDialog {
         // Inicializa o controlador
         project3DController = new Project3DController(this);
     }
+
+    frmProject3DView() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     public javax.swing.JButton getBtnSave() {
         return btnSave;

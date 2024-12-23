@@ -4,6 +4,10 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
+import com.mycompany.projetoarquitetonico.Controllers.ClientRegistrationController;
+import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
+import com.mycompany.projetoarquitetonico.models.ClientAccount;
+
 /**
  *
  * @author yurit
@@ -16,7 +20,10 @@ public class frmClientRegistration extends javax.swing.JDialog {
     public frmClientRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        new ClientRegistrationController(this);
     }
+
+    
     public javax.swing.JButton getBtnSubmit() {
         return btnSubmit;
     }
@@ -26,11 +33,11 @@ public class frmClientRegistration extends javax.swing.JDialog {
     }
 
     public javax.swing.JTextField getTxtCPF() {
-        return jTextField1;
+        return txtCPF;
     }
 
     public javax.swing.JTextField getTxtBirthDate() {
-        return jTextField2;
+        return txtBirthDate;
     }
 
     public javax.swing.ButtonGroup getSexButtonGroup() {
@@ -51,18 +58,25 @@ public class frmClientRegistration extends javax.swing.JDialog {
         btnSubmit = new javax.swing.JButton();
         txtName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCPF = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtBirthDate = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radioMasculine = new javax.swing.JRadioButton();
+        radioFeminine = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nome");
 
         btnSubmit.setText("Cadastrar");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,41 +86,43 @@ public class frmClientRegistration extends javax.swing.JDialog {
 
         jLabel2.setText("CPF");
 
-        jTextField1.setToolTipText("");
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtCPF.setToolTipText("");
+        txtCPF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtCPFActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Data de nascimento");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtBirthDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtBirthDateActionPerformed(evt);
             }
         });
 
         jLabel4.setText("Sexo");
 
-        sexButtonGroup.add(jRadioButton1);
-        jRadioButton1.setText("Masculino");
-        jRadioButton1.setName(""); // NOI18N
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        sexButtonGroup.add(radioMasculine);
+        radioMasculine.setText("Masculino");
+        radioMasculine.setName(""); // NOI18N
+        radioMasculine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                radioMasculineActionPerformed(evt);
             }
         });
 
-        sexButtonGroup.add(jRadioButton2);
-        jRadioButton2.setText("Feminino");
-        jRadioButton2.setName(""); // NOI18N
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        sexButtonGroup.add(radioFeminine);
+        radioFeminine.setText("Feminino");
+        radioFeminine.setName(""); // NOI18N
+        radioFeminine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                radioFeminineActionPerformed(evt);
             }
         });
+
+        jLabel5.setText("Senha");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,17 +136,21 @@ public class frmClientRegistration extends javax.swing.JDialog {
                         .addComponent(btnSubmit))
                     .addComponent(txtName)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(jLabel5)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtBirthDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCPF, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(radioMasculine)
+                                    .addComponent(radioFeminine))))
                         .addGap(0, 131, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -147,16 +167,20 @@ public class frmClientRegistration extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(radioMasculine)
+                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
+                    .addComponent(radioFeminine)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addComponent(txtBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(btnSubmit)
                 .addContainerGap())
         );
@@ -168,21 +192,43 @@ public class frmClientRegistration extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtCPFActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtBirthDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBirthDateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtBirthDateActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void radioMasculineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMasculineActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_radioMasculineActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void radioFeminineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFeminineActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_radioFeminineActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        String name = txtName.getText();
+        String cpf = txtCPF.getText();
+        String birthDate = txtBirthDate.getText();
+        String password = txtPassword.getText();
+        String sex = null;
+        if( radioMasculine.isSelected() ){
+            sex = "m";
+        }else if( radioFeminine.isSelected() ){
+            sex = "f";
+        }
+        
+        ClientAccount acc = new ClientAccount();
+        acc.setName(name);
+        acc.setCpf(cpf);
+        acc.setBirthDate(birthDate);
+        acc.setPassword(password);
+        acc.setSex(sex);
+        
+        ClientAccountDAO.save(acc);
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -191,11 +237,13 @@ public class frmClientRegistration extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JRadioButton radioFeminine;
+    private javax.swing.JRadioButton radioMasculine;
     private javax.swing.ButtonGroup sexButtonGroup;
+    private javax.swing.JTextField txtBirthDate;
+    private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtName;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
