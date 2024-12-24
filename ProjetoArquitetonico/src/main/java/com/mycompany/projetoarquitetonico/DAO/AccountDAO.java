@@ -23,6 +23,10 @@ public class AccountDAO extends GenericDAO{
     protected String password = "";
     protected String birthDate;
     protected String sex;
+    protected boolean isActive;
+    protected boolean isClient;
+    protected boolean isEngineer;
+    protected boolean isAdmin;
     
     
     public AccountDAO(){
@@ -71,7 +75,32 @@ public class AccountDAO extends GenericDAO{
     public void setPassword(String password){
         this.password = password;
     }
+    
+    public void setClientAccess(boolean arg){
+        this.isClient = arg;
+    }
+    
+    public void setEngineerAccess(boolean arg){
+        this.isEngineer = arg;
+    }
+    
+    public void setAdminAccess(boolean arg){
+        this.isAdmin = arg;
+    }
+    
+    public boolean isClient(){
+        return this.isClient;
+    }
+    
+    public boolean isEngineer(){
+        return this.isEngineer;
+    }
 
+    public boolean isAdmin(){
+        return this.isAdmin;
+    }
+    
+    
     @Override
     public void save() {
         

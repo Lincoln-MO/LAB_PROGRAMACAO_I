@@ -24,6 +24,7 @@ public class ClientAccountDAO extends AccountDAO{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TerrainDAO> terrains;
     
+    
     public ClientAccountDAO(){
         
     }

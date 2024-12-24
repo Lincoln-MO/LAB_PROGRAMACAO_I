@@ -31,9 +31,16 @@ public class ProjetoArquitetonico {
         frm.setVisible(true);
         */
         
+        /*
         //project reg. test
         frmProjectRegistration frm = new frmProjectRegistration(null, false);
         frm.setVisible(true);
+        */
+        
+        // admin test
+        frmAdmin frm = new frmAdmin();
+        frm.setVisible(true);
+        
         
         
         

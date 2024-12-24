@@ -4,6 +4,8 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
+import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.Connection;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,7 @@ public class AdminController {
         this.view = view;
         initController();
     }
+    
 
     private void initController() {
         // Configura os eventos dos botões
@@ -38,26 +41,34 @@ public class AdminController {
         });
     }
 
-    private void saveUserAccess() {
+    
+    private void saveUserAccess() {   
         String cpf = view.getTxtCPF().getText().trim();
-        boolean isClient = view.getCheckClient().isSelected();
-        boolean isEngineer = view.getCheckEngineer().isSelected();
-        boolean isAdmin = view.getCheckAdmin().isSelected();
+        String[] accessLevel = view.getSelectedAccessLevel();
 
         if (cpf.isEmpty()) {
             JOptionPane.showMessageDialog(view, "O CPF não pode estar vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
         }
 
-        if (!isClient && !isEngineer && !isAdmin) {
-            JOptionPane.showMessageDialog(view, "Selecione ao menos um nível de acesso.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
+        /*
 
         // Lógica para salvar o nível de acesso no sistema
         // Aqui podemos chamar um método na classe de modelo ou DAO para salvar os dados
         JOptionPane.showMessageDialog(view, "Nível de acesso salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        */  
+        
+        Connection.beginTransaction();
+        ClientAccountDAO client = ClientAccountDAO.findByCPF(cpf);
+        
+        client.setClientAccess( view.isClientSelected() );
+        client.setEngineerAccess( view.isEngineerSelected() );
+        client.setAdminAccess( view.isAdminSelected() );
+        
+        Connection.commitTransaction();
+
     }
+    
 
     private void logout() {
         // Lógica de logout (ex.: fechar a janela atual e retornar à tela de login)
