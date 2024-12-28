@@ -6,17 +6,8 @@ package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.TerrainRegistrationController;
 import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.Connection;
 import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
-import com.mycompany.projetoarquitetonico.models.Client;
-import com.mycompany.projetoarquitetonico.models.ClientAccount;
-import com.mycompany.projetoarquitetonico.models.Terrain;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Query;
+
 
 /**
  *
@@ -25,10 +16,14 @@ import javax.persistence.Query;
 
 
 public class frmTerrainRegistration extends javax.swing.JDialog {
+    private TerrainRegistrationController controller;
+    //private AccountDAO terrainOwner = null;
+    
+    
     public frmTerrainRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        new TerrainRegistrationController(this); // Associar o controlador à view
+        this.controller = new TerrainRegistrationController(this);
     }
 
     
@@ -37,26 +32,32 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
         return btnRegister;
     }
 
+    
     public javax.swing.JButton getBtnClose() {
         return btnClose;
     }
 
+    
     public javax.swing.JTextField getTxtTerrainName() {
         return txtTerrainName;
     }
 
+    
     public javax.swing.JTextField getTxtOwnerCPF() {
         return txtOwnerCPF;
     }
 
+    
     public javax.swing.JTextField getTxtTerrainArea() {
         return txtTerrainArea;
     }
 
+    
     public javax.swing.JTextField getTxtTerrainLocation() {
         return txtTerrainLocation;
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,6 +77,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
         txtTerrainLocation = new javax.swing.JTextField();
         btnRegister = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
+        btnFindOwner = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,6 +127,13 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
             }
         });
 
+        btnFindOwner.setText("Procurar");
+        btnFindOwner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindOwnerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,11 +144,6 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                     .addComponent(txtTerrainName)
                     .addComponent(txtTerrainArea)
                     .addComponent(txtTerrainLocation)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 230, Short.MAX_VALUE)
-                        .addComponent(btnClose)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRegister))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -147,7 +151,15 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtOwnerCPF))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 245, Short.MAX_VALUE)
+                        .addComponent(btnClose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegister))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtOwnerCPF)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFindOwner)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -160,7 +172,9 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtOwnerCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtOwnerCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFindOwner))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,7 +183,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTerrainLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegister)
                     .addComponent(btnClose))
@@ -179,46 +193,53 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void txtOwnerCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOwnerCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOwnerCPFActionPerformed
 
+    
     private void txtTerrainNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTerrainNameActionPerformed
 
+    
     private void txtTerrainAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainAreaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTerrainAreaActionPerformed
 
+    
     private void txtTerrainLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTerrainLocationActionPerformed
 
+    
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        String name = txtTerrainName.getText();
-        String ownerCPF = txtOwnerCPF.getText();
-        String area = txtTerrainArea.getText();
-        String location = txtTerrainLocation.getText();
-        
-        ClientAccountDAO owner = ClientAccountDAO.findByCPF(ownerCPF);
-        
-        TerrainDAO t = new TerrainDAO();
-        t.setName(name);
-        t.setOwner(owner);
-        t.setArea(area);
-        t.setLocation(location);
-        
-        TerrainDAO.save(t);
+        controller.setTerrainName( txtTerrainName.getText() );
+        //controller.setTerrainOwner( this.terrainOwner );
+        controller.setTerrainArea( txtTerrainArea.getText() );
+        controller.setTerrainLocation( txtTerrainLocation.getText() );
+        controller.submit();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
+    
+    private void btnFindOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOwnerActionPerformed
+        controller.searchOwner();
+    }//GEN-LAST:event_btnFindOwnerActionPerformed
+
+    
+    public void setOwnerName(String name){
+        txtOwnerCPF.setText(name);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnFindOwner;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -4,7 +4,14 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.Connection;
+import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
+import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectHistory;
+import com.mycompany.projetoarquitetonico.models.Account;
+import java.util.List;
+import javax.persistence.Query;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -14,68 +21,71 @@ import javax.swing.JOptionPane;
  */
 
 public class ProjectHistoryController {
-    
     private frmProjectHistory view;
-
+    private DefaultListModel tableModel = new DefaultListModel();
+    private AccountDAO account = null;
+    private List<ProjectDAO> projects = null;
+    
+    
     public ProjectHistoryController(frmProjectHistory view) {
         this.view = view;
         
-        // Adicionando o listener para o botão "Fechar"
-        this.view.getBtnClose().addActionListener(e -> onCloseButtonClicked());
-
-        // Adicionando o listener para os campos e combo boxes
-        this.view.getTxtClientCPF().addActionListener(e -> onClientCPFChanged());
-        this.view.getComboProject().addActionListener(e -> onProjectSelectionChanged());
+        /*
+        if( clientMode ) view.setClientMode();
+        else view.setEngineerMode();
+        */
+        view.setEngineerMode();
     }
 
-    // Método que será chamado quando o botão de fechar for pressionado
-    private void onCloseButtonClicked() {
-        // Fechar a janela
-        view.dispose();
-    }
-
-    // Método chamado quando o CPF do cliente é alterado
-    private void onClientCPFChanged() {
-        String clientCPF = view.getTxtClientCPF().getText();
-
-        // Lógica para verificar se o CPF é válido e carregar projetos
-        
-        
-        if (clientCPF.isEmpty()) {
-            JOptionPane.showMessageDialog(view, "Por favor, insira o CPF do cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            loadProjectsForClient(clientCPF);
-        }
-    }
-
-    // Método chamado quando o projeto é selecionado no combo box
-    private void onProjectSelectionChanged() {
-        String selectedProject = (String) view.getComboProject().getSelectedItem();
-        if (selectedProject != null) {
-            // Lógica para carregar os detalhes ou históricos do projeto
-            loadProjectHistory(selectedProject);
-        }
-    }
-
+    
     // Método para carregar os projetos associados ao cliente
-    private void loadProjectsForClient(String clientCPF) {
-        
-        // Aqui poderemos adicionar a lógica para buscar os projetos relacionados ao CPF.    
-        // Por enquanto, apenas um exemplo de como carregar dados na lista
-        DefaultListModel<String> model = new DefaultListModel<>();
-        model.addElement("Projeto 1");
-        model.addElement("Projeto 2");
-        model.addElement("Projeto 3");
-
-        view.getListClientProjects().setModel(model);
+    private void loadProjectsForClient(String clientCPF) { 
     }
 
+    
     // Método para carregar o histórico ou informações do projeto selecionado
     private void loadProjectHistory(String projectName) {
-        
-        // adicionaremos aqui posteriormente a lógica para buscar o histórico de um projeto do banco de dados
-        
-        JOptionPane.showMessageDialog(view, "Carregando histórico do projeto: " + projectName);
     }
     
+    
+    public void findAccount(){
+        account = frmAccountFind.getAccount( "client" );
+        if( account != null ){
+            view.setClientName( account.getName());
+        }
+        
+        loadProjectList();
+    }
+    
+    
+    public void loadProjectList(){
+        this.projects = ProjectDAO.findAllByUser(account);
+        
+        for( ProjectDAO p : projects ){
+            view.addProject(p);
+        }
+        
+    }
+    
+    
+    public void setAccount(AccountDAO account){
+        this.account = account;
+    }
+    
+    
+    public void handleProjectSelection(){
+        view.clearTable();
+        ProjectDAO project = view.getSelectedProject();
+        if(project == null) return;
+        
+        // add rows in the table
+        for( String row : project.getExpenseTableString().split("\n") ){
+            String[] args = row.split("\t");
+            String name         = args[0];
+            float quantity      = Float.parseFloat(args[1]);
+            float price         = Float.parseFloat(args[2]);
+            String description  = args[3];
+            view.addTableRow(name, quantity, price, description);
+        }
+    }
 }

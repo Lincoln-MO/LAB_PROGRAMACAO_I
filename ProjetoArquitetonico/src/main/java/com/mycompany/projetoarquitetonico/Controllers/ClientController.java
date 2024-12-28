@@ -7,7 +7,8 @@ package com.mycompany.projetoarquitetonico.Controllers;
 import com.mycompany.projetoarquitetonico.forms.frmClient;
 import com.mycompany.projetoarquitetonico.forms.frmClientFeedback;
 import com.mycompany.projetoarquitetonico.forms.frmProject3DView;
-import com.mycompany.projetoarquitetonico.forms.frmSpendReport;
+import com.mycompany.projetoarquitetonico.forms.frmExpenseReport;
+import com.mycompany.projetoarquitetonico.forms.frmProjectHistory;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,41 +19,34 @@ import javax.swing.JOptionPane;
 public class ClientController {
     private frmClient view;
 
+    
     public ClientController(frmClient view) {
         this.view = view;
-        addEventListeners();
     }
 
-    private void addEventListeners() {
-        // Relatório de Gastos
-        view.getBtnSpendReport().addActionListener(evt -> openSpendReport());
 
-        // Enviar Feedback
-        view.getBtnSendFeedback().addActionListener(evt -> openFeedbackForm());
-
-        // Visualização 3D
-        view.getBtn3DView().addActionListener(evt -> open3DView());
-
-        // Sair
-        view.getBtnLogout().addActionListener(evt -> logout());
-    }
-
-    private void openSpendReport() {
-        frmSpendReport spendReport = new frmSpendReport(view, true);
-        spendReport.setVisible(true);
-    }
-
-    private void openFeedbackForm() {
+    public void openFeedbackForm() {
         frmClientFeedback feedbackForm = new frmClientFeedback(view, true);
         feedbackForm.setVisible(true);
     }
 
-    private void open3DView() {
+    
+    public void open3DViewForm() {
         frmProject3DView view3D = new frmProject3DView(view, true);
         view3D.setVisible(true);
     }
+    
+    
+    public void openProjectHistoryForm(){
+        frmProjectHistory frm = new frmProjectHistory(view, true);
+        frm.setClientMode();
+        frm.getController().setAccount( LoginController.getAccount() );
+        frm.getController().loadProjectList();
+        frm.setVisible(true);
+    }
+    
 
-    private void logout() {
+    public void logout() {
         int choice = JOptionPane.showConfirmDialog(view, "Você tem certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             // Aqui, adicionaremos a lógica de logout (ex: voltar à tela de login)

@@ -34,17 +34,17 @@
                       <EmptySpace min="0" pref="222" max="32767" attributes="0"/>
                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnSelectAccount" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSelectTerrain" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="txtName" max="32767" attributes="0"/>
-                  <Component id="comboAccount" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtSearch" max="32767" attributes="0"/>
+                  <Component id="comboTerrains" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel3" min="-2" pref="125" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtFoundAccountsCounter" min="-2" pref="158" max="-2" attributes="0"/>
+                              <Component id="txtFoundTerrainsCounter" min="-2" pref="158" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -60,17 +60,17 @@
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtName" min="-2" max="-2" attributes="0"/>
+              <Component id="txtSearch" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtFoundAccountsCounter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFoundTerrainsCounter" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="comboAccount" min="-2" max="-2" attributes="0"/>
+              <Component id="comboTerrains" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="269" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnSelectAccount" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnSelectTerrain" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -79,12 +79,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnSelectAccount">
+    <Component class="javax.swing.JButton" name="btnSelectTerrain">
       <Properties>
         <Property name="text" type="java.lang.String" value="Selecionar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectAccountActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectTerrainActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
@@ -94,21 +94,21 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Pesquisar por Nome ou CPF"/>
+        <Property name="text" type="java.lang.String" value="Pesquisar por Nome ou localiza&#xe7;&#xe3;o"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtName">
+    <Component class="javax.swing.JTextField" name="txtSearch">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNameActionPerformed"/>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNameKeyReleased"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearchActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Contas encontradas"/>
+        <Property name="text" type="java.lang.String" value="Terrenos encontradas"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="comboAccount">
+    <Component class="javax.swing.JComboBox" name="comboTerrains">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -118,7 +118,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="txtFoundAccountsCounter">
+    <Component class="javax.swing.JLabel" name="txtFoundTerrainsCounter">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>

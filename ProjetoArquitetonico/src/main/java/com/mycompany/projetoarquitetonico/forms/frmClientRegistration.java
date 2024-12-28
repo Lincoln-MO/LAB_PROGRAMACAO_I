@@ -5,8 +5,9 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.ClientRegistrationController;
-import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
-import com.mycompany.projetoarquitetonico.models.ClientAccount;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.Account;
+
 
 /**
  *
@@ -220,14 +221,16 @@ public class frmClientRegistration extends javax.swing.JDialog {
             sex = "f";
         }
         
-        ClientAccount acc = new ClientAccount();
+        Account acc = new Account();
         acc.setName(name);
         acc.setCpf(cpf);
         acc.setBirthDate(birthDate);
         acc.setPassword(password);
         acc.setSex(sex);
+        acc.setIsClient(true);
+        acc.setIsActive(true);
         
-        ClientAccountDAO.save(acc);
+        AccountDAO.save(acc);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
 

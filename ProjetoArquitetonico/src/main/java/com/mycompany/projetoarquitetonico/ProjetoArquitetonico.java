@@ -20,13 +20,14 @@ public class ProjetoArquitetonico {
         Connection.openConnection();
         
         // main form
-        /*
+        
         frmLogin mainView = new frmLogin();
         LoginController loginController = new LoginController(mainView);  // Conecta a view ao controlador
         mainView.setVisible(true);
-        */
         
-        /* terrain reg. test
+        
+        /*
+        //terrain reg. test
         frmTerrainRegistration frm = new frmTerrainRegistration(null, false); 
         frm.setVisible(true);
         */
@@ -37,13 +38,22 @@ public class ProjetoArquitetonico {
         frm.setVisible(true);
         */
         
+        /*
         // admin test
         frmAdmin frm = new frmAdmin();
         frm.setVisible(true);
+        */
         
+        // project regist.
+        /*
+        frmProjectRegistration frm = new frmProjectRegistration(null, false); 
+        frm.setVisible(true);
+        */
         
-        
-        
+        /*
+        frmProjectHistory frm = new frmProjectHistory(null, false); 
+        frm.setVisible(true);
+        */
         
         /*
         java.awt.EventQueue.invokeLater(() -> {

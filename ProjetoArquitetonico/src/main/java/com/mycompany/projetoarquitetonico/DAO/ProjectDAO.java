@@ -4,12 +4,15 @@
  */
 package com.mycompany.projetoarquitetonico.DAO;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Query;
 
 
 /**
@@ -24,9 +27,10 @@ public class ProjectDAO extends GenericDAO{
     private String name;
     private String startDate;
     @ManyToOne
-    private EngineerAccountDAO responsible;
+    private AccountDAO responsible;
     @OneToOne
     private TerrainDAO terrain;
+    private String expenseTableString;
 
     
     public static void save(ProjectDAO proj){
@@ -42,6 +46,30 @@ public class ProjectDAO extends GenericDAO{
         System.out.println("Persist");
     }
     
+    
+    public static List<ProjectDAO> findAllByTerrain(TerrainDAO terrain){
+        String sql = "SELECT project FROM project project WHERE "+
+            "(terrain_id = :id)";
+
+        Query query = Connection.getEntityManager().createQuery(sql);
+        query.setParameter("id", terrain.getID());
+        
+        return query.getResultList();
+    }
+    
+    
+    public static List<ProjectDAO> findAllByUser(AccountDAO account){
+        List<ProjectDAO> result = new ArrayList<ProjectDAO>();
+        
+        // not good
+        for( TerrainDAO t : account.getTerains()){
+            for( ProjectDAO p : ProjectDAO.findAllByTerrain(t) ){
+                result.add( p );
+            }
+        }
+        
+        return result;
+    }
     
     @Override
     public void save() {
@@ -106,14 +134,14 @@ public class ProjectDAO extends GenericDAO{
     /**
      * @return the responsible
      */
-    public EngineerAccountDAO getResponsible() {
+    public AccountDAO getResponsible() {
         return responsible;
     }
 
     /**
      * @param responsible the responsible to set
      */
-    public void setResponsible(EngineerAccountDAO responsible) {
+    public void setResponsible(AccountDAO responsible) {
         this.responsible = responsible;
     }
 
@@ -129,5 +157,17 @@ public class ProjectDAO extends GenericDAO{
      */
     public void setTerrain(TerrainDAO terrain) {
         this.terrain = terrain;
+    }
+
+    /**
+     * @return the expenseTable
+     */
+    public String getExpenseTableString() {
+        return expenseTableString;
+    }
+
+
+    public void setExpenseTableString(String tableString) {
+        this.expenseTableString = tableString;
     }
 }

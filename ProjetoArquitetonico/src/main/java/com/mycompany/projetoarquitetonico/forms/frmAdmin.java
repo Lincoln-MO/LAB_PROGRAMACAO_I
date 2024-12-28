@@ -5,49 +5,60 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.AdminController;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 
 /**
  *
  * @author yurit
  */
 public class frmAdmin extends javax.swing.JFrame {
-
+    private AdminController controller;
+    private AccountDAO selectedAccout = null;
+    
+    
     /**
      * Creates new form frm
      */
     public frmAdmin() {
         initComponents();
-        new AdminController(this);
+        this.controller = new AdminController(this);
         
     }
+    
+    
     // Métodos para acessar componentes da interface
     public javax.swing.JButton getBtnSave() {
         return btnSave;
     }
 
+    
     public javax.swing.JButton getBtnLogout() {
         return btnLogout;
     }
 
+    
     public javax.swing.JTextField getTxtCPF() {
-        return txtCPF;
+        return txtSearch;
     }
 
+    
     public javax.swing.JCheckBox getCheckClient() {
         return checkClient;
     }
 
+    
     public javax.swing.JCheckBox getCheckEngineer() {
         return checkEngineer;
     }
 
+    
     public javax.swing.JCheckBox getCheckAdmin() {
         return checkAdmin;
     }
     
     
     public String getCpf(){
-        return txtCPF.getText();
+        return txtSearch.getText();
     }
     
     
@@ -67,14 +78,31 @@ public class frmAdmin extends javax.swing.JFrame {
         return result;
     }
     
+    
+    public void uncheckAll(){
+        checkClient.setSelected(false);
+        checkEngineer.setSelected(false);
+        checkAdmin.setSelected(false);
+    }
+    
+    public void check(String option){
+        switch( option ){
+            case "client" -> checkClient.setSelected(true);
+            case "engineer" -> checkEngineer.setSelected(true);
+            case "admin" -> checkAdmin.setSelected(true);
+        }
+    }
 
+    
     public boolean isClientSelected(){
         return checkClient.isSelected();
     }
     
+    
     public boolean isEngineerSelected(){
         return checkEngineer.isSelected();
     }
+    
     
     public boolean isAdminSelected(){
         return checkAdmin.isSelected();
@@ -90,19 +118,20 @@ public class frmAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtLoginName = new javax.swing.JLabel();
+        lblLoginName = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtCPF = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         checkClient = new javax.swing.JCheckBox();
         checkEngineer = new javax.swing.JCheckBox();
         checkAdmin = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
+        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtLoginName.setText("Logado como: XXX.XXX.XXX-XX");
+        lblLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 
         btnLogout.setText("Sair");
 
@@ -113,7 +142,9 @@ public class frmAdmin extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("CPF do usuário");
+        jLabel1.setText("Usuário");
+
+        txtSearch.setEditable(false);
 
         checkClient.setText("Cliente");
 
@@ -122,6 +153,13 @@ public class frmAdmin extends javax.swing.JFrame {
         checkAdmin.setText("Administrador");
 
         jLabel2.setText("Nível de acesso");
+
+        btnSearch.setText("Procurar");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,16 +178,19 @@ public class frmAdmin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtLoginName)
+                                .addComponent(lblLoginName)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnLogout))
-                            .addComponent(txtCPF)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSearch)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -158,7 +199,9 @@ public class frmAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,20 +212,32 @@ public class frmAdmin extends javax.swing.JFrame {
                 .addComponent(checkAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSave)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLogout)
-                    .addComponent(txtLoginName))
+                    .addComponent(lblLoginName))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        controller.submit();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        controller.searchAccount();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    
+    public void setAccountName(String name){
+        txtSearch.setText(name);
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -190,12 +245,13 @@ public class frmAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JCheckBox checkAdmin;
     private javax.swing.JCheckBox checkClient;
     private javax.swing.JCheckBox checkEngineer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtCPF;
-    private javax.swing.JLabel txtLoginName;
+    private javax.swing.JLabel lblLoginName;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

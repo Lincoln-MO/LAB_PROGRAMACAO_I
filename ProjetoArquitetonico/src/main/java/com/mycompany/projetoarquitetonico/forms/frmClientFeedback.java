@@ -5,6 +5,7 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.FeedbackController;
+import com.mycompany.projetoarquitetonico.Controllers.LoginController;
 
 /**
  *
@@ -12,12 +13,7 @@ import com.mycompany.projetoarquitetonico.Controllers.FeedbackController;
  */
 
 public class frmClientFeedback extends javax.swing.JDialog {
-
-    /**
-     * Creates new form frmClientFeedback
-     */
-    
-    private FeedbackController feedbackController;  // Declaração da variável feedbackController
+    private FeedbackController controller;
     
     
     public frmClientFeedback(java.awt.Frame parent, boolean modal) {
@@ -25,20 +21,24 @@ public class frmClientFeedback extends javax.swing.JDialog {
         initComponents();
         
         // Inicializa o controlador, passando o próprio formulário (this)
-        feedbackController = new FeedbackController(this);
+        controller = new FeedbackController(this);
     }
     
     
     public javax.swing.JTextArea getTextAreaFeedback() {
-        return jTextArea1;
+        return txtMessage;
     }
+    
+    
     public javax.swing.JButton getBtnSubmit() {
         return btnSubmit;
     }
 
+    
     public javax.swing.JButton getBtnCancel() {
         return btnCancel;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +51,7 @@ public class frmClientFeedback extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtMessage = new javax.swing.JTextArea();
         btnCancel = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
 
@@ -59,9 +59,9 @@ public class frmClientFeedback extends javax.swing.JDialog {
 
         jLabel1.setText("Feedback");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtMessage.setColumns(20);
+        txtMessage.setRows(5);
+        jScrollPane1.setViewportView(txtMessage);
 
         btnCancel.setText("Cancelar");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -112,14 +112,16 @@ public class frmClientFeedback extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
-         feedbackController.handleCancel(); 
+         controller.cancel(); 
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        // TODO add your handling code here:
-        feedbackController.handleSubmitFeedback();
+        controller.setMessage( txtMessage.getText() );
+        controller.setAuthor(LoginController.getAccount());
+        controller.submit();
     }//GEN-LAST:event_btnSubmitActionPerformed
  
 
@@ -128,6 +130,6 @@ public class frmClientFeedback extends javax.swing.JDialog {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtMessage;
     // End of variables declaration//GEN-END:variables
 }

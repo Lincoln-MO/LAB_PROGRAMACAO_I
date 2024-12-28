@@ -17,7 +17,7 @@ public class frmLogin extends javax.swing.JFrame {
     /**
      * Creates new form frmLogin
      */
-    private final LoginController loginController;
+    //private final LoginController loginController;
     
     // stuff used in login
     private String selectedAccountType = null;
@@ -28,7 +28,8 @@ public class frmLogin extends javax.swing.JFrame {
     
     public frmLogin() {
         initComponents();
-        loginController = new LoginController(this);
+        //loginController = new LoginController(this);
+        //LoginController.init();
     }
     public javax.swing.JTextField getTxtLogin() {
         return txtLogin;
@@ -194,7 +195,7 @@ public class frmLogin extends javax.swing.JFrame {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         this.cpf = txtLogin.getText();
         this.password = txtPassword.getText();
-        loginController.handleSubmit(this.cpf, this.password, this.selectedAccountType);
+        LoginController.submit(this.cpf, this.password, this.selectedAccountType);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed

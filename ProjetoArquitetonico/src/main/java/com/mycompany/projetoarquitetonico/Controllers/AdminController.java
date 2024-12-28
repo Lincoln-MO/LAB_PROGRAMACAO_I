@@ -4,8 +4,9 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
-import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.Connection;
+import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,58 +18,36 @@ import java.awt.event.ActionListener;
  */
 public class AdminController {
     private final frmAdmin view;
-
+    private AccountDAO account = null;
+    
+    
     public AdminController(frmAdmin view) {
         this.view = view;
-        initController();
-    }
-    
-
-    private void initController() {
-        // Configura os eventos dos botões
-        view.getBtnSave().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveUserAccess();
-            }
-        });
-
-        view.getBtnLogout().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                logout();
-            }
-        });
     }
 
     
-    private void saveUserAccess() {   
-        String cpf = view.getTxtCPF().getText().trim();
-        String[] accessLevel = view.getSelectedAccessLevel();
-
-        if (cpf.isEmpty()) {
-            JOptionPane.showMessageDialog(view, "O CPF não pode estar vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-
-        
-        /*
-
-        // Lógica para salvar o nível de acesso no sistema
-        // Aqui podemos chamar um método na classe de modelo ou DAO para salvar os dados
-        JOptionPane.showMessageDialog(view, "Nível de acesso salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        */  
-        
+    public void submit() {   
         Connection.beginTransaction();
-        ClientAccountDAO client = ClientAccountDAO.findByCPF(cpf);
         
-        client.setClientAccess( view.isClientSelected() );
-        client.setEngineerAccess( view.isEngineerSelected() );
-        client.setAdminAccess( view.isAdminSelected() );
+        account = AccountDAO.findByCPF( account.getCpf() );
+        
+        account.setClientAccess( view.isClientSelected() );
+        account.setEngineerAccess( view.isEngineerSelected() );
+        account.setAdminAccess( view.isAdminSelected() );
         
         Connection.commitTransaction();
-
     }
     
+    
+    public void searchAccount(){
+        this.account = frmAccountFind.getAccount("_ANY");
+        view.setAccountName( account.getName() );
+        view.uncheckAll();
+        if( account.isClient() )    view.check("client");
+        if( account.isEngineer())   view.check("engineer");
+        if( account.isAdmin())      view.check("admin");
+    }
+
 
     private void logout() {
         // Lógica de logout (ex.: fechar a janela atual e retornar à tela de login)

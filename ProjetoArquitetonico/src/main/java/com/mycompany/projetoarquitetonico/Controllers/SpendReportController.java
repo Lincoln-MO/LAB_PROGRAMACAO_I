@@ -4,7 +4,7 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
-import com.mycompany.projetoarquitetonico.forms.frmSpendReport;
+import com.mycompany.projetoarquitetonico.forms.frmExpenseReport;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,9 +12,9 @@ import javax.swing.JOptionPane;
  * @author lincoln
  */
 public class SpendReportController {
-    private final frmSpendReport spendReportView;
+    private final frmExpenseReport spendReportView;
 
-    public SpendReportController(frmSpendReport spendReportView) {
+    public SpendReportController(frmExpenseReport spendReportView) {
         this.spendReportView = spendReportView;
         initializeActions();
     }

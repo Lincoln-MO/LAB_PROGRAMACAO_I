@@ -26,34 +26,33 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnSendFeedback" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btn3DView" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnSpendReport" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="txtLoginName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnSendFeedback" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btn3DView" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnProjects" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnSpendReport" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="btnSendFeedback" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btn3DView" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="169" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnProjects" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="140" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnLogout" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtLoginName" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -64,14 +63,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnSpendReport">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de gastos"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSpendReportActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnSendFeedback">
       <Properties>
         <Property name="text" type="java.lang.String" value="Enviar feedback"/>
@@ -99,6 +90,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnProjects">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Hist&#xf3;rico de projetos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProjectsActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

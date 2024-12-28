@@ -5,37 +5,23 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.ClientController;
+import com.mycompany.projetoarquitetonico.Controllers.LoginController;
 
 /**
  *
  * @author yurit e lincoln
  */
 public class frmClient extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmClient
-     */
+    private ClientController controller;
+    
     public frmClient() {
         initComponents();
-        new ClientController(this); // Criando e associando o controlador à view
+        controller = new ClientController(this);
     }
+    
+    
     public javax.swing.JLabel getTxtLoginName() {
         return txtLoginName;
-    }
-    public javax.swing.JButton getBtnSpendReport() {
-        return btnSpendReport;
-    }
-
-    public javax.swing.JButton getBtnSendFeedback() {
-        return btnSendFeedback;
-    }
-
-    public javax.swing.JButton getBtn3DView() {
-        return btn3DView;
-    }
-
-    public javax.swing.JButton getBtnLogout() {
-        return btnLogout;
     }
 
 
@@ -48,20 +34,13 @@ public class frmClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnSpendReport = new javax.swing.JButton();
         btnSendFeedback = new javax.swing.JButton();
         btn3DView = new javax.swing.JButton();
         txtLoginName = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
+        btnProjects = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnSpendReport.setText("Relatório de gastos");
-        btnSpendReport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSpendReportActionPerformed(evt);
-            }
-        });
 
         btnSendFeedback.setText("Enviar feedback");
         btnSendFeedback.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +65,13 @@ public class frmClient extends javax.swing.JFrame {
             }
         });
 
+        btnProjects.setText("Histórico de projetos");
+        btnProjects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProjectsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,27 +80,26 @@ public class frmClient extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtLoginName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogout))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSendFeedback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn3DView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSpendReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtLoginName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogout)))
-                .addContainerGap())
+                            .addComponent(btnProjects, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnSpendReport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(35, 35, 35)
                 .addComponent(btnSendFeedback)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn3DView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProjects)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogout)
                     .addComponent(txtLoginName))
@@ -124,21 +109,25 @@ public class frmClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSpendReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpendReportActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSpendReportActionPerformed
-
+    
     private void btnSendFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendFeedbackActionPerformed
-        // TODO add your handling code here:
+        controller.openFeedbackForm();
     }//GEN-LAST:event_btnSendFeedbackActionPerformed
 
+    
     private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
-        // TODO add your handling code here:
+        controller.open3DViewForm();
     }//GEN-LAST:event_btn3DViewActionPerformed
 
+    
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
+        controller.logout();
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    
+    private void btnProjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectsActionPerformed
+        controller.openProjectHistoryForm();
+    }//GEN-LAST:event_btnProjectsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,8 +136,8 @@ public class frmClient extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn3DView;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnProjects;
     private javax.swing.JButton btnSendFeedback;
-    private javax.swing.JButton btnSpendReport;
     private javax.swing.JLabel txtLoginName;
     // End of variables declaration//GEN-END:variables
 }

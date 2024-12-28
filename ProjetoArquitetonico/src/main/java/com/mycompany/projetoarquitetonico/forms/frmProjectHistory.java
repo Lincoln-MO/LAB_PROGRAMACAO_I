@@ -5,42 +5,115 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.ProjectHistoryController;
+import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author yurit
  */
 public class frmProjectHistory extends javax.swing.JDialog {
-
-    /**
-     * Creates new form frmProjectHistory
-     */
-    
     private ProjectHistoryController controller;
+    private DefaultTableModel tableModel;
+    private DefaultComboBoxModel comboProjectModel;
+    private List<ProjectDAO> projects = null;
+    
     
     public frmProjectHistory(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         // Instanciando o controlador
         controller = new ProjectHistoryController(this);
+        tableModel = (DefaultTableModel) tblExpenses.getModel();
+        comboProjectModel = (DefaultComboBoxModel) comboProject.getModel();
+        projects = new ArrayList<ProjectDAO>();
+        
+        clearTable();
+        clearProjectList();
     }
+    
+    
+    public ProjectHistoryController getController(){
+        return this.controller;
+    }
+    
+    
     // Métodos getter para os componentes da view, caso necessário
     public javax.swing.JTextField getTxtClientCPF() {
-        return txtClientCPF;
+        return txtClientName;
     }
+    
 
     public javax.swing.JComboBox<String> getComboProject() {
         return comboProject;
     }
 
-    public javax.swing.JList<String> getListClientProjects() {
-        return listClientProjects;
-    }
 
     public javax.swing.JButton getBtnClose() {
         return btnClose;
     }
+    
+    
+    public ProjectDAO getSelectedProject(){
+        int id = comboProject.getSelectedIndex();
+        
+        if( id < 0 ) return null;
+        
+        return projects.get( id );
+    }
+    
+    
+    public void setClientMode(){
+        btnSearch.setVisible( false );
+    }
 
+    
+    public void setEngineerMode(){
+        btnSearch.setVisible( true );
+    }
+    
+    
+    public void clearTable(){
+        while( tblExpenses.getRowCount() > 0 ){
+            tableModel.removeRow(0);
+        }
+    }
+    
+    
+    public void clearProjectList(){
+        comboProjectModel.removeAllElements();
+    }
+    
+    
+    public void addTableRow(String name, float quantity, float price, String description){
+        tableModel.addRow(new Object[]{name, quantity, price, description});
+    }
+
+    
+    public void addTableRow(){
+        tableModel.addRow(new Object[]{});
+    }
+    
+    
+    public void addProject(ProjectDAO project){
+        this.projects.add(project);
+        
+        /*
+        It's essential to have an number before the project name to diferentiate
+        it from other projects with the same name, because the
+        "JComboBox.getSelectedIndex()" method in this shit ass platform doesn't 
+        recognise two different items with the same name for some 
+        fucking reason, and it awlays returns ID of the first item with matching
+        name.
+        */
+        comboProjectModel.addElement(comboProject.getItemCount()+1 + " - " + project.getName());
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,23 +123,36 @@ public class frmProjectHistory extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        txtClientCPF = new javax.swing.JTextField();
+        txtClientName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         comboProject = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listClientProjects = new javax.swing.JList<>();
         btnClose = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblExpenses = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Cliente (CPF)");
+        jLabel1.setText("Cliente");
 
-        txtClientCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtClientCPFActionPerformed(evt);
-            }
-        });
+        txtClientName.setEditable(false);
 
         jLabel2.setText("Projeto");
 
@@ -77,14 +163,43 @@ public class frmProjectHistory extends javax.swing.JDialog {
             }
         });
 
-        listClientProjects.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listClientProjects);
-
         btnClose.setText("Fechar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setText("Pesquisar");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Gastos");
+
+        tblExpenses.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Quantidade", "Preço", "Descrição"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tblExpenses.setEnabled(false);
+        jScrollPane1.setViewportView(tblExpenses);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,19 +207,22 @@ public class frmProjectHistory extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboProject, javax.swing.GroupLayout.Alignment.TRAILING, 0, 388, Short.MAX_VALUE)
-                    .addComponent(txtClientCPF)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnClose)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnClose)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(comboProject, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtClientName, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnSearch)))))
+                        .addComponent(jLabel3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,14 +230,18 @@ public class frmProjectHistory extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtClientCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtClientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboProject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnClose)
                 .addContainerGap())
         );
@@ -128,21 +250,34 @@ public class frmProjectHistory extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProjectActionPerformed
-        // TODO add your handling code here:
+        controller.handleProjectSelection();
     }//GEN-LAST:event_comboProjectActionPerformed
 
-    private void txtClientCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClientCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtClientCPFActionPerformed
+    
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        controller.findAccount();
+    }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
 
+    
+    public void setClientName(String name){
+        txtClientName.setText( name );
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> comboProject;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listClientProjects;
-    private javax.swing.JTextField txtClientCPF;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblExpenses;
+    private javax.swing.JTextField txtClientName;
     // End of variables declaration//GEN-END:variables
 }

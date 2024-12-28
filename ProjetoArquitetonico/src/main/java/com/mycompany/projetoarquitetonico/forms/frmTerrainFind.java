@@ -4,38 +4,35 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
 import java.util.List;
 
 /**
  *
  * @author yurit
  */
-public class frmAccountFind extends javax.swing.JDialog {
-    private String accountType;
-    private AccountDAO selectedAccount;
-    private List<AccountDAO> foundAccounts = null;
+public class frmTerrainFind extends javax.swing.JDialog {
+    private TerrainDAO selectedTerrain;
+    private List<TerrainDAO> foundTerrains = null;
     
     /**
      * Creates new form frmAccountFind
      */
-    public frmAccountFind(java.awt.Frame parent, boolean modal) {
+    public frmTerrainFind(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.accountType = "";
     }
     
     
-    public static AccountDAO getAccount(String accountType){
-        frmAccountFind frm = new frmAccountFind(null, true);
-        frm.setAccountType(accountType);
+    public static TerrainDAO getTerrain(){
+        frmTerrainFind frm = new frmTerrainFind(null, true);
         frm.setVisible(true);
         
         // how can something this awful work so great
         while (frm.isVisible()){}
         frm.dispose();
         
-        return frm.getSelectedAccount();
+        return frm.getSelectedTerrain();
     }
 
     
@@ -49,41 +46,41 @@ public class frmAccountFind extends javax.swing.JDialog {
     private void initComponents() {
 
         findBy = new javax.swing.ButtonGroup();
-        btnSelectAccount = new javax.swing.JButton();
+        btnSelectTerrain = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        comboAccount = new javax.swing.JComboBox<>();
-        txtFoundAccountsCounter = new javax.swing.JLabel();
+        comboTerrains = new javax.swing.JComboBox<>();
+        txtFoundTerrainsCounter = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnSelectAccount.setText("Selecionar");
-        btnSelectAccount.addActionListener(new java.awt.event.ActionListener() {
+        btnSelectTerrain.setText("Selecionar");
+        btnSelectTerrain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectAccountActionPerformed(evt);
+                btnSelectTerrainActionPerformed(evt);
             }
         });
 
         jButton2.setText("Cancelar");
 
-        jLabel1.setText("Pesquisar por Nome ou CPF");
+        jLabel1.setText("Pesquisar por Nome ou localização");
 
-        txtName.addActionListener(new java.awt.event.ActionListener() {
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
+                txtSearchActionPerformed(evt);
             }
         });
-        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNameKeyReleased(evt);
+                txtSearchKeyReleased(evt);
             }
         });
 
-        jLabel3.setText("Contas encontradas");
+        jLabel3.setText("Terrenos encontradas");
 
-        txtFoundAccountsCounter.setText("0");
+        txtFoundTerrainsCounter.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,16 +93,16 @@ public class frmAccountFind extends javax.swing.JDialog {
                         .addGap(0, 222, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSelectAccount))
-                    .addComponent(txtName)
-                    .addComponent(comboAccount, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSelectTerrain))
+                    .addComponent(txtSearch)
+                    .addComponent(comboTerrains, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFoundAccountsCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtFoundTerrainsCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -115,16 +112,16 @@ public class frmAccountFind extends javax.swing.JDialog {
                 .addGap(60, 60, 60)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtFoundAccountsCounter))
+                    .addComponent(txtFoundTerrainsCounter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboTerrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelectAccount)
+                    .addComponent(btnSelectTerrain)
                     .addComponent(jButton2))
                 .addContainerGap())
         );
@@ -133,50 +130,46 @@ public class frmAccountFind extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void btnSelectAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectAccountActionPerformed
-        this.selectedAccount = this.foundAccounts.get( comboAccount.getSelectedIndex() );
-        this.setVisible(false); // need this for frmAccountFind.getAccount() 
-    }//GEN-LAST:event_btnSelectAccountActionPerformed
+    private void btnSelectTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTerrainActionPerformed
+        this.selectedTerrain = this.foundTerrains.get( comboTerrains.getSelectedIndex() );
+        this.setVisible(false); // need this for frmTerrainFind.getTerrain() 
+    }//GEN-LAST:event_btnSelectTerrainActionPerformed
 
     
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    }//GEN-LAST:event_txtSearchActionPerformed
 
     
-    private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
-        String search = txtName.getText();
-        this.foundAccounts = AccountDAO.findAllByNameOrCPF(search, this.accountType);
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        String search = txtSearch.getText();
+        this.foundTerrains = TerrainDAO.search(search);
         
-        comboAccount.removeAllItems();
+        comboTerrains.removeAllItems();
         if( search.equals("") ){
-            txtFoundAccountsCounter.setText("0");
+            txtFoundTerrainsCounter.setText("0");
             return;
         }
         
-        txtFoundAccountsCounter.setText( String.valueOf( this.foundAccounts.size() ));
-        for( AccountDAO acc : this.foundAccounts ){
-            comboAccount.addItem(acc.getName() + " : " + acc.getCpf());
+        txtFoundTerrainsCounter.setText( String.valueOf( this.foundTerrains.size() ));
+        for( TerrainDAO terr : this.foundTerrains ){
+            comboTerrains.addItem(terr.getName() + " : " + terr.getLocation());
         }
-    }//GEN-LAST:event_txtNameKeyReleased
+    }//GEN-LAST:event_txtSearchKeyReleased
 
-    
-    public void setAccountType(String accountType){
-        this.accountType = accountType;
-    }
-    
-    public AccountDAO getSelectedAccount(){
-        return this.selectedAccount;
+
+    public TerrainDAO getSelectedTerrain(){
+        return this.selectedTerrain;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSelectAccount;
-    private javax.swing.JComboBox<String> comboAccount;
+    private javax.swing.JButton btnSelectTerrain;
+    private javax.swing.JComboBox<String> comboTerrains;
     private javax.swing.ButtonGroup findBy;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel txtFoundAccountsCounter;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JLabel txtFoundTerrainsCounter;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

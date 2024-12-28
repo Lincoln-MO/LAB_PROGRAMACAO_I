@@ -4,6 +4,9 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.Connection;
+import com.mycompany.projetoarquitetonico.DAO.FeedbackDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClientFeedback;
 import javax.swing.JOptionPane;
 
@@ -14,37 +17,55 @@ import javax.swing.JOptionPane;
 
 
 public class FeedbackController {
-    private final frmClientFeedback feedbackView;
-
+    private final frmClientFeedback view;
+    private FeedbackDAO feedback;
+    
+    
     public FeedbackController(frmClientFeedback feedbackView) {
-        this.feedbackView = feedbackView;
-        initializeActions();
+        this.view = feedbackView;
+        this.feedback = new FeedbackDAO();
     }
 
-    // Inicializa os listeners da interface de feedback
-    private void initializeActions() {
-        feedbackView.getBtnSubmit().addActionListener(e -> handleSubmitFeedback());
-        feedbackView.getBtnCancel().addActionListener(e -> handleCancel());
-    }
 
     // Processa o envio do feedback
-    public void handleSubmitFeedback() {
-        String feedback = feedbackView.getTextAreaFeedback().getText().trim();
-        
-        if (feedback.isEmpty()) {
-            JOptionPane.showMessageDialog(feedbackView, "Por favor, insira seu feedback.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Aqui adicionamos a lógica para salvar o feedback no banco de dados ou em um arquivo
-        
-        
-        JOptionPane.showMessageDialog(feedbackView, "Feedback enviado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        feedbackView.dispose(); // Fecha a tela de feedback após envio
+    public void submit() {
+        Connection.beginTransaction();
+        Connection.persist(feedback);
+        Connection.commitTransaction();
+        Connection.closeConnection();
     }
 
+    
     // Método para cancelar o feedback
-    public void handleCancel() {
-        feedbackView.dispose(); // Fecha a tela de feedback sem enviar
-    }    
+    public void cancel() {
+        view.dispose(); // Fecha a tela de feedback sem enviar
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return feedback.getMessage();
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.feedback.setMessage(message);
+    }
+
+    /**
+     * @return the author
+     */
+    public AccountDAO getAuthor() {
+        return feedback.getAuthor();
+    }
+
+    /**
+     * @param author the author to set
+     */
+    public void setAuthor(AccountDAO author) {
+        this.feedback.setAuthor(author);
+    }
 }

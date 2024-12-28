@@ -4,17 +4,15 @@
  */
 package com.mycompany.projetoarquitetonico.models;
 
-import com.mycompany.projetoarquitetonico.DAO.ClientAccountDAO;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+
 
 /**
  *
  * @author tainope
  */
 public class Terrain {
-    private ClientAccountDAO owner;
+    private AccountDAO owner;
     private String name;
     private String area;
     private String location;
@@ -50,14 +48,14 @@ public class Terrain {
     /**
      * @return the owner
      */
-    public ClientAccountDAO getOwner() {
+    public AccountDAO getOwner() {
         return owner;
     }
 
     /**
      * @param owner the owner to set
      */
-    public void setOwner(ClientAccountDAO owner) {
+    public void setOwner(AccountDAO owner) {
         this.owner = owner;
     }
 

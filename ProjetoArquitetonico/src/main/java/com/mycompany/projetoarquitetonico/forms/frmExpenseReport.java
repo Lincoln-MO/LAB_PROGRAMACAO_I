@@ -10,7 +10,7 @@ import com.mycompany.projetoarquitetonico.Controllers.SpendReportController;
  *
  * @author yurit
  */
-public class frmSpendReport extends javax.swing.JDialog {
+public class frmExpenseReport extends javax.swing.JDialog {
 
     /**
      * Creates new form frmSpendDialog
@@ -18,7 +18,7 @@ public class frmSpendReport extends javax.swing.JDialog {
     
     private SpendReportController spendReportController;  // Declaração do controlador
     
-    public frmSpendReport(java.awt.Frame parent, boolean modal) {
+    public frmExpenseReport(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
@@ -157,8 +157,7 @@ public class frmSpendReport extends javax.swing.JDialog {
     }//GEN-LAST:event_comboTerrainActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        // TODO add your handling code here:
-        spendReportController.handleClose();  // Chama o método para fechar a janela
+        dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

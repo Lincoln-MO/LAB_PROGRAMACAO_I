@@ -4,55 +4,117 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
-import com.mycompany.projetoarquitetonico.DAO.EngineerAccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
 import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author lincoln
  */
 public class ProjectRegistrationController {
+    private String projectName = null;
+    private String startDate = null;
+    private AccountDAO responsible = null;
+    private TerrainDAO terrain = null;
+    private String expenseTableString = null;
     
     private frmProjectRegistration view;
 
     public ProjectRegistrationController(frmProjectRegistration view) {
         this.view = view;
-        
-        // Adicionando os listeners aos campos de entrada
-        this.view.getBtnRegister().addActionListener(e -> onRegisterButtonClicked());
     }
 
-    // Método que será chamado quando o botão de cadastro for pressionado
-    private void onRegisterButtonClicked() {
-        // Obter os valores dos campos
-        String projectName = view.getTxtProjectName().getText();
-        String startDate = view.getTxtStartDate().getText();
-        int responsible = Integer.parseInt(view.getResponsibleCPF());
-        int terrain = Integer.parseInt(view.getTerrainId());
-
-        ProjectDAO p = new ProjectDAO();
+    
+    public void submit(){
+        if ( responsible == null ){
+            System.out.println("Responsible ID not found");
+            return;
+        }
         
+        if ( !responsible.isEngineer() ){
+            System.out.println("Rsponsible is not engineer");
+            return;
+        }
+        
+        ProjectDAO p = new ProjectDAO();
         p.setName(projectName);
         p.setStartDate(startDate);
-        p.setResponsible(EngineerAccountDAO.findById(responsible)); ///////
-        p.setTerrain(TerrainDAO.findById(terrain));
-        
+        p.setResponsible(responsible);
+        p.setTerrain(terrain);  
+        p.setExpenseTableString(expenseTableString);
         ProjectDAO.save(p);
-        /*
-        // Validar os campos
-        if (projectName.isEmpty() || startDate.isEmpty() || responsible == null || terrain == null) {
-            JOptionPane.showMessageDialog(view, "Por favor, preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Aqui depois vamos adicionar a lógica para criar um novo projeto, 
-            // mas como ainda não tem a DAO ou a classe Project apenas exibimos uma mensagem de sucesso.
-            JOptionPane.showMessageDialog(view, "Projeto cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        }
-        */
-        
-        
     }
     
+
+    /**
+     * @return the projectName
+     */
+    public String getProjectName() {
+        return projectName;
+    }
+
+    /**
+     * @param projectName the projectName to set
+     */
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    /**
+     * @return the startDate
+     */
+    public String getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * @param startDate the startDate to set
+     */
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * @return the responsible
+     */
+    public AccountDAO getResponsible() {
+        return responsible;
+    }
+
+    /**
+     * @param responsible the responsible to set
+     */
+    public void setResponsible(AccountDAO responsible) {
+        this.responsible = responsible;
+    }
+
+    /**
+     * @return the terrain
+     */
+    public TerrainDAO getTerrain() {
+        return terrain;
+    }
+
+    /**
+     * @param terrain the terrain to set
+     */
+    public void setTerrain(TerrainDAO terrain) {
+        this.terrain = terrain;
+    }
+
+    /**
+     * @return the expenseTable
+     */
+    public String getExpenseTableString() {
+        return expenseTableString;
+    }
+
+    /**
+     * @param expenseTable the expenseTable to set
+     */
+    public void setExpenseTableString(String tableString) {
+        this.expenseTableString = tableString;
+    }
 }

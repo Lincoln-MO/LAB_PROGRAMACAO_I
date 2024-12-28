@@ -5,34 +5,31 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.ProjectRegistrationController;
-import javax.swing.JTextField;
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
  * @author yurit e lincoln
  */
 public class frmProjectRegistration extends javax.swing.JDialog {
-
-    /**
-     * Creates new form frmProjectRegistration
-     */
+    private ProjectRegistrationController controller; 
+    private AccountDAO responsible = null;
+    private TerrainDAO terrain = null;
+    private DefaultTableModel tableModel;
+    
+    
     public frmProjectRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        new ProjectRegistrationController(this);
-    }
-    
-    public javax.swing.JButton getBtnRegister() {
-    return btnRegister;
-    }
-
-    public javax.swing.JTextField getTxtProjectName() {
-        return txtProjectName;
+        controller = new ProjectRegistrationController(this);
+        tableModel = (DefaultTableModel) tblExpenses.getModel();
+        
+        clearTable();
     }
 
-    public javax.swing.JFormattedTextField getTxtStartDate() {
-        return txtStartDate;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,8 +47,15 @@ public class frmProjectRegistration extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnRegister = new javax.swing.JButton();
-        txtResponsibleCPF = new javax.swing.JTextField();
-        txtTerrainID = new javax.swing.JTextField();
+        txtResponsible = new javax.swing.JTextField();
+        txtTerrain = new javax.swing.JTextField();
+        btnResponsibleFind = new javax.swing.JButton();
+        btnTerrainFind = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblExpenses = new javax.swing.JTable();
+        btnAddRow = new javax.swing.JButton();
+        btnRemoveRow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -72,7 +76,7 @@ public class frmProjectRegistration extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Responsável");
+        jLabel3.setText("Responsável (CPF)");
 
         jLabel4.setText("Terreno");
 
@@ -83,6 +87,61 @@ public class frmProjectRegistration extends javax.swing.JDialog {
             }
         });
 
+        txtResponsible.setEditable(false);
+
+        txtTerrain.setEditable(false);
+
+        btnResponsibleFind.setText("Procurar");
+        btnResponsibleFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResponsibleFindActionPerformed(evt);
+            }
+        });
+
+        btnTerrainFind.setText("Procurar");
+        btnTerrainFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerrainFindActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Gastos");
+
+        tblExpenses.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Quantidade", "Preço", "Descrição"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblExpenses);
+
+        btnAddRow.setText("[+] Adicionar linha");
+        btnAddRow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRowActionPerformed(evt);
+            }
+        });
+
+        btnRemoveRow.setText("[-] Remover linhas selecionadas");
+        btnRemoveRow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveRowActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,20 +149,33 @@ public class frmProjectRegistration extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtProjectName)
-                    .addComponent(txtStartDate)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 297, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnRegister))
-                    .addComponent(txtResponsibleCPF)
-                    .addComponent(txtTerrainID))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRegister, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnRemoveRow)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAddRow))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtProjectName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtStartDate, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTerrain, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                            .addComponent(txtResponsible))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnResponsibleFind)
+                            .addComponent(btnTerrainFind))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,12 +192,24 @@ public class frmProjectRegistration extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtResponsibleCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtResponsible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnResponsibleFind))
+                .addGap(11, 11, 11)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTerrainID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTerrainFind))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddRow)
+                    .addComponent(btnRemoveRow))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addComponent(btnRegister)
                 .addContainerGap())
         );
@@ -133,35 +217,106 @@ public class frmProjectRegistration extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void clearTable(){
+        while( tblExpenses.getRowCount() > 0 ){
+            tableModel.removeRow(0);
+        }
+    }
+    
+    
+    public void addTableRow(String name, float quantity, float price, String description){
+        tableModel.addRow(new Object[]{name, quantity, price, description});
+    }
+
+    
+    public void addTableRow(){
+        tableModel.addRow(new Object[]{});
+    }
+    
+    
     private void txtProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtProjectNameActionPerformed
 
+    
     private void txtStartDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStartDateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStartDateActionPerformed
 
+    
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        // TODO add your handling code here:
+        controller.setProjectName( txtProjectName.getText());
+        controller.setStartDate( txtStartDate.getText() );
+        controller.setResponsible( this.responsible );
+        controller.setTerrain( this.terrain );
+        controller.setExpenseTableString( getTableString() );
+        controller.submit();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
-    public String getResponsibleCPF(){
-        return this.txtResponsibleCPF.getText();
+    
+    private void btnResponsibleFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResponsibleFindActionPerformed
+        this.responsible = frmAccountFind.getAccount("engineer");
+        txtResponsible.setText(responsible.getCpf());
+        controller.setResponsible(responsible);
+    }//GEN-LAST:event_btnResponsibleFindActionPerformed
+
+    
+    private void btnTerrainFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerrainFindActionPerformed
+        this.terrain = frmTerrainFind.getTerrain();
+        txtTerrain.setText(terrain.getName());
+    }//GEN-LAST:event_btnTerrainFindActionPerformed
+
+    
+    public String getTableString(){
+        int width = tableModel.getColumnCount();
+        int height = tableModel.getRowCount();
+        String tableString = "";
+        
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                tableString += tableModel.getValueAt(h, w);
+                if( h < height){
+                    tableString += "\t";
+                }
+            }
+            tableString += "\n";
+        }
+        
+        System.out.println(tableString);
+        return tableString;
     }
     
-    public String getTerrainId(){
-        return this.txtTerrainID.getText();
-    }
+    
+    private void btnAddRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRowActionPerformed
+        addTableRow();
+    }//GEN-LAST:event_btnAddRowActionPerformed
+
+    
+    private void btnRemoveRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveRowActionPerformed
+        int selectedRowCount = tblExpenses.getSelectedRowCount();
+        for(int i = 0; i < selectedRowCount; i++){
+            tableModel.removeRow( tblExpenses.getSelectedRow() );
+        }
+    }//GEN-LAST:event_btnRemoveRowActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddRow;
     private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnRemoveRow;
+    private javax.swing.JButton btnResponsibleFind;
+    private javax.swing.JButton btnTerrainFind;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblExpenses;
     private javax.swing.JTextField txtProjectName;
-    private javax.swing.JTextField txtResponsibleCPF;
+    private javax.swing.JTextField txtResponsible;
     private javax.swing.JFormattedTextField txtStartDate;
-    private javax.swing.JTextField txtTerrainID;
+    private javax.swing.JTextField txtTerrain;
     // End of variables declaration//GEN-END:variables
 }

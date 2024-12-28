@@ -13,37 +13,44 @@ import com.mycompany.projetoarquitetonico.Controllers.EngineerController;
 
 
 public class frmEngineer extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmEngineer
-     */
+    private final EngineerController controller;
+    
+    
     public frmEngineer(java.awt.Frame parent, boolean modal) {
         initComponents();
-        
+        controller = new EngineerController(this);
     }
+    
+    
     public javax.swing.JButton getBtnRegisterProject() {
         return btnRegisterProject;
     }
+    
 
     public javax.swing.JButton getBtnRegisterClient() {
         return btnRegisterClient;
     }
 
+    
     public javax.swing.JButton getBtnRegisterTerrain() {
         return btnRegisterTerrain;
     }
-
+    
+    
     public javax.swing.JButton getBtn3DView() {
         return btn3DView;
     }
 
+    
     public javax.swing.JButton getBtnProjectHistory() {
         return btnProjectHistory;
     }
 
+    
     public javax.swing.JButton getBtnLogout() {
         return btnLogout;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,38 +159,34 @@ public class frmEngineer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnProjectHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProjectHistoryActionPerformed
-        frmProjectHistory form = new frmProjectHistory(this, true);
-        form.setVisible(true);
-        this.dispose();
+        controller.openProjectHistoryForm();
     }//GEN-LAST:event_btnProjectHistoryActionPerformed
 
+    
     private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
-        frmProject3DView form = new frmProject3DView(this, true);
-        form.setVisible(true);
-        this.dispose();
+        controller.open3DViewForm();
     }//GEN-LAST:event_btn3DViewActionPerformed
 
+    
     private void btnRegisterTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterTerrainActionPerformed
-        frmTerrainRegistration form = new frmTerrainRegistration(this, true);
-        form.setVisible(true);
-        this.dispose();
+        controller.openTerrainRegistrationForm();
     }//GEN-LAST:event_btnRegisterTerrainActionPerformed
 
+    
     private void btnRegisterClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterClientActionPerformed
-        frmClientRegistration form = new frmClientRegistration(this, true);
-        form.setVisible(true);
-        this.dispose();
+        controller.openClientRegistrationForm();
     }//GEN-LAST:event_btnRegisterClientActionPerformed
 
+    
     private void btnRegisterProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterProjectActionPerformed
-        frmProjectRegistration form = new frmProjectRegistration(this, true);
-        form.setVisible(true);
-        this.dispose();
+        controller.openProjectRegistrationForm();
     }//GEN-LAST:event_btnRegisterProjectActionPerformed
 
+    
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
+        controller.logout();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
 

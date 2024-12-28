@@ -9,68 +9,55 @@ import com.mycompany.projetoarquitetonico.models.*;
 import javax.swing.JOptionPane;
 
 public class LoginController {
-    private final frmLogin mainView;
-    private String selectedAccountType = null; // Armazena o tipo de conta selecionado
-    private AccountDAO accountDao = new AccountDAO();
+    private static frmLogin view;
+    private static String selectedAccountType = null; // Armazena o tipo de conta selecionado
+    private static AccountDAO account;
     
 
     public LoginController(frmLogin mainView) {
-        this.mainView = mainView;
-        initializeActions();
+        view = mainView;
     }
 
-    // Inicializa os listeners da interface principal
-    private void initializeActions() {
-        //??????????????
-        //mainView.getBtnSubmit().addActionListener(e -> handleSubmit());
-    }
-
+    
     // Método para processar o botão "Entrar"
-    public void handleSubmit(String cpf, String password, String accountType) {
+    public static void submit(String cpf, String password, String accountType) {
         System.out.println("Login attempt");
-        this.selectedAccountType = accountType;
+        selectedAccountType = accountType;
         
-        JOptionPane.showMessageDialog(mainView, "Login: " + cpf + "\nPassword: " + password);
-        accountDao.find(cpf, password, "admin");
+        account = AccountDAO.find(cpf, password);
         
-        if(accountType.equals("admin")){
-            AdminAccount acc = AdminAccountDAO.find(cpf, password);
-            if(acc != null){
+        if(getAccount() == null){
                 System.out.println("not found");
-            }else{
-                System.out.println("found");
-                redirectUser("admin", cpf);
+                return;
+        }
+        
+        switch (accountType) {
+            case "client" -> {
+                if ( getAccount().isAdmin() ){
+                    redirectUser("client", cpf);
+                }
+            }
+            case "engineer" -> {
+                if ( getAccount().isEngineer() ){
+                    redirectUser("engineer", cpf);
+                }
+            }
+            case "admin" -> {
+                if ( getAccount().isAdmin() ){
+                    redirectUser("admin", cpf);
+                }
             }
         }
-        else if (accountType.equals("engineer")){
-            EngineerAccount acc = EngineerAccountDAO.find(cpf, password);
-            if(acc == null){
-                System.out.println("not found");
-            }else{
-                System.out.println("found");
-                redirectUser("engineer", cpf);
-            }
-        }else if (accountType.equals("client")){
-            ClientAccount acc = ClientAccountDAO.find(cpf, password);
-            if(acc == null){
-                System.out.println("not found");
-            }else{
-                System.out.println("found");
-                redirectUser("client", cpf);
-            }
-        }
-            
-        
 
         // No account type selected
         if (selectedAccountType == null) {
-            JOptionPane.showMessageDialog(mainView, "Selecione um tipo de conta.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view, "Selecione um tipo de conta.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Has empty fields
         if (cpf.isEmpty() || cpf.isEmpty()) {
-            JOptionPane.showMessageDialog(mainView, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view, "Preencha todos os campos.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -116,13 +103,15 @@ public class LoginController {
     }
     */
 
+    
     // Valida o formato do CPF
-    private boolean isCPFValid(String cpf) {
+    private static boolean isCPFValid(String cpf) {
         return cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
     }
 
+    
     // Simula a validação no banco de dados (substitua pela lógica real)
-    private boolean validateLogin(String cpf, String password, String accountType) {
+    private static boolean validateLogin(String cpf, String password, String accountType) {
         String redirect = null;
         System.out.println("login validation");
         
@@ -132,44 +121,47 @@ public class LoginController {
             case "engineer":
                 break;
             case "admin":
-                AdminAccount result = AdminAccountDAO.find(cpf, password);
-                if( result != null ){
-                    redirectUser("admin", cpf);
-                    return true;
-                }
-                System.out.println("login not found");
-                //break;
+                break;
         }
         return false;
     }
+    
 
     // Redireciona o usuário com base no tipo de conta
-    private void redirectUser(String tipoConta, String cpf) {
+    private static void redirectUser(String tipoConta, String cpf) {
         switch (tipoConta) {
             case "client":
                 frmClient clientView = new frmClient();
                 clientView.setVisible(true);
                 clientView.getTxtLoginName().setText("Logado como: " + cpf);
-                mainView.dispose();  // Fecha a janela principal de login
+                view.dispose();  // Fecha a janela principal de login
                 break;
 
             case "engineer":
                 //JOptionPane.showMessageDialog(mainView, "Redirecionando para a interface de Engenheiro.");
                 frmEngineer engineerView = new frmEngineer(null, false);
                 engineerView.setVisible(true);
-                mainView.dispose();  // Fecha a janela principal de login
+                view.dispose();  // Fecha a janela principal de login
                 break;
 
             case "admin":
                 //JOptionPane.showMessageDialog(mainView, "Redirecionando para a interface de Administrador.");
                 frmAdmin adminView = new frmAdmin();
                 adminView.setVisible(true);
-                mainView.dispose();  // Fecha a janela principal de login
+                view.dispose();  // Fecha a janela principal de login
                 break;
 
             default:
-                JOptionPane.showMessageDialog(mainView, "Tipo de conta desconhecido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view, "Tipo de conta desconhecido.", "Erro", JOptionPane.ERROR_MESSAGE);
                 break;
         }
+    }
+    
+
+    /**
+     * @return the account
+     */
+    public static AccountDAO getAccount() {
+        return account;
     }
 }

@@ -4,6 +4,9 @@
  */
 package com.mycompany.projetoarquitetonico.Controllers;
 
+import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmTerrainRegistration;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,56 +17,101 @@ import java.awt.event.ActionListener;
  */
 public class TerrainRegistrationController {
     private frmTerrainRegistration view;
-
+    private String terrainName = null;
+    private AccountDAO terrainOwner = null;
+    private String terrainArea = null;
+    private String terrainLocation = null;
+        
+    
     public TerrainRegistrationController(frmTerrainRegistration view) {
         this.view = view;
-        addListeners();
     }
 
-    private void addListeners() {
-        view.getBtnRegister().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registerTerrain();
-            }
-        });
+
+    public void submit() {
+        TerrainDAO t = new TerrainDAO();
         
-        view.getBtnClose().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                closeForm();
-            }
-        });
+        t.setName( terrainName );
+        t.setOwner( terrainOwner );
+        t.setArea( terrainArea );
+        t.setLocation( terrainLocation );
+        
+        TerrainDAO.save(t);
     }
 
-    private void registerTerrain() {
-        // Lógica para cadastrar o terreno
-        String terrainName = view.getTxtTerrainName().getText();
-        String ownerCPF = view.getTxtOwnerCPF().getText();
-        String terrainArea = view.getTxtTerrainArea().getText();
-        String terrainLocation = view.getTxtTerrainLocation().getText();
-        
-        // Aqui depois vamos adicionar validações e persistência de dados, 
-        // como verificar se os campos não estão vazios e se o CPF é válido.
-        
-        
-        /*
-        if (terrainName.isEmpty() || ownerCPF.isEmpty() || terrainArea.isEmpty() || terrainLocation.isEmpty()) {
-            // Exibe uma mensagem de erro se algum campo estiver vazio
-            System.out.println("Por favor, preencha todos os campos.");
-        } else {
-            // Aqui vamos fazer a persistência (salvar no banco de dados, por exemplo).
-            // Por enquanto, apenas exibimos uma mensagem de sucesso.
-            System.out.println("Terreno cadastrado com sucesso!");
-            // Fechar a janela após o cadastro
-            view.dispose();
-        }
-
-*/
+    
+    public void searchOwner(){
+        this.terrainOwner = frmAccountFind.getAccount("client");
+        view.setOwnerName( terrainOwner.getName() );
     }
-
+    
+    
     private void closeForm() {
         // Fechar o formulário sem realizar nenhuma ação
         view.dispose();
+    }
+
+    
+    /**
+     * @return the terrainName
+     */
+    public String getTerrainName() {
+        return terrainName;
+    }
+    
+
+    /**
+     * @param terrainName the terrainName to set
+     */
+    public void setTerrainName(String terrainName) {
+        this.terrainName = terrainName;
+    }
+
+    
+    /**
+     * @return the owner
+     */
+    public AccountDAO getTerrainOwner() {
+        return terrainOwner;
+    }
+
+    
+    /**
+     * @param owner the owner to set
+     */
+    public void setTerrainOwner(AccountDAO owner) {
+        this.terrainOwner = owner;
+    }
+    
+
+    /**
+     * @return the terrainArea
+     */
+    public String getTerrainArea() {
+        return terrainArea;
+    }
+
+    
+    /**
+     * @param terrainArea the terrainArea to set
+     */
+    public void setTerrainArea(String terrainArea) {
+        this.terrainArea = terrainArea;
+    }
+
+    
+    /**
+     * @return the terrainLocation
+     */
+    public String getTerrainLocation() {
+        return terrainLocation;
+    }
+
+    
+    /**
+     * @param terrainLocation the terrainLocation to set
+     */
+    public void setTerrainLocation(String terrainLocation) {
+        this.terrainLocation = terrainLocation;
     }
 }

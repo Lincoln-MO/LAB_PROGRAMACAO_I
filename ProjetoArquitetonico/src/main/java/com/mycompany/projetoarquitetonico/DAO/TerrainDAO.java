@@ -4,8 +4,9 @@
  */
 package com.mycompany.projetoarquitetonico.DAO;
 
-import com.mycompany.projetoarquitetonico.models.ClientAccount;
+
 import com.mycompany.projetoarquitetonico.models.Terrain;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -19,7 +20,7 @@ public class TerrainDAO extends GenericDAO{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private ClientAccountDAO owner;
+    private AccountDAO owner;
     private String name;
     private String area;
     private String location;
@@ -44,13 +45,37 @@ public class TerrainDAO extends GenericDAO{
         Connection.beginTransaction();
         
         // makes the terrain.owner persistent 
-        terrain.owner = Connection.getEntityManager().find(ClientAccountDAO.class, terrain.owner.getID());
+        terrain.owner = Connection.getEntityManager().find(AccountDAO.class, terrain.owner.getID());
         
         Connection.persist(terrain);
         Connection.commitTransaction();
         Connection.closeConnection();
         System.out.println("Persist");
     }
+    
+    
+    public static List<TerrainDAO> search(String search){
+        String sql = "SELECT terrain FROM terrain terrain WHERE "+
+                "(name LIKE :name or location LIKE :location)";
+
+        Query query = Connection.getEntityManager().createQuery(sql);
+        query.setParameter("name", (search + "%"));   // "%" for the LIKE operator
+        query.setParameter("location", (search + "%"));
+        
+        return query.getResultList();
+    }
+    
+    
+    public static List<TerrainDAO> FindByOwner(AccountDAO owner){
+        String sql = "SELECT terrain FROM terrain terrain WHERE "+
+                "(owner_id = id)";
+
+        Query query = Connection.getEntityManager().createQuery(sql);
+        query.setParameter("id", owner.getID());
+        
+        return query.getResultList();
+    }
+    
 
     @Override
     public Object load(Object obj) {
@@ -87,14 +112,14 @@ public class TerrainDAO extends GenericDAO{
     /**
      * @return the owner
      */
-    public ClientAccountDAO getOwner() {
+    public AccountDAO getOwner() {
         return owner;
     }
 
     /**
      * @param owner the owner to set
      */
-    public void setOwner(ClientAccountDAO owner) {
+    public void setOwner(AccountDAO owner) {
         this.owner = owner;
     }
 
@@ -138,5 +163,9 @@ public class TerrainDAO extends GenericDAO{
      */
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    int getID() {
+        return this.id;
     }
 }
