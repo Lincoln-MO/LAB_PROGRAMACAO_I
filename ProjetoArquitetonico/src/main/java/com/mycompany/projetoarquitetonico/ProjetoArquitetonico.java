@@ -19,13 +19,23 @@ public class ProjetoArquitetonico {
     public static void main(String[] args) {
         Connection.openConnection();
         
+        LoginController.startNewSession();
+        
         // main form
         
+        /*
         frmLogin mainView = new frmLogin();
         LoginController loginController = new LoginController(mainView);  // Conecta a view ao controlador
         mainView.setVisible(true);
+        */
         
+        /*
+        // 3D view
+        frmProject3DView frm = new frmProject3DView(null, false); 
+        frm.setVisible(true);
+        /*
         
+        */
         /*
         //terrain reg. test
         frmTerrainRegistration frm = new frmTerrainRegistration(null, false); 

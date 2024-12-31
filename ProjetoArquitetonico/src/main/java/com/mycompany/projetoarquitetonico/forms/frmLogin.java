@@ -1,61 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
-/**
- *
- * @author yurit e lincoln
- */
 
 import com.mycompany.projetoarquitetonico.Controllers.LoginController;
-import java.util.Arrays;
+import com.mycompany.projetoarquitetonico.utils.BlinkText;
+
 
 public class frmLogin extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmLogin
-     */
-    //private final LoginController loginController;
-    
-    // stuff used in login
-    private String selectedAccountType = null;
-    private String cpf = null;
-    private String password = null;
-    
+    /*
+    This form has no "controller" attribute, the LoginController uses 
+    static methods only.
+    */
     
     
     public frmLogin() {
         initComponents();
-        //loginController = new LoginController(this);
-        //LoginController.init();
-    }
-    public javax.swing.JTextField getTxtLogin() {
-        return txtLogin;
+        lblErrorMessage.setVisible(false);
     }
 
-    public javax.swing.JPasswordField getTxtPassword() {
-        return txtPassword;
-    }
-
-    public javax.swing.JButton getBtnSubmit() {
-        return btnSubmit;
-    }
-
-    public javax.swing.JRadioButton getRadioClient() {
-        return radioClient;
-    }
-
-    public javax.swing.JRadioButton getRadioEngineer() {
-        return radioEngineer;
-    }
-
-    public javax.swing.JRadioButton getRadioAdmin() {
-        return radioAdmin;
-    }  
     
-
+    public void showError(String message, String errorType){
+        lblErrorMessage.setText(message);
+        lblErrorMessage.setVisible(true);
+        BlinkText.blinkLabelRed(lblErrorMessage, 3);
+        
+        switch( errorType ){
+            case "cpf" -> BlinkText.blinkTextFieldRed(txtLogin, 3);
+            case "password" -> BlinkText.blinkTextFieldRed(txtPassword, 3);
+            case "" -> {}
+            default -> System.out.println("Unknown error type: " + errorType);
+        }
+    }
+    
+    
+    public String getLoginText(){
+        return txtLogin.getText();
+    }
+    
+    
+    public String getPasswordText(){
+        return txtPassword.getText();
+    }
+    
+    
+    public String getSelectedAccountType(){
+        if( radioClient.isSelected() ) return "client";
+        if( radioEngineer.isSelected() ) return "engineer";
+        if( radioAdmin.isSelected() ) return "admin";
+        return null;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,6 +67,7 @@ public class frmLogin extends javax.swing.JFrame {
         radioEngineer = new javax.swing.JRadioButton();
         radioAdmin = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
+        lblErrorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -124,6 +117,10 @@ public class frmLogin extends javax.swing.JFrame {
 
         jLabel3.setText("Tipo de conta");
 
+        lblErrorMessage.setForeground(new java.awt.Color(255, 255, 255));
+        lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblErrorMessage.setText("ERROR_MESSAGE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,6 +128,9 @@ public class frmLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSubmit)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
@@ -143,11 +143,9 @@ public class frmLogin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(radioAdmin))
                             .addComponent(txtLogin)
-                            .addComponent(txtPassword))
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSubmit)
-                        .addContainerGap())))
+                            .addComponent(txtPassword)
+                            .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +165,9 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -177,27 +177,22 @@ public class frmLogin extends javax.swing.JFrame {
 
     
     private void radioClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioClientActionPerformed
-        this.selectedAccountType = "client";
     }//GEN-LAST:event_radioClientActionPerformed
 
     
     private void radioEngineerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioEngineerActionPerformed
-        this.selectedAccountType = "engineer";
     }//GEN-LAST:event_radioEngineerActionPerformed
 
     
     private void radioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdminActionPerformed
-        this.selectedAccountType = "admin";
-        System.out.println("acc adm");
     }//GEN-LAST:event_radioAdminActionPerformed
 
     
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        this.cpf = txtLogin.getText();
-        this.password = txtPassword.getText();
-        LoginController.submit(this.cpf, this.password, this.selectedAccountType);
+        LoginController.handleSubmit();
     }//GEN-LAST:event_btnSubmitActionPerformed
 
+    
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
@@ -209,6 +204,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JRadioButton radioAdmin;
     private javax.swing.JRadioButton radioClient;
     private javax.swing.JRadioButton radioEngineer;

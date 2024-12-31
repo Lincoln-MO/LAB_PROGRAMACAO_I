@@ -37,7 +37,7 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="txtLoginName" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblLoginName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -62,7 +62,7 @@
               <EmptySpace pref="129" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnLogout" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtLoginName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLoginName" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -104,7 +104,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnProjectHistory">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Hist&#xf3;rico de projetos"/>
+        <Property name="text" type="java.lang.String" value="Projetos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProjectHistoryActionPerformed"/>
@@ -118,7 +118,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="txtLoginName">
+    <Component class="javax.swing.JLabel" name="lblLoginName">
       <Properties>
         <Property name="text" type="java.lang.String" value="Logado como: XXX.XXX.XXX-XX"/>
       </Properties>

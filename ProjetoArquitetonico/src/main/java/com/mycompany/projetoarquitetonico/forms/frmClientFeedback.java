@@ -1,45 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
+
 import com.mycompany.projetoarquitetonico.Controllers.FeedbackController;
-import com.mycompany.projetoarquitetonico.Controllers.LoginController;
+
 
 /**
  *
  * @author yurit e lincoln
  */
-
 public class frmClientFeedback extends javax.swing.JDialog {
-    private FeedbackController controller;
+    private final FeedbackController controller;
     
     
     public frmClientFeedback(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        // Inicializa o controlador, passando o próprio formulário (this)
         controller = new FeedbackController(this);
     }
     
     
-    public javax.swing.JTextArea getTextAreaFeedback() {
-        return txtMessage;
-    }
-    
-    
-    public javax.swing.JButton getBtnSubmit() {
-        return btnSubmit;
+    public String getMessageText(){
+        return txtMessage.getText();
     }
 
     
-    public javax.swing.JButton getBtnCancel() {
-        return btnCancel;
-    }
     
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,16 +100,14 @@ public class frmClientFeedback extends javax.swing.JDialog {
 
     
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-         controller.cancel(); 
+         controller.handleCancel(); 
     }//GEN-LAST:event_btnCancelActionPerformed
 
     
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        controller.setMessage( txtMessage.getText() );
-        controller.setAuthor(LoginController.getAccount());
-        controller.submit();
+        controller.handleSubmit();
     }//GEN-LAST:event_btnSubmitActionPerformed
- 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

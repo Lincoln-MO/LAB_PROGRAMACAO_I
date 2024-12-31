@@ -21,6 +21,13 @@ import javax.persistence.Query;
  */
 @Entity(name = "project")
 public class ProjectDAO extends GenericDAO{
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -39,11 +46,58 @@ public class ProjectDAO extends GenericDAO{
         
         // makes the project.terrain persistent 
         proj.setTerrain(Connection.getEntityManager().find(TerrainDAO.class, proj.getTerrain().getId()));
+        proj.setResponsible(Connection.getEntityManager().find(AccountDAO.class, proj.getResponsible().getId()));
         
         Connection.persist(proj);
         Connection.commitTransaction();
         Connection.closeConnection();
         System.out.println("Persist");
+    }
+    
+    
+    public static void update(ProjectDAO proj){
+        /*
+        String sql = "UPDATE project SET "+
+            "name = :name, " +
+            "startDate = :startDate, " +
+            "responsible_id = :responsibleId, " +
+            "terrain_id = :terrainId, " +
+            "expenseTableString = :tableString " +
+            "WHERE id = :id";
+
+        Query query = Connection.getEntityManager().createQuery(sql);
+        query.setParameter("name", proj.getName());
+        query.setParameter("startDate", proj.getStartDate());
+        query.setParameter("responsibleId", proj.getResponsible().getID());
+        query.setParameter("terrainId", proj.getTerrain().getID());
+        query.setParameter("tableString", proj.getExpenseTableString());
+        query.setParameter("id", proj.getId());
+        
+        query.executeUpdate();
+        */
+        
+        Connection.openConnection();
+        Connection.beginTransaction();
+        
+        // makes the project.terrain persistent 
+        proj.setTerrain(Connection.getEntityManager().find(TerrainDAO.class, proj.getTerrain().getId()));
+        proj.setResponsible(Connection.getEntityManager().find(AccountDAO.class, proj.getResponsible().getId()));
+        
+        Connection.merge(proj);
+        Connection.commitTransaction();
+        Connection.closeConnection();
+        System.out.println("Persist");
+    }
+    
+    
+    public static ProjectDAO findById(int id){
+        String sql = "SELECT project FROM project project WHERE "+
+            "(id = :id)";
+
+        Query query = Connection.getEntityManager().createQuery(sql);
+        query.setParameter("id", id);
+        
+        return (ProjectDAO) query.getSingleResult();
     }
     
     

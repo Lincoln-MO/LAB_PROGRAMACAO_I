@@ -21,13 +21,16 @@ public class Connection {
         createManager();
     }
     
+    
     private static void createManager(){
         manager = factory.createEntityManager();
     }
     
+    
     public static void closeConnection(){
         factory.close();
     }
+    
     
     public static void beginTransaction(){
         System.out.println("begin");
@@ -35,10 +38,18 @@ public class Connection {
         manager.getTransaction().begin();
     }
     
+    
     public static void persist(Object obj){
         System.out.println("persist");
         manager.persist(obj);
     }
+    
+    
+    public static void merge(Object obj){
+        System.out.println("merge");
+        manager.merge(obj);
+    }
+    
     
     public static void commitTransaction(){
         System.out.println("commit");

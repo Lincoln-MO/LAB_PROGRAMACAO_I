@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
+
 import com.mycompany.projetoarquitetonico.Controllers.ProjectRegistrationController;
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.utils.BlinkText;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -14,23 +10,139 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author yurit e lincoln
  */
-public class frmProjectRegistration extends javax.swing.JDialog {
-    private ProjectRegistrationController controller; 
-    private AccountDAO responsible = null;
-    private TerrainDAO terrain = null;
-    private DefaultTableModel tableModel;
+public final class frmProjectRegistration extends javax.swing.JDialog {
+    private final ProjectRegistrationController controller; 
+    private final DefaultTableModel tableModel;
     
     
     public frmProjectRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         controller = new ProjectRegistrationController(this);
         tableModel = (DefaultTableModel) tblExpenses.getModel();
         
+        lblErrorMessage.setVisible( false );
         clearTable();
+        setRegisterMode();
     }
 
+    
+    public void showError(String message, String errorType){
+        lblErrorMessage.setText(message);
+        lblErrorMessage.setVisible(true);
+        BlinkText.blinkLabelRed(lblErrorMessage, 3);
+        
+        switch( errorType ){
+            case "name" -> BlinkText.blinkTextFieldRed(txtProjectName, 3);
+            case "startDate" -> BlinkText.blinkTextFieldRed(txtStartDate, 3);
+            case "responsible" -> BlinkText.blinkTextFieldRed(txtResponsible, 3);
+            case "terrain" -> BlinkText.blinkTextFieldRed(txtTerrain, 3);
+            case "" -> {}
+            default -> System.out.println("Unknown error type: " + errorType);
+        }
+    }
+    
 
+    public void setEditMode(){
+        btnRegister.setText("Salvar alterações");
+        //editMode = true;
+    }
+    
+    
+    public void setRegisterMode(){
+        btnRegister.setText("Cadastrar");
+        //editMode = false;
+    }
+    
+    
+    public ProjectRegistrationController getController(){
+        return this.controller;
+    }
+    
+    
+    public void setProjectName(String name){
+        txtProjectName.setText(name);
+    }
+    
+    
+    public void setStartDate(String startDate){
+        txtStartDate.setText(startDate);
+    }
+    
+    
+    public void setResponsibleCPF(String cpf){
+        txtResponsible.setText(cpf);
+    }
+    
+    
+    public void setTerrainName(String name){
+        txtTerrain.setText(name);
+    }
+    
+    
+    public void setExpenseTable(String tableString){
+        // add rows in the table
+        for( String row : tableString.split("\n") ){
+            String[] args = row.split("\t");
+            String name         = args[0];
+            float quantity      = Float.parseFloat(args[1]);
+            float price         = Float.parseFloat(args[2]);
+            String description  = args[3];
+            addTableRow(name, quantity, price, description);
+        }
+    }
+    
+    
+    public void clearTable(){
+        while( tblExpenses.getRowCount() > 0 ){
+            tableModel.removeRow(0);
+        }
+    }
+    
+    
+    public void addTableRow(String name, float quantity, float price, String description){
+        tableModel.addRow(new Object[]{name, quantity, price, description});
+    }
+
+    
+    public void addTableRow(){
+        tableModel.addRow(new Object[]{});
+    }
+    
+    
+    public String getNameText(){
+        return txtProjectName.getText();
+    }
+    
+    
+    public String getStartDateText(){
+        return txtStartDate.getText();
+    }
+    
+    
+    public String getTableString(){
+        int width = tableModel.getColumnCount();
+        int height = tableModel.getRowCount();
+        String tableString = "";
+        
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                tableString += tableModel.getValueAt(h, w);
+                if( h < height){
+                    tableString += "\t";
+                }
+            }
+            tableString += "\n";
+        }
+        
+        System.out.println(tableString);
+        return tableString;
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +168,7 @@ public class frmProjectRegistration extends javax.swing.JDialog {
         tblExpenses = new javax.swing.JTable();
         btnAddRow = new javax.swing.JButton();
         btnRemoveRow = new javax.swing.JButton();
+        lblErrorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,6 +255,10 @@ public class frmProjectRegistration extends javax.swing.JDialog {
             }
         });
 
+        lblErrorMessage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblErrorMessage.setText("ERROR_MESSAGE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,6 +266,7 @@ public class frmProjectRegistration extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +327,9 @@ public class frmProjectRegistration extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddRow)
                     .addComponent(btnRemoveRow))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(btnRegister)
                 .addContainerGap())
         );
@@ -217,23 +337,6 @@ public class frmProjectRegistration extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public void clearTable(){
-        while( tblExpenses.getRowCount() > 0 ){
-            tableModel.removeRow(0);
-        }
-    }
-    
-    
-    public void addTableRow(String name, float quantity, float price, String description){
-        tableModel.addRow(new Object[]{name, quantity, price, description});
-    }
-
-    
-    public void addTableRow(){
-        tableModel.addRow(new Object[]{});
-    }
-    
     
     private void txtProjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProjectNameActionPerformed
         // TODO add your handling code here:
@@ -246,47 +349,19 @@ public class frmProjectRegistration extends javax.swing.JDialog {
 
     
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        controller.setProjectName( txtProjectName.getText());
-        controller.setStartDate( txtStartDate.getText() );
-        controller.setResponsible( this.responsible );
-        controller.setTerrain( this.terrain );
-        controller.setExpenseTableString( getTableString() );
-        controller.submit();
+        controller.handleSubmit();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     
     private void btnResponsibleFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResponsibleFindActionPerformed
-        this.responsible = frmAccountFind.getAccount("engineer");
-        txtResponsible.setText(responsible.getCpf());
-        controller.setResponsible(responsible);
+        controller.handleResponsibleFind();
     }//GEN-LAST:event_btnResponsibleFindActionPerformed
 
     
     private void btnTerrainFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerrainFindActionPerformed
-        this.terrain = frmTerrainFind.getTerrain();
-        txtTerrain.setText(terrain.getName());
+        controller.handleTerrainFind();
     }//GEN-LAST:event_btnTerrainFindActionPerformed
-
-    
-    public String getTableString(){
-        int width = tableModel.getColumnCount();
-        int height = tableModel.getRowCount();
-        String tableString = "";
-        
-        for(int h = 0; h < height; h++){
-            for(int w = 0; w < width; w++){
-                tableString += tableModel.getValueAt(h, w);
-                if( h < height){
-                    tableString += "\t";
-                }
-            }
-            tableString += "\n";
-        }
-        
-        System.out.println(tableString);
-        return tableString;
-    }
-    
+   
     
     private void btnAddRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRowActionPerformed
         addTableRow();
@@ -313,6 +388,7 @@ public class frmProjectRegistration extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JTable tblExpenses;
     private javax.swing.JTextField txtProjectName;
     private javax.swing.JTextField txtResponsible;

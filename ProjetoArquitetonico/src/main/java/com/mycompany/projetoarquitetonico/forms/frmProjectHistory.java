@@ -1,36 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
+
 
 import com.mycompany.projetoarquitetonico.Controllers.ProjectHistoryController;
 import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
  * @author yurit
  */
-public class frmProjectHistory extends javax.swing.JDialog {
-    private ProjectHistoryController controller;
-    private DefaultTableModel tableModel;
-    private DefaultComboBoxModel comboProjectModel;
+public final class frmProjectHistory extends javax.swing.JDialog {
+    private final ProjectHistoryController controller;
+    private final DefaultTableModel tableModel;
+    private final DefaultComboBoxModel comboProjectModel;
     private List<ProjectDAO> projects = null;
     
     
     public frmProjectHistory(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        // Instanciando o controlador
+
         controller = new ProjectHistoryController(this);
         tableModel = (DefaultTableModel) tblExpenses.getModel();
         comboProjectModel = (DefaultComboBoxModel) comboProject.getModel();
-        projects = new ArrayList<ProjectDAO>();
+        projects = new ArrayList<>();
         
         clearTable();
         clearProjectList();
@@ -38,43 +35,33 @@ public class frmProjectHistory extends javax.swing.JDialog {
     
     
     public ProjectHistoryController getController(){
-        return this.controller;
+       return this.controller;
     }
     
     
-    // Métodos getter para os componentes da view, caso necessário
-    public javax.swing.JTextField getTxtClientCPF() {
-        return txtClientName;
+    public void setEngineerMode(){
+        btnEdit.setVisible(true);
     }
     
-
-    public javax.swing.JComboBox<String> getComboProject() {
-        return comboProject;
+    
+    public void setClientMode(){
+        btnEdit.setVisible(false);
     }
-
-
-    public javax.swing.JButton getBtnClose() {
-        return btnClose;
+    
+    
+    public void setClientName(String name){
+        txtClientName.setText( name );
     }
     
     
     public ProjectDAO getSelectedProject(){
         int id = comboProject.getSelectedIndex();
         
-        if( id < 0 ) return null;
+        if( id < 0 ) return null;   // if nothing is selected
         
         return projects.get( id );
     }
     
-    
-    public void setClientMode(){
-        btnSearch.setVisible( false );
-    }
-
-    
-    public void setEngineerMode(){
-        btnSearch.setVisible( true );
-    }
     
     
     public void clearTable(){
@@ -107,11 +94,13 @@ public class frmProjectHistory extends javax.swing.JDialog {
         it from other projects with the same name, because the
         "JComboBox.getSelectedIndex()" method in this shit ass platform doesn't 
         recognise two different items with the same name for some 
-        fucking reason, and it awlays returns ID of the first item with matching
+        fucking reason, and it awlays returns the ID of the first item with matching
         name.
         */
         comboProjectModel.addElement(comboProject.getItemCount()+1 + " - " + project.getName());
     }
+    
+    
     
     
     /**
@@ -134,6 +123,7 @@ public class frmProjectHistory extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblExpenses = new javax.swing.JTable();
+        btnEdit = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -201,6 +191,13 @@ public class frmProjectHistory extends javax.swing.JDialog {
         tblExpenses.setEnabled(false);
         jScrollPane1.setViewportView(tblExpenses);
 
+        btnEdit.setText("Editar");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,7 +208,10 @@ public class frmProjectHistory extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnClose)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEdit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnClose))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(comboProject, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +242,9 @@ public class frmProjectHistory extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnClose)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClose)
+                    .addComponent(btnEdit))
                 .addContainerGap())
         );
 
@@ -255,20 +257,23 @@ public class frmProjectHistory extends javax.swing.JDialog {
 
     
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        controller.findAccount();
+        controller.handleFindAccount();
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     
-    public void setClientName(String name){
-        txtClientName.setText( name );
-    }
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        controller.handleEditSelectedProject();
+    }//GEN-LAST:event_btnEditActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> comboProject;
     private javax.swing.JLabel jLabel1;

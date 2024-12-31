@@ -1,59 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
+
 import com.mycompany.projetoarquitetonico.Controllers.AdminController;
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.utils.BlinkText;
+
 
 /**
  *
  * @author yurit
  */
 public class frmAdmin extends javax.swing.JFrame {
-    private AdminController controller;
-    private AccountDAO selectedAccout = null;
+    private final AdminController controller;
     
-    
-    /**
-     * Creates new form frm
-     */
+
     public frmAdmin() {
         initComponents();
         this.controller = new AdminController(this);
+        lblErrorMessage.setVisible(false);
+    }
+    
+    
+    public void showError(String message, String errorType){
+        lblErrorMessage.setText(message);
+        lblErrorMessage.setVisible(true);
+        BlinkText.blinkLabelRed(lblErrorMessage, 3);
         
+        switch( errorType ){
+            case "account" -> BlinkText.blinkTextFieldRed(txtSearch, 3);
+            case "" -> {}
+            default -> System.out.println("Unknown error type: " + errorType);
+        }
     }
     
     
-    // Métodos para acessar componentes da interface
-    public javax.swing.JButton getBtnSave() {
-        return btnSave;
+    public void setAccountName(String name){
+        txtSearch.setText(name);
     }
-
     
-    public javax.swing.JButton getBtnLogout() {
-        return btnLogout;
-    }
-
     
-    public javax.swing.JTextField getTxtCPF() {
-        return txtSearch;
-    }
-
-    
-    public javax.swing.JCheckBox getCheckClient() {
-        return checkClient;
-    }
-
-    
-    public javax.swing.JCheckBox getCheckEngineer() {
-        return checkEngineer;
-    }
-
-    
-    public javax.swing.JCheckBox getCheckAdmin() {
-        return checkAdmin;
+    public void setLoginText(String text){
+        lblLoginName.setText( text );
     }
     
     
@@ -85,6 +71,7 @@ public class frmAdmin extends javax.swing.JFrame {
         checkAdmin.setSelected(false);
     }
     
+    
     public void check(String option){
         switch( option ){
             case "client" -> checkClient.setSelected(true);
@@ -108,6 +95,8 @@ public class frmAdmin extends javax.swing.JFrame {
         return checkAdmin.isSelected();
     }
     
+    
+    
             
     /**
      * This method is called from within the constructor to initialize the form.
@@ -128,12 +117,18 @@ public class frmAdmin extends javax.swing.JFrame {
         checkAdmin = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
+        lblErrorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 
         btnLogout.setText("Sair");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         btnSave.setText("Salvar");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -161,6 +156,10 @@ public class frmAdmin extends javax.swing.JFrame {
             }
         });
 
+        lblErrorMessage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblErrorMessage.setText("ERROR_MESSAGE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,6 +176,7 @@ public class frmAdmin extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblLoginName)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,7 +189,7 @@ public class frmAdmin extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                                 .addComponent(btnSearch)))
                         .addContainerGap())))
         );
@@ -212,7 +212,9 @@ public class frmAdmin extends javax.swing.JFrame {
                 .addComponent(checkAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSave)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLogout)
                     .addComponent(lblLoginName))
@@ -224,23 +226,18 @@ public class frmAdmin extends javax.swing.JFrame {
 
     
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        controller.submit();
+        controller.handleSubmit();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        controller.searchAccount();
+        controller.handleSearchAccount();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    
-    public void setAccountName(String name){
-        txtSearch.setText(name);
-    }
-    
-    
-    /**
-     * @param args the command line arguments
-     */
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        controller.handleLogout();
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
@@ -251,6 +248,7 @@ public class frmAdmin extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkEngineer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JLabel lblLoginName;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables

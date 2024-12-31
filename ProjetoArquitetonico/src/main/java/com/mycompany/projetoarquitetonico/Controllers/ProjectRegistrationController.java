@@ -1,119 +1,172 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.Controllers;
+
 
 import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
 import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
+import com.mycompany.projetoarquitetonico.forms.frmTerrainFind;
+import com.mycompany.projetoarquitetonico.utils.Validation;
+
 
 /**
  *
  * @author lincoln
  */
 public class ProjectRegistrationController {
+    private int projectId = -1;   // used in project editing
     private String projectName = null;
     private String startDate = null;
     private AccountDAO responsible = null;
     private TerrainDAO terrain = null;
     private String expenseTableString = null;
-    
-    private frmProjectRegistration view;
+    private final frmProjectRegistration view;
 
+    
     public ProjectRegistrationController(frmProjectRegistration view) {
         this.view = view;
     }
 
     
-    public void submit(){
-        if ( responsible == null ){
-            System.out.println("Responsible ID not found");
+    public void handleSubmit(){
+        projectName = view.getNameText();
+        startDate = view.getStartDateText();
+        
+        // Form validarion start
+        if( !Validation.isProjectNameValid(projectName) ){
+            view.showError("Nome inválido", "responsible");
             return;
         }
         
+        if( !Validation.isDateValid(startDate) ){
+            view.showError("Data inválida", "responsible");
+            return;
+        }
+        
+        if( responsible == null ){
+            view.showError("Responsável inválido", "responsible");
+            return;
+        }
+        
+        if( terrain == null ){
+            view.showError("Terreno inválido", "responsible");
+            return;
+        }
+        
+        /*
+        This error SHOULDN'T show up by any means, but
+        at this point I don't doubt anything...
+        */
         if ( !responsible.isEngineer() ){
-            System.out.println("Rsponsible is not engineer");
+            view.showError("Responsável não é engenheiro", "responsible");
             return;
         }
+        // Form validation end
         
-        ProjectDAO p = new ProjectDAO();
+        
+        // Save/update project
+        ProjectDAO p;
+        // if projectId >= 0 then is on edit mode
+        if( projectId >= 0){
+            System.out.println("\n\n\nedit mode\n\n\n");
+            p = ProjectDAO.findById(projectId);
+        }else{
+            p = new ProjectDAO();
+        }
+        
         p.setName(projectName);
         p.setStartDate(startDate);
         p.setResponsible(responsible);
         p.setTerrain(terrain);  
-        p.setExpenseTableString(expenseTableString);
-        ProjectDAO.save(p);
+        p.setExpenseTableString(view.getTableString());
+        
+        if( projectId >= 0){    
+            ProjectDAO.update(p); // edit mode
+        }else{
+            ProjectDAO.save(p); // register mode
+        }
+    }
+    
+    
+    public void editProject(ProjectDAO project){
+        System.out.println("\n\nedit\n\n");
+        this.projectId = project.getId();
+        this.projectName = project.getName();
+        this.startDate = project.getStartDate();
+        this.responsible = project.getResponsible();
+        System.out.println(project.getResponsible().getCpf());
+        this.terrain = project.getTerrain();
+        this.expenseTableString = project.getExpenseTableString();
+        
+        view.setEditMode();
+        view.setProjectName(projectName);
+        view.setStartDate(startDate);
+        view.setResponsibleCPF(responsible.getCpf());
+        view.setTerrainName(terrain.getName());
+        view.setExpenseTable(expenseTableString);
+    }
+    
+    
+    public void handleResponsibleFind(){
+        AccountDAO resp = frmAccountFind.getAccount("engineer");
+        view.setResponsibleCPF(resp.getCpf());
+        this.responsible = resp;
+    }
+    
+    
+    public void handleTerrainFind(){
+        TerrainDAO ter = frmTerrainFind.getTerrain();
+        view.setTerrainName(ter.getName());
+        this.terrain = ter;
     }
     
 
-    /**
-     * @return the projectName
-     */
     public String getProjectName() {
         return projectName;
     }
 
-    /**
-     * @param projectName the projectName to set
-     */
+
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
 
-    /**
-     * @return the startDate
-     */
+
     public String getStartDate() {
         return startDate;
     }
 
-    /**
-     * @param startDate the startDate to set
-     */
+
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    /**
-     * @return the responsible
-     */
+
     public AccountDAO getResponsible() {
         return responsible;
     }
 
-    /**
-     * @param responsible the responsible to set
-     */
+
     public void setResponsible(AccountDAO responsible) {
         this.responsible = responsible;
     }
 
-    /**
-     * @return the terrain
-     */
+
     public TerrainDAO getTerrain() {
         return terrain;
     }
 
-    /**
-     * @param terrain the terrain to set
-     */
+
     public void setTerrain(TerrainDAO terrain) {
         this.terrain = terrain;
     }
 
-    /**
-     * @return the expenseTable
-     */
+
     public String getExpenseTableString() {
         return expenseTableString;
     }
 
-    /**
-     * @param expenseTable the expenseTable to set
-     */
+
     public void setExpenseTableString(String tableString) {
         this.expenseTableString = tableString;
     }

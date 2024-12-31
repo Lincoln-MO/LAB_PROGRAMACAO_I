@@ -1,23 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
+
 import com.mycompany.projetoarquitetonico.Controllers.TerrainRegistrationController;
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
 
 
 /**
  *
  * @author yurit e lincoln
  */
-
-
 public class frmTerrainRegistration extends javax.swing.JDialog {
-    private TerrainRegistrationController controller;
-    //private AccountDAO terrainOwner = null;
+    private final TerrainRegistrationController controller;
     
     
     public frmTerrainRegistration(java.awt.Frame parent, boolean modal) {
@@ -27,36 +19,27 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
     }
 
     
-    // Getters para os componentes da view
-    public javax.swing.JButton getBtnRegister() {
-        return btnRegister;
+    public String getTerrainNameText(){
+        return txtTerrainName.getText();
     }
-
     
-    public javax.swing.JButton getBtnClose() {
-        return btnClose;
-    }
-
     
-    public javax.swing.JTextField getTxtTerrainName() {
-        return txtTerrainName;
+    public String getTerrainAreaText(){
+        return txtTerrainArea.getText();
     }
-
     
-    public javax.swing.JTextField getTxtOwnerCPF() {
-        return txtOwnerCPF;
-    }
-
     
-    public javax.swing.JTextField getTxtTerrainArea() {
-        return txtTerrainArea;
+    public String getTerrainLocationText(){
+        return txtTerrainLocation.getText();
     }
-
     
-    public javax.swing.JTextField getTxtTerrainLocation() {
-        return txtTerrainLocation;
+    
+    public void setOwnerName(String name){
+        txtOwnerCPF.setText(name);
     }
-
+    
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -218,24 +201,16 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
-    
+
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        controller.setTerrainName( txtTerrainName.getText() );
-        //controller.setTerrainOwner( this.terrainOwner );
-        controller.setTerrainArea( txtTerrainArea.getText() );
-        controller.setTerrainLocation( txtTerrainLocation.getText() );
-        controller.submit();
+        controller.handleSubmit();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     
     private void btnFindOwnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindOwnerActionPerformed
-        controller.searchOwner();
+        controller.handleSearchOwner();
     }//GEN-LAST:event_btnFindOwnerActionPerformed
 
-    
-    public void setOwnerName(String name){
-        txtOwnerCPF.setText(name);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;

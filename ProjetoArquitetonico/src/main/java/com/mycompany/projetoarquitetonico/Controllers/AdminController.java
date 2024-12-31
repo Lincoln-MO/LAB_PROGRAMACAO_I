@@ -1,16 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.Controllers;
+
 
 import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.Connection;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 /**
  *
@@ -26,8 +21,16 @@ public class AdminController {
     }
 
     
-    public void submit() {   
+    public void handleSubmit() {   
         Connection.beginTransaction();
+        
+        System.out.println(account == null);
+        // Form validation start
+        if( account == null ){
+            view.showError("Conta inválida", "account");
+            return;
+        }
+        // Form validation end
         
         account = AccountDAO.findByCPF( account.getCpf() );
         
@@ -39,8 +42,11 @@ public class AdminController {
     }
     
     
-    public void searchAccount(){
+    public void handleSearchAccount(){
         this.account = frmAccountFind.getAccount("_ANY");
+        
+        if( account == null ) return;
+        
         view.setAccountName( account.getName() );
         view.uncheckAll();
         if( account.isClient() )    view.check("client");
@@ -49,12 +55,7 @@ public class AdminController {
     }
 
 
-    private void logout() {
-        // Lógica de logout (ex.: fechar a janela atual e retornar à tela de login)
-        int confirm = JOptionPane.showConfirmDialog(view, "Deseja realmente sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            view.dispose(); // Fecha a janela atual
-            // Aqui vamos redirecionar para a tela de login se necessário
-        }
+    public void handleLogout() {
+        if( LoginController.handleLogout() ) view.dispose();
     }
 }

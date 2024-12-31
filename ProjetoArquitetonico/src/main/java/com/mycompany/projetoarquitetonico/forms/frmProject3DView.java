@@ -4,34 +4,33 @@
  */
 package com.mycompany.projetoarquitetonico.forms;
 import com.mycompany.projetoarquitetonico.Controllers.Project3DController;
-/**
- *
- * @author yurit lincoln
- */
+
+// 3D test
+import com.sun.net.httpserver.HttpServer;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+
 
 public class frmProject3DView extends javax.swing.JDialog {
+    private Project3DController project3DController;
 
-    /**
-     * Creates new form frmProject3DView
-     */
     
-     private Project3DController project3DController;  // Declaração do controlador
-     
     public frmProject3DView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        // Inicializa o controlador
-        project3DController = new Project3DController(this);
+        project3DController = new Project3DController(this); 
     }
+    
 
     frmProject3DView() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    
     public javax.swing.JButton getBtnSave() {
         return btnSave;
     }
+    
 
     public javax.swing.JButton getBtnClose() {
         return btnClose;
@@ -50,6 +49,7 @@ public class frmProject3DView extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,19 +69,30 @@ public class frmProject3DView extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
-                .addComponent(btnClose)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSave)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(btnClose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSave))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -92,27 +103,52 @@ public class frmProject3DView extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
-                    .addComponent(btnClose))
+                    .addComponent(btnClose)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         // TODO add your handling code here:
         project3DController.handleClose();  // Chama o método para fechar a janela
     }//GEN-LAST:event_btnCloseActionPerformed
 
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
         project3DController.handleSave();  // Chama o método para salvar o projeto 3D
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try{
+            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+
+            // Define a context that serves files from the current directory
+            server.createContext("/", new com.sun.net.httpserver.HttpHandler() {
+                @Override
+                public void handle(com.sun.net.httpserver.HttpExchange exchange) throws IOException {
+                    // Handle requests here (simple file serving)
+                    
+                }
+            });
+
+            // Start the server
+            server.start();
+            System.out.println("Server started on port 8000");
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

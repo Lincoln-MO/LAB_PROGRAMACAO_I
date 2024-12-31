@@ -1,17 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
+
 import com.mycompany.projetoarquitetonico.Controllers.EngineerController;
+
 
 /**
  *
  * @author yurit e lincoln
  */
-
-
 public class frmEngineer extends javax.swing.JFrame {
     private final EngineerController controller;
     
@@ -22,36 +18,13 @@ public class frmEngineer extends javax.swing.JFrame {
     }
     
     
-    public javax.swing.JButton getBtnRegisterProject() {
-        return btnRegisterProject;
+    public void setLoginText(String text){
+        lblLoginName.setText( text );
     }
     
 
-    public javax.swing.JButton getBtnRegisterClient() {
-        return btnRegisterClient;
-    }
-
-    
-    public javax.swing.JButton getBtnRegisterTerrain() {
-        return btnRegisterTerrain;
-    }
     
     
-    public javax.swing.JButton getBtn3DView() {
-        return btn3DView;
-    }
-
-    
-    public javax.swing.JButton getBtnProjectHistory() {
-        return btnProjectHistory;
-    }
-
-    
-    public javax.swing.JButton getBtnLogout() {
-        return btnLogout;
-    }
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,7 +40,7 @@ public class frmEngineer extends javax.swing.JFrame {
         btn3DView = new javax.swing.JButton();
         btnProjectHistory = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
-        txtLoginName = new javax.swing.JLabel();
+        lblLoginName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,7 +72,7 @@ public class frmEngineer extends javax.swing.JFrame {
             }
         });
 
-        btnProjectHistory.setText("Histórico de projetos");
+        btnProjectHistory.setText("Projetos");
         btnProjectHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProjectHistoryActionPerformed(evt);
@@ -113,7 +86,7 @@ public class frmEngineer extends javax.swing.JFrame {
             }
         });
 
-        txtLoginName.setText("Logado como: XXX.XXX.XXX-XX");
+        lblLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,7 +104,7 @@ public class frmEngineer extends javax.swing.JFrame {
                             .addComponent(btnRegisterProject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtLoginName)
+                        .addComponent(lblLoginName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLogout)))
                 .addContainerGap())
@@ -152,7 +125,7 @@ public class frmEngineer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogout)
-                    .addComponent(txtLoginName))
+                    .addComponent(lblLoginName))
                 .addContainerGap())
         );
 
@@ -197,6 +170,6 @@ public class frmEngineer extends javax.swing.JFrame {
     private javax.swing.JButton btnRegisterClient;
     private javax.swing.JButton btnRegisterProject;
     private javax.swing.JButton btnRegisterTerrain;
-    private javax.swing.JLabel txtLoginName;
+    private javax.swing.JLabel lblLoginName;
     // End of variables declaration//GEN-END:variables
 }

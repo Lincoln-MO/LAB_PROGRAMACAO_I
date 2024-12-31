@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
 
+
 import com.mycompany.projetoarquitetonico.Controllers.ClientRegistrationController;
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.models.Account;
+import com.mycompany.projetoarquitetonico.utils.BlinkText;
 
 
 /**
@@ -14,37 +10,73 @@ import com.mycompany.projetoarquitetonico.models.Account;
  * @author yurit
  */
 public class frmClientRegistration extends javax.swing.JDialog {
-
-    /**
-     * Creates new form frmClientRegistration
-     */
+    ClientRegistrationController controller;
+    
+    
     public frmClientRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        new ClientRegistrationController(this);
+        controller = new ClientRegistrationController(this);
     }
-
     
-    public javax.swing.JButton getBtnSubmit() {
-        return btnSubmit;
+    
+    public void showError(String message, String errorType){
+        lblErrorMessage.setText(message);
+        lblErrorMessage.setVisible(true);
+        BlinkText.blinkLabelRed(lblErrorMessage, 3);
+        
+        switch( errorType ){
+            case "name" -> BlinkText.blinkTextFieldRed(txtName, 3);
+            case "startDate" -> BlinkText.blinkTextFieldRed(txtCPF, 3);
+            case "birthDate" -> BlinkText.blinkTextFieldRed(txtBirthDate, 3);
+            case "password" -> BlinkText.blinkTextFieldRed(txtPassword, 3);
+            case "sex" -> {}
+            case "" -> {}
+            default -> System.out.println("Unknown error type: " + errorType);
+        }
     }
-
-    public javax.swing.JTextField getTxtName() {
-        return txtName;
+    
+    
+    public String getNameText(){
+        return txtName.getText();
     }
-
-    public javax.swing.JTextField getTxtCPF() {
-        return txtCPF;
+    
+    
+    public String getCPFText(){
+        return txtCPF.getText();
     }
-
-    public javax.swing.JTextField getTxtBirthDate() {
-        return txtBirthDate;
+    
+    
+    public String getBirthDateText(){
+        return txtBirthDate.getText();
     }
-
-    public javax.swing.ButtonGroup getSexButtonGroup() {
-        return sexButtonGroup;
+    
+    
+    public String getPasswordText(){
+        return txtPassword.getText();
     }
+    
+    
+    public boolean isMasculineSelected(){
+        return radioMasculine.isSelected();
+    }
+    
+    
+    public boolean isFeminineSelected(){
+        return radioFeminine.isSelected();
+    }
+    
 
+    public void clearForm(){
+        txtName.setText("");
+        txtCPF.setText("");
+        txtBirthDate.setText("");
+        sexButtonGroup.clearSelection();
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +99,7 @@ public class frmClientRegistration extends javax.swing.JDialog {
         radioFeminine = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
+        lblErrorMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,6 +158,10 @@ public class frmClientRegistration extends javax.swing.JDialog {
 
         jLabel5.setText("Senha");
 
+        lblErrorMessage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblErrorMessage.setText("ERROR_MESSAGE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,7 +189,8 @@ public class frmClientRegistration extends javax.swing.JDialog {
                                     .addComponent(jLabel4)
                                     .addComponent(radioMasculine)
                                     .addComponent(radioFeminine))))
-                        .addGap(0, 131, Short.MAX_VALUE)))
+                        .addGap(0, 131, Short.MAX_VALUE))
+                    .addComponent(lblErrorMessage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,7 +219,9 @@ public class frmClientRegistration extends javax.swing.JDialog {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(lblErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSubmit)
                 .addContainerGap())
         );
@@ -189,48 +229,34 @@ public class frmClientRegistration extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
 
+    
     private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCPFActionPerformed
 
+    
     private void txtBirthDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBirthDateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBirthDateActionPerformed
 
+    
     private void radioMasculineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioMasculineActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioMasculineActionPerformed
 
+    
     private void radioFeminineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFeminineActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioFeminineActionPerformed
 
+    
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        String name = txtName.getText();
-        String cpf = txtCPF.getText();
-        String birthDate = txtBirthDate.getText();
-        String password = txtPassword.getText();
-        String sex = null;
-        if( radioMasculine.isSelected() ){
-            sex = "m";
-        }else if( radioFeminine.isSelected() ){
-            sex = "f";
-        }
-        
-        Account acc = new Account();
-        acc.setName(name);
-        acc.setCpf(cpf);
-        acc.setBirthDate(birthDate);
-        acc.setPassword(password);
-        acc.setSex(sex);
-        acc.setIsClient(true);
-        acc.setIsActive(true);
-        
-        AccountDAO.save(acc);
+        controller.handleSubmit();
     }//GEN-LAST:event_btnSubmitActionPerformed
 
 
@@ -241,6 +267,7 @@ public class frmClientRegistration extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JRadioButton radioFeminine;
     private javax.swing.JRadioButton radioMasculine;
     private javax.swing.ButtonGroup sexButtonGroup;

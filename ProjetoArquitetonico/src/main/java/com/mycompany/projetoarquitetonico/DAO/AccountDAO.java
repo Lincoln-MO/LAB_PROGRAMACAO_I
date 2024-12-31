@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class AccountDAO extends GenericDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Integer id;
+    private Integer id;
     protected String name;
     protected String cpf;
     protected String password = "";
@@ -209,7 +209,7 @@ public class AccountDAO extends GenericDAO{
     }
     
     public int getID(){
-        return this.id;
+        return this.getId();
     }
 
     @Override
@@ -236,5 +236,19 @@ public class AccountDAO extends GenericDAO{
      */
     public List<TerrainDAO> getTerains() {
         return terains;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
+
 
 import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import java.util.List;
+
 
 /**
  *
@@ -16,9 +14,7 @@ public class frmAccountFind extends javax.swing.JDialog {
     private AccountDAO selectedAccount;
     private List<AccountDAO> foundAccounts = null;
     
-    /**
-     * Creates new form frmAccountFind
-     */
+
     public frmAccountFind(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -39,6 +35,18 @@ public class frmAccountFind extends javax.swing.JDialog {
     }
 
     
+    public void setAccountType(String accountType){
+        this.accountType = accountType;
+    }
+    
+    
+    public AccountDAO getSelectedAccount(){
+        return this.selectedAccount;
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,7 +58,7 @@ public class frmAccountFind extends javax.swing.JDialog {
 
         findBy = new javax.swing.ButtonGroup();
         btnSelectAccount = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -66,7 +74,12 @@ public class frmAccountFind extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Cancelar");
+        btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Pesquisar por Nome ou CPF");
 
@@ -94,7 +107,7 @@ public class frmAccountFind extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 222, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSelectAccount))
                     .addComponent(txtName)
@@ -112,7 +125,7 @@ public class frmAccountFind extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,10 +135,10 @@ public class frmAccountFind extends javax.swing.JDialog {
                     .addComponent(txtFoundAccountsCounter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelectAccount)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancel))
                 .addContainerGap())
         );
 
@@ -161,19 +174,16 @@ public class frmAccountFind extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNameKeyReleased
 
     
-    public void setAccountType(String accountType){
-        this.accountType = accountType;
-    }
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
     
-    public AccountDAO getSelectedAccount(){
-        return this.selectedAccount;
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSelectAccount;
     private javax.swing.JComboBox<String> comboAccount;
     private javax.swing.ButtonGroup findBy;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel txtFoundAccountsCounter;
