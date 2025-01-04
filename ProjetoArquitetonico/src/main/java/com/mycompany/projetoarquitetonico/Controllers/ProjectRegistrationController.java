@@ -4,22 +4,21 @@ package com.mycompany.projetoarquitetonico.Controllers;
 import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
 import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.forms.frmFileChooser;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
 import com.mycompany.projetoarquitetonico.forms.frmTerrainFind;
 import com.mycompany.projetoarquitetonico.utils.Validation;
+import javax.swing.JOptionPane;
 
 
-/**
- *
- * @author lincoln
- */
 public class ProjectRegistrationController {
     private int projectId = -1;   // used in project editing
     private String projectName = null;
     private String startDate = null;
     private AccountDAO responsible = null;
     private TerrainDAO terrain = null;
+    private String model3DFilePath = null;
     private String expenseTableString = null;
     private final frmProjectRegistration view;
 
@@ -33,14 +32,16 @@ public class ProjectRegistrationController {
         projectName = view.getNameText();
         startDate = view.getStartDateText();
         
+        view.hideErrorMessage();
+        
         // Form validarion start
-        if( !Validation.isProjectNameValid(projectName) ){
-            view.showError("Nome inválido", "responsible");
+        if( !Validation.isNameValid(projectName) ){
+            view.showError("Nome inválido", "name");
             return;
         }
         
         if( !Validation.isDateValid(startDate) ){
-            view.showError("Data inválida", "responsible");
+            view.showError("Data inválida", "date");
             return;
         }
         
@@ -50,13 +51,14 @@ public class ProjectRegistrationController {
         }
         
         if( terrain == null ){
-            view.showError("Terreno inválido", "responsible");
+            view.showError("Terreno inválido", "terrain");
             return;
         }
         
         /*
-        This error SHOULDN'T show up by any means, but
-        at this point I don't doubt anything...
+        This error SHOULDN'T show up by any means, but if the magic
+        happens it would treat it like the most mundane thing ever, so it will not
+        scary away the end user
         */
         if ( !responsible.isEngineer() ){
             view.showError("Responsável não é engenheiro", "responsible");
@@ -64,12 +66,10 @@ public class ProjectRegistrationController {
         }
         // Form validation end
         
-        
         // Save/update project
         ProjectDAO p;
         // if projectId >= 0 then is on edit mode
         if( projectId >= 0){
-            System.out.println("\n\n\nedit mode\n\n\n");
             p = ProjectDAO.findById(projectId);
         }else{
             p = new ProjectDAO();
@@ -81,10 +81,28 @@ public class ProjectRegistrationController {
         p.setTerrain(terrain);  
         p.setExpenseTableString(view.getTableString());
         
+        if( model3DFilePath != null ){
+            p.set3DModelFromFile( model3DFilePath );
+        }
+        
         if( projectId >= 0){    
             ProjectDAO.update(p); // edit mode
+            JOptionPane.showMessageDialog(view, "Alterações salvas.");
         }else{
             ProjectDAO.save(p); // register mode
+            JOptionPane.showMessageDialog(view, "Projeto cadastrado.");
+        }
+        
+        view.clearForm();
+    }
+    
+    
+    public void handle3DModelFind(){
+        model3DFilePath = frmFileChooser.chooseFile();
+        if( model3DFilePath != null ){
+            view.setFileName( model3DFilePath );
+        }else{
+            view.setFileName("");
         }
     }
     
@@ -110,16 +128,21 @@ public class ProjectRegistrationController {
     
     public void handleResponsibleFind(){
         AccountDAO resp = frmAccountFind.getAccount("engineer");
-        view.setResponsibleCPF(resp.getCpf());
         this.responsible = resp;
+        
+        if( resp != null ) view.setResponsibleCPF(resp.getCpf());
+        else view.setResponsibleCPF("");
     }
     
     
     public void handleTerrainFind(){
         TerrainDAO ter = frmTerrainFind.getTerrain();
-        view.setTerrainName(ter.getName());
         this.terrain = ter;
+        
+        if( ter != null) view.setTerrainName(ter.getName());
+        else view.setTerrainName("");
     }
+    
     
 
     public String getProjectName() {

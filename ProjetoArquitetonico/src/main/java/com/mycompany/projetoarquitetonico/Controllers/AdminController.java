@@ -5,6 +5,7 @@ import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.Connection;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -24,7 +25,8 @@ public class AdminController {
     public void handleSubmit() {   
         Connection.beginTransaction();
         
-        System.out.println(account == null);
+        view.hideErrorMessage();
+        
         // Form validation start
         if( account == null ){
             view.showError("Conta inválida", "account");
@@ -39,6 +41,9 @@ public class AdminController {
         account.setAdminAccess( view.isAdminSelected() );
         
         Connection.commitTransaction();
+        
+        JOptionPane.showMessageDialog(view, "Alterações salvas.");
+        view.clearForm();
     }
     
     
@@ -57,5 +62,15 @@ public class AdminController {
 
     public void handleLogout() {
         if( LoginController.handleLogout() ) view.dispose();
+    }
+    
+    
+    public void handleDeleteAccount(){
+        int confirm = JOptionPane.showConfirmDialog(view, "Deseja realmente excluir a conta?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            account.makeInactive();
+            view.clearForm();
+            JOptionPane.showMessageDialog(view, "Conta excluida");
+        }
     }
 }

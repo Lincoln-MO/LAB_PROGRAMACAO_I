@@ -1,11 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.forms;
+
 
 import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
 import java.util.List;
+
 
 /**
  *
@@ -14,10 +12,8 @@ import java.util.List;
 public class frmTerrainFind extends javax.swing.JDialog {
     private TerrainDAO selectedTerrain;
     private List<TerrainDAO> foundTerrains = null;
+
     
-    /**
-     * Creates new form frmAccountFind
-     */
     public frmTerrainFind(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -35,6 +31,8 @@ public class frmTerrainFind extends javax.swing.JDialog {
         return frm.getSelectedTerrain();
     }
 
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,7 +107,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,7 +117,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
                     .addComponent(txtFoundTerrainsCounter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboTerrains, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelectTerrain)
                     .addComponent(jButton2))
@@ -131,7 +129,11 @@ public class frmTerrainFind extends javax.swing.JDialog {
 
     
     private void btnSelectTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTerrainActionPerformed
-        this.selectedTerrain = this.foundTerrains.get( comboTerrains.getSelectedIndex() );
+        int id = comboTerrains.getSelectedIndex();
+        
+        if( id >= 0) this.selectedTerrain = this.foundTerrains.get(id);
+        else this.selectedTerrain = null;
+        
         this.setVisible(false); // need this for frmTerrainFind.getTerrain() 
     }//GEN-LAST:event_btnSelectTerrainActionPerformed
 

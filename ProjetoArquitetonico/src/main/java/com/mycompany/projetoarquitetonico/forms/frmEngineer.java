@@ -4,10 +4,6 @@ package com.mycompany.projetoarquitetonico.forms;
 import com.mycompany.projetoarquitetonico.Controllers.EngineerController;
 
 
-/**
- *
- * @author yurit e lincoln
- */
 public class frmEngineer extends javax.swing.JFrame {
     private final EngineerController controller;
     
@@ -37,10 +33,10 @@ public class frmEngineer extends javax.swing.JFrame {
         btnRegisterProject = new javax.swing.JButton();
         btnRegisterClient = new javax.swing.JButton();
         btnRegisterTerrain = new javax.swing.JButton();
-        btn3DView = new javax.swing.JButton();
         btnProjectHistory = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         lblLoginName = new javax.swing.JLabel();
+        btnClientFeedback = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,13 +61,6 @@ public class frmEngineer extends javax.swing.JFrame {
             }
         });
 
-        btn3DView.setText("Visualização 3D");
-        btn3DView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3DViewActionPerformed(evt);
-            }
-        });
-
         btnProjectHistory.setText("Projetos");
         btnProjectHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +77,13 @@ public class frmEngineer extends javax.swing.JFrame {
 
         lblLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 
+        btnClientFeedback.setText("Feedback de clientes");
+        btnClientFeedback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientFeedbackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,18 +91,18 @@ public class frmEngineer extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnProjectHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn3DView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRegisterTerrain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRegisterClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRegisterProject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblLoginName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogout)))
+                        .addComponent(btnLogout))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnProjectHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegisterTerrain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegisterClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegisterProject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClientFeedback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -119,9 +115,9 @@ public class frmEngineer extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegisterTerrain)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn3DView)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProjectHistory)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClientFeedback)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogout)
@@ -138,10 +134,6 @@ public class frmEngineer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProjectHistoryActionPerformed
 
     
-    private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
-        controller.open3DViewForm();
-    }//GEN-LAST:event_btn3DViewActionPerformed
-
     
     private void btnRegisterTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterTerrainActionPerformed
         controller.openTerrainRegistrationForm();
@@ -162,9 +154,13 @@ public class frmEngineer extends javax.swing.JFrame {
         controller.logout();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
+    private void btnClientFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientFeedbackActionPerformed
+        controller.openClientFeedbackForm();
+    }//GEN-LAST:event_btnClientFeedbackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn3DView;
+    private javax.swing.JButton btnClientFeedback;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnProjectHistory;
     private javax.swing.JButton btnRegisterClient;

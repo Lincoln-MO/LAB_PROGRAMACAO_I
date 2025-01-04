@@ -33,6 +33,7 @@ public class frmClient extends javax.swing.JFrame {
 
     
     
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +44,6 @@ public class frmClient extends javax.swing.JFrame {
     private void initComponents() {
 
         btnSendFeedback = new javax.swing.JButton();
-        btn3DView = new javax.swing.JButton();
         txtLoginName = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         btnProjects = new javax.swing.JButton();
@@ -54,13 +54,6 @@ public class frmClient extends javax.swing.JFrame {
         btnSendFeedback.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSendFeedbackActionPerformed(evt);
-            }
-        });
-
-        btn3DView.setText("Visualização 3D");
-        btn3DView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3DViewActionPerformed(evt);
             }
         });
 
@@ -94,7 +87,6 @@ public class frmClient extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnSendFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn3DView, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnProjects))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -105,9 +97,7 @@ public class frmClient extends javax.swing.JFrame {
                 .addComponent(btnSendFeedback, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnProjects, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn3DView, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogout)
                     .addComponent(txtLoginName))
@@ -123,10 +113,6 @@ public class frmClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSendFeedbackActionPerformed
 
     
-    private void btn3DViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DViewActionPerformed
-        controller.open3DViewForm();
-    }//GEN-LAST:event_btn3DViewActionPerformed
-
     
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         controller.logout();
@@ -142,7 +128,6 @@ public class frmClient extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn3DView;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnProjects;
     private javax.swing.JButton btnSendFeedback;

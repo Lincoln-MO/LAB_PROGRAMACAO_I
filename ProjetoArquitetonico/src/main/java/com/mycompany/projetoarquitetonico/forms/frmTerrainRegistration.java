@@ -2,11 +2,13 @@ package com.mycompany.projetoarquitetonico.forms;
 
 
 import com.mycompany.projetoarquitetonico.Controllers.TerrainRegistrationController;
+import com.mycompany.projetoarquitetonico.utils.BlinkText;
+import com.mycompany.projetoarquitetonico.utils.TextMasks;
 
 
 /**
  *
- * @author yurit e lincoln
+ * @author yurit
  */
 public class frmTerrainRegistration extends javax.swing.JDialog {
     private final TerrainRegistrationController controller;
@@ -15,9 +17,38 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
     public frmTerrainRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        TextMasks.installFloatMask( txtTerrainArea );
         this.controller = new TerrainRegistrationController(this);
     }
 
+    
+    public void showError(String message, String errorType){
+        lblErrorMessage.setText(message);
+        lblErrorMessage.setVisible(true);
+        BlinkText.blinkLabelRed(lblErrorMessage, 3);
+        
+        switch( errorType ){
+            case "name" -> BlinkText.blinkTextFieldRed(txtTerrainName, 3);
+            case "area" -> BlinkText.blinkTextFieldRed(txtTerrainArea, 3);
+            case "location" -> BlinkText.blinkTextFieldRed(txtTerrainLocation, 3);
+            case "" -> {}
+            default -> System.out.println("Unknown error type: " + errorType);
+        }
+    }
+    
+    
+    public void hideErrorMessage(){
+        lblErrorMessage.setVisible(false);
+    }
+    
+    
+    public void clearForm(){
+        txtTerrainName.setText("");
+        txtOwnerCPF.setText("");
+        txtTerrainArea.setText("");
+        txtTerrainLocation.setText("");
+        hideErrorMessage();
+    }
     
     public String getTerrainNameText(){
         return txtTerrainName.getText();
@@ -55,12 +86,13 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtOwnerCPF = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtTerrainArea = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtTerrainLocation = new javax.swing.JTextField();
         btnRegister = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         btnFindOwner = new javax.swing.JButton();
+        lblErrorMessage = new javax.swing.JLabel();
+        txtTerrainArea = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,13 +112,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Área do terreno");
-
-        txtTerrainArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTerrainAreaActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Área do terreno (m²)");
 
         jLabel4.setText("Localização");
 
@@ -117,6 +143,10 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
             }
         });
 
+        lblErrorMessage.setForeground(new java.awt.Color(255, 255, 255));
+        lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblErrorMessage.setText("ERROR_MESSAGE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,16 +154,10 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTerrainName)
                     .addComponent(txtTerrainArea)
+                    .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTerrainName)
                     .addComponent(txtTerrainLocation)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 245, Short.MAX_VALUE)
                         .addComponent(btnClose)
@@ -142,7 +166,14 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(txtOwnerCPF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFindOwner)))
+                        .addComponent(btnFindOwner))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -166,7 +197,9 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTerrainLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegister)
                     .addComponent(btnClose))
@@ -187,10 +220,6 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
     }//GEN-LAST:event_txtTerrainNameActionPerformed
 
     
-    private void txtTerrainAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainAreaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTerrainAreaActionPerformed
-
     
     private void txtTerrainLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTerrainLocationActionPerformed
         // TODO add your handling code here:
@@ -220,8 +249,9 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JTextField txtOwnerCPF;
-    private javax.swing.JTextField txtTerrainArea;
+    private javax.swing.JFormattedTextField txtTerrainArea;
     private javax.swing.JTextField txtTerrainLocation;
     private javax.swing.JTextField txtTerrainName;
     // End of variables declaration//GEN-END:variables

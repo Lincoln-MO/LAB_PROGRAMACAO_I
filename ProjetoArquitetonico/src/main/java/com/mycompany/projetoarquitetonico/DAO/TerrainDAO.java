@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.DAO;
 
 
 import com.mycompany.projetoarquitetonico.models.Terrain;
 import java.util.List;
 import javax.persistence.*;
+
 
 /**
  *
@@ -25,8 +22,10 @@ public class TerrainDAO extends GenericDAO{
     private String area;
     private String location;
 
+    
     public TerrainDAO(){
     }
+    
     
     public TerrainDAO(Terrain terrain){
         this.name = terrain.getName();
@@ -35,34 +34,41 @@ public class TerrainDAO extends GenericDAO{
         this.owner = terrain.getOwner();
     }
     
+    
     public static TerrainDAO findById(int id){
         return Connection.getEntityManager().find(TerrainDAO.class, id);
     }
     
     
     public static void save(TerrainDAO terrain){
-        Connection.openConnection();
         Connection.beginTransaction();
         
         // makes the terrain.owner persistent 
-        terrain.owner = Connection.getEntityManager().find(AccountDAO.class, terrain.owner.getID());
+        terrain.owner = Connection.getEntityManager().find(AccountDAO.class, terrain.owner.getId());
         
         Connection.persist(terrain);
+
         Connection.commitTransaction();
-        Connection.closeConnection();
         System.out.println("Persist");
     }
     
     
     public static List<TerrainDAO> search(String search){
+        List<TerrainDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT terrain FROM terrain terrain WHERE "+
                 "(name LIKE :name or location LIKE :location)";
 
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("name", (search + "%"));   // "%" for the LIKE operator
         query.setParameter("location", (search + "%"));
+        result = query.getResultList();
         
-        return query.getResultList();
+        Connection.commitTransaction();
+        
+        return result;
     }
     
     
@@ -71,7 +77,7 @@ public class TerrainDAO extends GenericDAO{
                 "(owner_id = id)";
 
         Query query = Connection.getEntityManager().createQuery(sql);
-        query.setParameter("id", owner.getID());
+        query.setParameter("id", owner.getId());
         
         return query.getResultList();
     }
@@ -81,26 +87,31 @@ public class TerrainDAO extends GenericDAO{
     public Object load(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 
     @Override
     public void update(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 
     @Override
     public void delete(Object obj) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 
     @Override
     public Object findAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
     @Override
     public void save() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 
     /**
      * @return the id
@@ -108,6 +119,7 @@ public class TerrainDAO extends GenericDAO{
     public Integer getId() {
         return id;
     }
+    
 
     /**
      * @return the owner
@@ -116,6 +128,7 @@ public class TerrainDAO extends GenericDAO{
         return owner;
     }
 
+    
     /**
      * @param owner the owner to set
      */
@@ -129,6 +142,7 @@ public class TerrainDAO extends GenericDAO{
     public String getName() {
         return name;
     }
+    
 
     /**
      * @param name the name to set
@@ -136,6 +150,7 @@ public class TerrainDAO extends GenericDAO{
     public void setName(String name) {
         this.name = name;
     }
+    
 
     /**
      * @return the area
@@ -144,6 +159,7 @@ public class TerrainDAO extends GenericDAO{
         return area;
     }
 
+    
     /**
      * @param area the area to set
      */
@@ -151,12 +167,14 @@ public class TerrainDAO extends GenericDAO{
         this.area = area;
     }
 
+    
     /**
      * @return the location
      */
     public String getLocation() {
         return location;
     }
+    
 
     /**
      * @param location the location to set
@@ -164,6 +182,7 @@ public class TerrainDAO extends GenericDAO{
     public void setLocation(String location) {
         this.location = location;
     }
+    
 
     int getID() {
         return this.id;

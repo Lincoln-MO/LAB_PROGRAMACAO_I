@@ -16,6 +16,7 @@ public class LoginController {
     private static String cpf;
     private static String password;
     private static String accountType;
+    
  
     public static boolean handleLogout(){
         int confirm = JOptionPane.showConfirmDialog(view, "Deseja realmente sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
@@ -38,6 +39,8 @@ public class LoginController {
         cpf = view.getLoginText();
         password = view.getPasswordText();
         accountType = view.getSelectedAccountType();
+        
+        view.hideErrorMessage();
         
         // Form validation start
         if( !Validation.isCpfValid( cpf )){

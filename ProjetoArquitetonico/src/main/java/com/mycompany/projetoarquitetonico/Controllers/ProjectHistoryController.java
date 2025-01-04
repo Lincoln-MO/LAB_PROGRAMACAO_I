@@ -6,17 +6,12 @@ import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectHistory;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
+import com.mycompany.projetoarquitetonico.utils.View3DModel;
 import java.util.List;
-import javax.swing.DefaultListModel;
 
 
-/**
- *
- * @author lincoln
- */
 public class ProjectHistoryController {
     private final frmProjectHistory view;
-    private DefaultListModel tableModel = new DefaultListModel();
     private AccountDAO account = null;
     private List<ProjectDAO> projects = null;
     private ProjectDAO selectedProject = null;
@@ -41,9 +36,17 @@ public class ProjectHistoryController {
         account = frmAccountFind.getAccount( "client" );
         if( account != null ){
             view.setClientName( account.getName());
+            loadProjectList();
         }
-        
-        loadProjectList();
+    }
+    
+    
+    public void handleView3DModel(){
+        if( selectedProject != null ){
+            String path = selectedProject.exportTemp3DModel();
+            System.out.println(path);
+            View3DModel.openFromFile(path);
+        }
     }
     
     
@@ -67,13 +70,20 @@ public class ProjectHistoryController {
         selectedProject = view.getSelectedProject();
         if(selectedProject == null) return;
         
-        // add rows in the table
-        for( String row : selectedProject.getExpenseTableString().split("\n") ){
+        // enables the 3D View button if the project has a 3D model file on it
+        view.setView3DModelButtonEnabled( selectedProject.has3DModel() );
+        
+        // add rows in the table (if it's not empty)
+        String tableString = selectedProject.getExpenseTableString();
+        System.out.println("\n\n\nts: " + tableString);
+        if( tableString.equals("") ) return;
+        
+        for( String row : tableString.split("\n") ){
             String[] args = row.split("\t");
-            String name         = args[0];
-            float quantity      = Float.parseFloat(args[1]);
-            float price         = Float.parseFloat(args[2]);
-            String description  = args[3];
+            String name         = args[0].equals("null") ? "" : args[0];
+            float quantity      = args[1].equals("null") ? 0 : Float.parseFloat(args[1]);
+            float price         = args[2].equals("null") ? 0 : Float.parseFloat(args[2]);
+            String description  = args[3].equals("null") ? "" : args[3];
             view.addTableRow(name, quantity, price, description);
         }
     }

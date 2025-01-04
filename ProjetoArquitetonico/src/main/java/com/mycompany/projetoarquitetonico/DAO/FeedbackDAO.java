@@ -1,54 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.DAO;
 
+
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Query;
+
 
 /**
  *
  * @author yurit
  */
 @Entity(name = "feedback")
-public class FeedbackDAO extends GenericDAO{
+public class FeedbackDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Integer id;
+    private Integer id;
     private String message;
     @ManyToOne
     private AccountDAO author;
     
     
-    @Override
-    public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public static List<FeedbackDAO> findAll(){
+        List<FeedbackDAO> result;
+        
+        Connection.beginTransaction();
+        
+        String sql = "SELECT feedback FROM feedback feedback";
+        Query query = Connection.getEntityManager().createQuery(sql);
+        
+        result = query.getResultList();
+        
+        Connection.commitTransaction();
+        
+        return result;
     }
-
-    @Override
-    public Object load(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Object findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
+    
     /**
      * @return the message
      */
@@ -75,6 +66,13 @@ public class FeedbackDAO extends GenericDAO{
      */
     public void setAuthor(AccountDAO author) {
         this.author = author;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
     }
     
 }

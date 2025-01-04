@@ -23,15 +23,15 @@ public class frmAccountFind extends javax.swing.JDialog {
     
     
     public static AccountDAO getAccount(String accountType){
+        AccountDAO result;
         frmAccountFind frm = new frmAccountFind(null, true);
         frm.setAccountType(accountType);
         frm.setVisible(true);
         
-        // how can something this awful work so great
-        while (frm.isVisible()){}
+        // returns when frm is not visible
+        result = frm.getSelectedAccount();
         frm.dispose();
-        
-        return frm.getSelectedAccount();
+        return result;
     }
 
     
@@ -135,7 +135,7 @@ public class frmAccountFind extends javax.swing.JDialog {
                     .addComponent(txtFoundAccountsCounter))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelectAccount)
                     .addComponent(btnCancel))
@@ -147,7 +147,11 @@ public class frmAccountFind extends javax.swing.JDialog {
 
     
     private void btnSelectAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectAccountActionPerformed
-        this.selectedAccount = this.foundAccounts.get( comboAccount.getSelectedIndex() );
+        int id = comboAccount.getSelectedIndex();
+        
+        if( id >= 0 ) this.selectedAccount = this.foundAccounts.get(id);
+        else this.selectedAccount = null;
+        
         this.setVisible(false); // need this for frmAccountFind.getAccount() 
     }//GEN-LAST:event_btnSelectAccountActionPerformed
 

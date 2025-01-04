@@ -5,6 +5,7 @@ import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.DAO.Connection;
 import com.mycompany.projetoarquitetonico.DAO.FeedbackDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClientFeedback;
+import javax.swing.JOptionPane;
 
 
 public class FeedbackController {
@@ -25,14 +26,16 @@ public class FeedbackController {
         Connection.beginTransaction();
         Connection.persist(feedback);
         Connection.commitTransaction();
+        
+        JOptionPane.showMessageDialog(view, "Feedback enviado.");
         view.dispose();
     }
 
     
-    public void handleCancel() {
-        view.dispose();
+    public void handleProjectFind(){
+        
     }
-
+    
     /**
      * @return the message
      */

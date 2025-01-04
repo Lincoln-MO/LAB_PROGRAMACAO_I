@@ -1,15 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.projetoarquitetonico.DAO;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
@@ -21,13 +23,6 @@ import javax.persistence.Query;
  */
 @Entity(name = "project")
 public class ProjectDAO extends GenericDAO{
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -38,77 +33,70 @@ public class ProjectDAO extends GenericDAO{
     @OneToOne
     private TerrainDAO terrain;
     private String expenseTableString;
-
+    @Lob
+    private byte[] model3DData = null;
+    private String model3DFileName = null;
+    
     
     public static void save(ProjectDAO proj){
-        Connection.openConnection();
         Connection.beginTransaction();
         
         // makes the project.terrain persistent 
         proj.setTerrain(Connection.getEntityManager().find(TerrainDAO.class, proj.getTerrain().getId()));
+        // makes the project.responsible persistent 
         proj.setResponsible(Connection.getEntityManager().find(AccountDAO.class, proj.getResponsible().getId()));
         
         Connection.persist(proj);
         Connection.commitTransaction();
-        Connection.closeConnection();
         System.out.println("Persist");
     }
     
     
     public static void update(ProjectDAO proj){
-        /*
-        String sql = "UPDATE project SET "+
-            "name = :name, " +
-            "startDate = :startDate, " +
-            "responsible_id = :responsibleId, " +
-            "terrain_id = :terrainId, " +
-            "expenseTableString = :tableString " +
-            "WHERE id = :id";
-
-        Query query = Connection.getEntityManager().createQuery(sql);
-        query.setParameter("name", proj.getName());
-        query.setParameter("startDate", proj.getStartDate());
-        query.setParameter("responsibleId", proj.getResponsible().getID());
-        query.setParameter("terrainId", proj.getTerrain().getID());
-        query.setParameter("tableString", proj.getExpenseTableString());
-        query.setParameter("id", proj.getId());
-        
-        query.executeUpdate();
-        */
-        
-        Connection.openConnection();
         Connection.beginTransaction();
         
         // makes the project.terrain persistent 
         proj.setTerrain(Connection.getEntityManager().find(TerrainDAO.class, proj.getTerrain().getId()));
+        // makes the project.responsible persistent
         proj.setResponsible(Connection.getEntityManager().find(AccountDAO.class, proj.getResponsible().getId()));
         
         Connection.merge(proj);
         Connection.commitTransaction();
-        Connection.closeConnection();
         System.out.println("Persist");
     }
     
     
     public static ProjectDAO findById(int id){
+        ProjectDAO result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT project FROM project project WHERE "+
             "(id = :id)";
 
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("id", id);
+        result = (ProjectDAO) query.getSingleResult();
         
-        return (ProjectDAO) query.getSingleResult();
+        return result;
     }
     
     
     public static List<ProjectDAO> findAllByTerrain(TerrainDAO terrain){
+        List<ProjectDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT project FROM project project WHERE "+
             "(terrain_id = :id)";
 
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("id", terrain.getID());
+        result = query.getResultList();
         
-        return query.getResultList();
+        Connection.commitTransaction();
+        
+        return result;
     }
     
     
@@ -116,7 +104,7 @@ public class ProjectDAO extends GenericDAO{
         List<ProjectDAO> result = new ArrayList<ProjectDAO>();
         
         // not good
-        for( TerrainDAO t : account.getTerains()){
+        for( TerrainDAO t : account.getTerains() ){
             for( ProjectDAO p : ProjectDAO.findAllByTerrain(t) ){
                 result.add( p );
             }
@@ -124,6 +112,49 @@ public class ProjectDAO extends GenericDAO{
         
         return result;
     }
+    
+    
+    public void set3DModelFromFile(String filePath){
+        File file = new File(filePath);
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            byte[] fileData = new byte[(int) file.length()];
+            fileInputStream.read(fileData);
+
+            this.model3DData = fileData;
+            this.model3DFileName = filePath;
+
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
+    
+    
+    public String exportTemp3DModel(){
+        String path = System.getProperty("user.dir") + "\\TEMP.obj";
+        FileOutputStream fileOutputStream = null;
+        try {
+            File file = new File(path);
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write( this.model3DData );
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }finally {
+            try {
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.toString());
+            }
+        }
+        return path;
+    }
+    
+    
+    public boolean has3DModel(){
+        return this.model3DFileName != null;
+    }
+    
     
     @Override
     public void save() {
@@ -150,19 +181,30 @@ public class ProjectDAO extends GenericDAO{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
     /**
      * @return the id
      */
     public Integer getId() {
         return id;
     }
+    
+    
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    
     /**
      * @return the name
      */
     public String getName() {
         return name;
     }
+    
 
     /**
      * @param name the name to set
@@ -171,12 +213,14 @@ public class ProjectDAO extends GenericDAO{
         this.name = name;
     }
 
+    
     /**
      * @return the startDate
      */
     public String getStartDate() {
         return startDate;
     }
+    
 
     /**
      * @param startDate the startDate to set
@@ -184,6 +228,7 @@ public class ProjectDAO extends GenericDAO{
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
+    
 
     /**
      * @return the responsible
@@ -191,6 +236,7 @@ public class ProjectDAO extends GenericDAO{
     public AccountDAO getResponsible() {
         return responsible;
     }
+    
 
     /**
      * @param responsible the responsible to set
@@ -199,6 +245,7 @@ public class ProjectDAO extends GenericDAO{
         this.responsible = responsible;
     }
 
+    
     /**
      * @return the terrain
      */
@@ -206,13 +253,15 @@ public class ProjectDAO extends GenericDAO{
         return terrain;
     }
 
+    
     /**
      * @param terrain the terrain to set
      */
     public void setTerrain(TerrainDAO terrain) {
         this.terrain = terrain;
     }
-
+    
+    
     /**
      * @return the expenseTable
      */

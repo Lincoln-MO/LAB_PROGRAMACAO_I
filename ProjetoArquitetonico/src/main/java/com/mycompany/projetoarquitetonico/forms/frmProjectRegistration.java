@@ -3,13 +3,11 @@ package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.ProjectRegistrationController;
 import com.mycompany.projetoarquitetonico.utils.BlinkText;
+import com.mycompany.projetoarquitetonico.utils.TextMasks;
 import javax.swing.table.DefaultTableModel;
 
 
-/**
- *
- * @author yurit e lincoln
- */
+
 public final class frmProjectRegistration extends javax.swing.JDialog {
     private final ProjectRegistrationController controller; 
     private final DefaultTableModel tableModel;
@@ -18,6 +16,7 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     public frmProjectRegistration(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        TextMasks.installDateMask( txtStartDate );
         
         controller = new ProjectRegistrationController(this);
         tableModel = (DefaultTableModel) tblExpenses.getModel();
@@ -35,7 +34,7 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         
         switch( errorType ){
             case "name" -> BlinkText.blinkTextFieldRed(txtProjectName, 3);
-            case "startDate" -> BlinkText.blinkTextFieldRed(txtStartDate, 3);
+            case "date" -> BlinkText.blinkTextFieldRed(txtStartDate, 3);
             case "responsible" -> BlinkText.blinkTextFieldRed(txtResponsible, 3);
             case "terrain" -> BlinkText.blinkTextFieldRed(txtTerrain, 3);
             case "" -> {}
@@ -43,16 +42,30 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         }
     }
     
+    
+    public void hideErrorMessage(){
+        lblErrorMessage.setVisible(false);
+    }
+    
 
+    public void clearForm(){
+        txtProjectName.setText("");
+        txtStartDate.setText("");
+        txtResponsible.setText("");
+        txtTerrain.setText("");
+        txt3DModelFile.setText("");
+        clearTable();
+        hideErrorMessage();
+    }
+    
+    
     public void setEditMode(){
         btnRegister.setText("Salvar alterações");
-        //editMode = true;
     }
     
     
     public void setRegisterMode(){
         btnRegister.setText("Cadastrar");
-        //editMode = false;
     }
     
     
@@ -78,6 +91,11 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     
     public void setTerrainName(String name){
         txtTerrain.setText(name);
+    }
+    
+    
+    public void setFileName(String name){
+        txt3DModelFile.setText(name);
     }
     
     
@@ -141,6 +159,14 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     }
     
     
+    public void removeSelectedRows(){
+        int selectedRowCount = tblExpenses.getSelectedRowCount();
+        for(int i = 0; i < selectedRowCount; i++){
+            tableModel.removeRow( tblExpenses.getSelectedRow() );
+        }
+    }
+    
+    
     
     
     /**
@@ -155,7 +181,6 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txtProjectName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtStartDate = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnRegister = new javax.swing.JButton();
@@ -169,6 +194,10 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         btnAddRow = new javax.swing.JButton();
         btnRemoveRow = new javax.swing.JButton();
         lblErrorMessage = new javax.swing.JLabel();
+        btn3DModelFind = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txt3DModelFile = new javax.swing.JTextField();
+        txtStartDate = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -181,13 +210,6 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         });
 
         jLabel2.setText("Data de início");
-
-        txtStartDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtStartDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStartDateActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Responsável (CPF)");
 
@@ -259,6 +281,22 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblErrorMessage.setText("ERROR_MESSAGE");
 
+        btn3DModelFind.setText("Procurar");
+        btn3DModelFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3DModelFindActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Modelo 3D");
+
+        txt3DModelFile.setEditable(false);
+        txt3DModelFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt3DModelFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -269,13 +307,16 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
                     .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txt3DModelFile))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn3DModelFind))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,11 +325,18 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
                                 .addComponent(btnRemoveRow)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAddRow))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtProjectName, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtStartDate, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTerrain, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                            .addComponent(txtProjectName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTerrain, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtResponsible))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,17 +367,23 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTerrain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTerrainFind))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt3DModelFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn3DModelFind))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRemoveRow)
+                    .addComponent(btnAddRow))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddRow)
-                    .addComponent(btnRemoveRow))
-                .addGap(18, 18, 18)
                 .addComponent(lblErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addComponent(btnRegister)
                 .addContainerGap())
         );
@@ -343,10 +397,6 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     }//GEN-LAST:event_txtProjectNameActionPerformed
 
     
-    private void txtStartDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStartDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStartDateActionPerformed
-
     
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         controller.handleSubmit();
@@ -369,14 +419,20 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
 
     
     private void btnRemoveRowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveRowActionPerformed
-        int selectedRowCount = tblExpenses.getSelectedRowCount();
-        for(int i = 0; i < selectedRowCount; i++){
-            tableModel.removeRow( tblExpenses.getSelectedRow() );
-        }
+        removeSelectedRows();
     }//GEN-LAST:event_btnRemoveRowActionPerformed
+
+    private void btn3DModelFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3DModelFindActionPerformed
+        controller.handle3DModelFind();
+    }//GEN-LAST:event_btn3DModelFindActionPerformed
+
+    private void txt3DModelFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt3DModelFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt3DModelFileActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn3DModelFind;
     private javax.swing.JButton btnAddRow;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnRemoveRow;
@@ -387,9 +443,11 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblErrorMessage;
     private javax.swing.JTable tblExpenses;
+    private javax.swing.JTextField txt3DModelFile;
     private javax.swing.JTextField txtProjectName;
     private javax.swing.JTextField txtResponsible;
     private javax.swing.JFormattedTextField txtStartDate;

@@ -1,13 +1,10 @@
 package com.mycompany.projetoarquitetonico.DAO;
 
+
 import com.mycompany.projetoarquitetonico.models.Account;
 import java.util.List;
 import javax.persistence.*;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
 /**
  *
@@ -15,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity(name = "account")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class AccountDAO extends GenericDAO{
+public class AccountDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -28,7 +25,7 @@ public class AccountDAO extends GenericDAO{
     protected boolean isClient;
     protected boolean isEngineer;
     protected boolean isAdmin;
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TerrainDAO> terains;
     
     
@@ -66,17 +63,36 @@ public class AccountDAO extends GenericDAO{
     
     public void update(Object obj){}
     
-    public void delete(Object obj){}
+    public void makeInactive(){
+        this.isActive = false;
+        
+        Connection.beginTransaction();
+        Connection.merge(this);
+        Connection.commitTransaction();
+    }
+    
+    public void makeActive(Object obj){
+        this.isActive = true;
+        
+        Connection.beginTransaction();
+        Connection.merge(this);
+        Connection.commitTransaction();
+    }
     
     
     public static AccountDAO find(String cpf, String password){
+        List<AccountDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE cpf = :cpf and password = :passw";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("cpf", cpf);
         query.setParameter("passw", password);
-        
-        List<AccountDAO> result = query.getResultList();
+        result = query.getResultList();
 
+        Connection.commitTransaction();
+        
         if( !result.isEmpty() ){
             return result.get(0);
         }else{
@@ -86,36 +102,60 @@ public class AccountDAO extends GenericDAO{
     
     
     public static List<AccountDAO> findAllByName(String name){
+        List<AccountDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE name LIKE :name";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("name", (name + "%")); // "%" for the LIKE operator
         
-        List<AccountDAO> result = query.getResultList();
-
+        result = query.getResultList();
+        
+        Connection.commitTransaction();
+        
         return result;
     }
     
     
     public static List<AccountDAO> findAllByCPF(String cpf){
+        List<AccountDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE cpf LIKE :cpf";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("cpf", (cpf + "%")); // "%" for the LIKE operator
-
-        return query.getResultList();
+        result = query.getResultList();
+        
+        Connection.commitTransaction();
+        
+        return result;
     }
     
     
     public static List<AccountDAO> findAllByNameOrCPF(String search){
+        List<AccountDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE (name LIKE :name or cpf LIKE :cpf)";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("name", (search + "%")); // "%" for the LIKE operator
         query.setParameter("cpf", (search + "%"));  // "%" for the LIKE operator
-
-        return query.getResultList();
+        result = query.getResultList();
+        
+        Connection.commitTransaction();
+        
+        return result;
     }
     
     
     public static List<AccountDAO> findAllByNameOrCPF(String search, String accountType){
+        List<AccountDAO> result;
+        
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE (name LIKE :name or cpf LIKE :cpf)";
         switch(accountType){
             case "client" ->    sql += "and (isClient = true)";
@@ -127,18 +167,25 @@ public class AccountDAO extends GenericDAO{
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("name", (search + "%")); // "%" for the LIKE operator
         query.setParameter("cpf", (search + "%"));
+        result = query.getResultList();
         
-        return query.getResultList();
+        Connection.commitTransaction();
+        
+        return result;
     }
     
     
     public static AccountDAO findByCPF(String cpf){
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE cpf = :cpf";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("cpf", cpf);
         
         List<AccountDAO> result = query.getResultList();
 
+        Connection.commitTransaction();
+        
         if( !result.isEmpty() ){
             return result.get(0);
         }else{
@@ -148,12 +195,16 @@ public class AccountDAO extends GenericDAO{
     
     
     public static AccountDAO findById(int id){
+        Connection.beginTransaction();
+        
         String sql = "SELECT account FROM account account WHERE id = :id";
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("id",  id);
         
         List<AccountDAO> result = query.getResultList();
-
+        
+        Connection.commitTransaction();
+        
         if( !result.isEmpty() ){
             return result.get(0);
         }else{
@@ -195,28 +246,16 @@ public class AccountDAO extends GenericDAO{
     }
     
     public static void save(Account account){
-        Connection.openConnection();
         Connection.beginTransaction();
+        
         Connection.persist(new AccountDAO(account));
+        
         Connection.commitTransaction();
-        Connection.closeConnection();
+        
         System.out.println("Persist");
     }
     
-    @Override
-    public void save() {
-        
-    }
     
-    public int getID(){
-        return this.getId();
-    }
-
-    @Override
-    public Object findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     /**
      * @return the name
      */
@@ -224,13 +263,15 @@ public class AccountDAO extends GenericDAO{
         return name;
     }
 
+    
     /**
      * @return the cpf
      */
     public String getCpf() {
         return cpf;
     }
-
+    
+    
     /**
      * @return the terains
      */
@@ -238,6 +279,7 @@ public class AccountDAO extends GenericDAO{
         return terains;
     }
 
+    
     /**
      * @return the id
      */
@@ -245,6 +287,7 @@ public class AccountDAO extends GenericDAO{
         return id;
     }
 
+    
     /**
      * @param id the id to set
      */

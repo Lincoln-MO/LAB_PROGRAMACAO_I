@@ -34,12 +34,11 @@ public class EngineerController {
         terrainView.setVisible(true);
     }
 
-    
-    public void open3DViewForm() {
-        frmProject3DView view3D = new frmProject3DView(view, true);
-        view3D.setVisible(true);
-    }
 
+    public void openClientFeedbackForm(){
+        frmViewClientFeedback frm = new frmViewClientFeedback(view, true);
+        frm.setVisible(true);
+    }
     
     public void openProjectHistoryForm() {
         frmProjectHistory historyView = new frmProjectHistory(view, true);

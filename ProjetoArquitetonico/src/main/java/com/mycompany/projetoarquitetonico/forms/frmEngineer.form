@@ -26,20 +26,20 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnProjectHistory" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btn3DView" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnRegisterTerrain" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnRegisterClient" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnRegisterProject" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="lblLoginName" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnProjectHistory" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnRegisterTerrain" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnRegisterClient" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnRegisterProject" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnClientFeedback" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -56,9 +56,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnRegisterTerrain" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btn3DView" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Component id="btnProjectHistory" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnClientFeedback" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="129" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnLogout" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -94,14 +94,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegisterTerrainActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn3DView">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Visualiza&#xe7;&#xe3;o 3D"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn3DViewActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnProjectHistory">
       <Properties>
         <Property name="text" type="java.lang.String" value="Projetos"/>
@@ -122,6 +114,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Logado como: XXX.XXX.XXX-XX"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnClientFeedback">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Feedback de clientes"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientFeedbackActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

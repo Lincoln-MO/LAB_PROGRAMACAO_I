@@ -5,6 +5,7 @@ import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClientRegistration;
 import com.mycompany.projetoarquitetonico.models.Account;
 import com.mycompany.projetoarquitetonico.utils.Validation;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -26,6 +27,8 @@ public class ClientRegistrationController {
 
     
     public void handleSubmit(){
+        view.hideErrorMessage();
+        
         String name = view.getNameText();
         String cpf = view.getCPFText();
         String birthDate = view.getBirthDateText();
@@ -75,5 +78,8 @@ public class ClientRegistrationController {
         acc.setIsActive(true);
         
         AccountDAO.save(acc);
+        
+        JOptionPane.showMessageDialog(view, "Alterações salvas.");
+        view.clearForm();
     }
 }

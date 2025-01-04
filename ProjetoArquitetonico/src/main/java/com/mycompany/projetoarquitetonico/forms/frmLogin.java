@@ -3,6 +3,7 @@ package com.mycompany.projetoarquitetonico.forms;
 
 import com.mycompany.projetoarquitetonico.Controllers.LoginController;
 import com.mycompany.projetoarquitetonico.utils.BlinkText;
+import com.mycompany.projetoarquitetonico.utils.TextMasks;
 
 
 public class frmLogin extends javax.swing.JFrame {
@@ -15,6 +16,8 @@ public class frmLogin extends javax.swing.JFrame {
     public frmLogin() {
         initComponents();
         lblErrorMessage.setVisible(false);
+        
+        TextMasks.installCPFMask(txtLogin);
     }
 
     
@@ -29,6 +32,11 @@ public class frmLogin extends javax.swing.JFrame {
             case "" -> {}
             default -> System.out.println("Unknown error type: " + errorType);
         }
+    }
+    
+    
+    public void hideErrorMessage(){
+        lblErrorMessage.setVisible(false);
     }
     
     
@@ -48,6 +56,10 @@ public class frmLogin extends javax.swing.JFrame {
         if( radioAdmin.isSelected() ) return "admin";
         return null;
     }
+    
+   
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +71,6 @@ public class frmLogin extends javax.swing.JFrame {
 
         groupAccountType = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        txtLogin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         btnSubmit = new javax.swing.JButton();
@@ -68,6 +79,7 @@ public class frmLogin extends javax.swing.JFrame {
         radioAdmin = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         lblErrorMessage = new javax.swing.JLabel();
+        txtLogin = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,24 +140,22 @@ public class frmLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSubmit)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radioClient)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radioEngineer)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radioAdmin))
-                            .addComponent(txtLogin)
-                            .addComponent(txtPassword)
-                            .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(10, 10, 10))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(radioClient)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(radioEngineer)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(radioAdmin))
+                        .addComponent(txtPassword)
+                        .addComponent(lblErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnSubmit, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +171,7 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +218,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioAdmin;
     private javax.swing.JRadioButton radioClient;
     private javax.swing.JRadioButton radioEngineer;
-    private javax.swing.JTextField txtLogin;
+    private javax.swing.JFormattedTextField txtLogin;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
