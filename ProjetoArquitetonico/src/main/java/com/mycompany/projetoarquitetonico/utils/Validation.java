@@ -6,11 +6,56 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author yurit
+ * @author yurit e lincoln
  */
 public class Validation {
+    
+    // Validação de CPF
     public static boolean isCpfValid(String cpf){
-        return cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
+        
+        // Remove caracteres não numéricos
+        cpf = cpf.replaceAll("[^\\d]", "");
+
+        // Verifica se o CPF possui 11 dígitos
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        // Verifica se todos os dígitos são iguais (ex: 111.111.111-11), o que é inválido
+        if (cpf.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+
+        try {
+            // Valida os dígitos verificadores
+            int soma = 0;
+            int peso = 10;
+            for (int i = 0; i < 9; i++) {
+                soma += (cpf.charAt(i) - '0') * peso--;
+            }
+            int primeiroDigito = 11 - (soma % 11);
+            if (primeiroDigito > 9) {
+                primeiroDigito = 0;
+            }
+
+            if (primeiroDigito != cpf.charAt(9) - '0') {
+                return false;
+            }
+
+            soma = 0;
+            peso = 11;
+            for (int i = 0; i < 10; i++) {
+                soma += (cpf.charAt(i) - '0') * peso--;
+            }
+            int segundoDigito = 11 - (soma % 11);
+            if (segundoDigito > 9) {
+                segundoDigito = 0;
+            }
+
+            return segundoDigito == cpf.charAt(10) - '0';
+        } catch (Exception e) {
+            return false;
+        }
     }
     
     
@@ -83,5 +128,19 @@ System.out.println(date);
     
     public static boolean isFloat(String arg){
         return arg.matches("^\\d*\\.\\d+$");
+    }
+    
+    // Validação de registro (consulta ao banco de dados ou outros critérios)
+    public static boolean isRegisterValid(String cpf){
+        if (cpf == null || cpf.trim().isEmpty()) {
+            return false;
+        }
+        
+        // Aqui você pode adicionar lógica para verificar se o CPF já está cadastrado
+        // Exemplo de consulta no banco de dados:
+        // return AccountDAO.isUserRegistered(cpf);
+
+        // Em caso de erro na consulta, retorna falso
+        return true; // Apenas para teste, ajuste conforme necessidade
     }
 }
