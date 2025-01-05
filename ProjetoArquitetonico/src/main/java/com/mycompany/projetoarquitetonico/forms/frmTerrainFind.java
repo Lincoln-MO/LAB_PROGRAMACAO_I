@@ -45,12 +45,12 @@ public class frmTerrainFind extends javax.swing.JDialog {
 
         findBy = new javax.swing.ButtonGroup();
         btnSelectTerrain = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         comboTerrains = new javax.swing.JComboBox<>();
         txtFoundTerrainsCounter = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -60,8 +60,6 @@ public class frmTerrainFind extends javax.swing.JDialog {
                 btnSelectTerrainActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Cancelar");
 
         jLabel1.setText("Pesquisar por Nome ou localização");
 
@@ -80,6 +78,13 @@ public class frmTerrainFind extends javax.swing.JDialog {
 
         txtFoundTerrainsCounter.setText("0");
 
+        btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,8 +93,8 @@ public class frmTerrainFind extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 222, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSelectTerrain))
                     .addComponent(txtSearch)
@@ -101,7 +106,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtFoundTerrainsCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 99, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,7 +125,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelectTerrain)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancel))
                 .addContainerGap())
         );
 
@@ -159,16 +164,20 @@ public class frmTerrainFind extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
 
     public TerrainDAO getSelectedTerrain(){
         return this.selectedTerrain;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSelectTerrain;
     private javax.swing.JComboBox<String> comboTerrains;
     private javax.swing.ButtonGroup findBy;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel txtFoundTerrainsCounter;

@@ -40,6 +40,12 @@ public class FeedbackDAO{
     }
     
     
+    public static void save(FeedbackDAO feedback){
+        Connection.beginTransaction();
+        Connection.persist(feedback);
+        Connection.commitTransaction();
+    }
+    
     /**
      * @return the message
      */

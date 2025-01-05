@@ -2,6 +2,7 @@ package com.mycompany.projetoarquitetonico.Controllers;
 
 
 import com.mycompany.projetoarquitetonico.forms.*;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -47,7 +48,10 @@ public class EngineerController {
     
 
     public void logout() {
-        view.dispose();
-        LoginController.startNewSession();
+        int choice = JOptionPane.showConfirmDialog(view, "Tem certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            view.dispose();
+            LoginController.startNewSession();
+        }
     }
 }

@@ -12,14 +12,21 @@ import javax.persistence.*;
  */
 @Entity(name = "terrain")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class TerrainDAO extends GenericDAO{
+public class TerrainDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AccountDAO owner;
+    
+    @Column(nullable = false)
     private String name;
+    
+    @Column(nullable = false)
     private String area;
+    
+    @Column(nullable = false)
     private String location;
 
     
@@ -82,37 +89,7 @@ public class TerrainDAO extends GenericDAO{
         return query.getResultList();
     }
     
-
-    @Override
-    public Object load(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
-
-    @Override
-    public void update(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-
-    @Override
-    public void delete(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-
-    @Override
-    public Object findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-    @Override
-    public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-
     /**
      * @return the id
      */

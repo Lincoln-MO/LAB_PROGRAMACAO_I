@@ -9,13 +9,14 @@ import com.mycompany.projetoarquitetonico.utils.BlinkText;
  *
  * @author yurit
  */
-public class frmAdmin extends javax.swing.JFrame {
+public final class frmAdmin extends javax.swing.JFrame {
     private final AdminController controller;
     
 
     public frmAdmin() {
         initComponents();
         this.controller = new AdminController(this);
+        this.setDeleteAccountButtonEnable(false);
         lblErrorMessage.setVisible(false);
     }
     
@@ -38,10 +39,16 @@ public class frmAdmin extends javax.swing.JFrame {
     }
     
     
+    public void setDeleteAccountButtonEnable(boolean arg){
+        btnDeleteAccount.setEnabled(arg);
+    }
+    
+    
     public void clearForm(){
         txtSearch.setText("");
         uncheckAll();
         hideErrorMessage();
+        setDeleteAccountButtonEnable(false);
     }
     
     public void setAccountName(String name){
@@ -172,7 +179,8 @@ public class frmAdmin extends javax.swing.JFrame {
         lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblErrorMessage.setText("ERROR_MESSAGE");
 
-        btnDeleteAccount.setBackground(new java.awt.Color(153, 0, 0));
+        btnDeleteAccount.setBackground(new java.awt.Color(204, 0, 0));
+        btnDeleteAccount.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteAccount.setText("Excluir conta");
         btnDeleteAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -103,10 +103,10 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
         // add rows in the table
         for( String row : tableString.split("\n") ){
             String[] args = row.split("\t");
-            String name         = args[0];
-            float quantity      = Float.parseFloat(args[1]);
-            float price         = Float.parseFloat(args[2]);
-            String description  = args[3];
+            String name         = args[0].equals("null") ? "" : args[0];
+            float quantity      = args[1].equals("null") ? 0 : Float.parseFloat(args[1]);
+            float price         = args[2].equals("null") ? 0 : Float.parseFloat(args[2]);
+            String description  = args[3].equals("null") ? "" : args[3];
             addTableRow(name, quantity, price, description);
         }
     }

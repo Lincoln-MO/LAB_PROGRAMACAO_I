@@ -46,6 +46,7 @@ public final class frmProjectHistory extends javax.swing.JDialog {
     
     public void setClientMode(){
         btnEdit.setVisible(false);
+        btnSearch.setVisible(false);
     }
     
     

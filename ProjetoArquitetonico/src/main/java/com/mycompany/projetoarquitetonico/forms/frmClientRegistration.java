@@ -31,8 +31,8 @@ public class frmClientRegistration extends javax.swing.JDialog {
         
         switch( errorType ){
             case "name" -> BlinkText.blinkTextFieldRed(txtName, 3);
-            case "startDate" -> BlinkText.blinkTextFieldRed(txtCPF, 3);
-            case "birthDate" -> BlinkText.blinkTextFieldRed(txtBirthDate, 3);
+            case "cpf" -> BlinkText.blinkTextFieldRed(txtCPF, 3);
+            case "date" -> BlinkText.blinkTextFieldRed(txtBirthDate, 3);
             case "password" -> BlinkText.blinkTextFieldRed(txtPassword, 3);
             case "sex" -> {}
             case "" -> {}

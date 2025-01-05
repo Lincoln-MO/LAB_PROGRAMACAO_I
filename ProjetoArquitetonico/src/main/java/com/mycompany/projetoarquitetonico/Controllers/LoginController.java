@@ -10,7 +10,7 @@ import com.mycompany.projetoarquitetonico.utils.Validation;
 import javax.swing.JOptionPane;
 
 
-public class LoginController {
+public class LoginController{
     private static frmLogin view;
     private static AccountDAO account;
     private static String cpf;
@@ -69,17 +69,22 @@ public class LoginController {
             return;
         }
         
+        if( !account.isActive() ){
+            view.showError("Conta desativada. Contate um administrador", "");
+            return;
+        }
+        
         if( accountType.equals("client") && account.isClient() ){
             redirectUser("client", cpf);
             return;
         }
         
-        if( accountType.equals("engineer") && account.isClient() ){
+        if( accountType.equals("engineer") && account.isEngineer()){
             redirectUser("engineer", cpf);
             return;
         }
         
-        if( accountType.equals("admin") && account.isClient() ){
+        if( accountType.equals("admin") && account.isAdmin() ){
             redirectUser("admin", cpf);
             return;
         }

@@ -62,6 +62,7 @@ public class ProjectHistoryController {
     
     public void setAccount(AccountDAO account){
         this.account = account;
+        view.setClientName(account.getCpf());
     }
     
     

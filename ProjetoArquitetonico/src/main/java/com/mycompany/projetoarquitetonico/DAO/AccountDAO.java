@@ -16,15 +16,34 @@ public class AccountDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
+    @Column(nullable = false)
     protected String name;
+    
+    @Column(unique = true, nullable = false)
     protected String cpf;
+    
+    @Column(nullable = false)
     protected String password = "";
+    
+    @Column(nullable = false)
     protected String birthDate;
+    
+    @Column(nullable = false)
     protected String sex;
-    protected boolean isActive;
+    
+    @Column(nullable = false)
+    private boolean isActive;
+    
+    @Column(nullable = false)
     protected boolean isClient;
+    
+    @Column(nullable = false)
     protected boolean isEngineer;
+    
+    @Column(nullable = false)
     protected boolean isAdmin;
+    
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TerrainDAO> terains;
     
@@ -53,18 +72,9 @@ public class AccountDAO{
         this.isActive = account.isActive();
     }
     
-    // GenericDAO interface implementation
-
-    
-    public AccountDAO load(Object obj){
-        System.out.println("Loading account...");
-        return null;
-    }
-    
-    public void update(Object obj){}
     
     public void makeInactive(){
-        this.isActive = false;
+        this.setActive(false);
         
         Connection.beginTransaction();
         Connection.merge(this);
@@ -72,7 +82,7 @@ public class AccountDAO{
     }
     
     public void makeActive(Object obj){
-        this.isActive = true;
+        this.setActive(true);
         
         Connection.beginTransaction();
         Connection.merge(this);
@@ -256,6 +266,15 @@ public class AccountDAO{
     }
     
     
+    public static void update(AccountDAO account){
+        Connection.beginTransaction();
+        
+        Connection.merge(account);
+        
+        Connection.commitTransaction();
+    }
+    
+    
     /**
      * @return the name
      */
@@ -293,5 +312,20 @@ public class AccountDAO{
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * @return the isActive
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+
+    
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }

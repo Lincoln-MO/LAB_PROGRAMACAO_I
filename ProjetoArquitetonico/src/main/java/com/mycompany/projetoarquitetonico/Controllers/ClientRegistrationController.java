@@ -52,7 +52,7 @@ public class ClientRegistrationController {
         }
         
         if( !Validation.isDateValid( birthDate ) ){
-            view.showError("Data inválida", "birthDate");
+            view.showError("Data inválida", "date");
             return;
         }
         
@@ -63,6 +63,11 @@ public class ClientRegistrationController {
         
         if( sex == null ){
             view.showError("Selecione um sexo", "sex");
+            return;
+        }
+        
+        if( !AccountDAO.findAllByCPF(cpf).isEmpty() ){
+            view.showError("CPF indisponível", "cpf");
             return;
         }
         // Form validation end
@@ -79,7 +84,7 @@ public class ClientRegistrationController {
         
         AccountDAO.save(acc);
         
-        JOptionPane.showMessageDialog(view, "Alterações salvas.");
+        JOptionPane.showMessageDialog(view, "Cliente cadastrado.");
         view.clearForm();
     }
 }

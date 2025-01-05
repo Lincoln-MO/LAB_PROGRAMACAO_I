@@ -33,9 +33,10 @@ public class ClientController {
     
 
     public void logout() {
-        int choice = JOptionPane.showConfirmDialog(view, "Você tem certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(view, "Tem certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             view.dispose();
+            LoginController.startNewSession();
         }
-    } 
+    }
 }

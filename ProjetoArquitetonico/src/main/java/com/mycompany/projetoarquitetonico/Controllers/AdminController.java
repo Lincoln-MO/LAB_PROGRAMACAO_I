@@ -2,7 +2,6 @@ package com.mycompany.projetoarquitetonico.Controllers;
 
 
 import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.Connection;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
 import javax.swing.JOptionPane;
@@ -23,8 +22,6 @@ public class AdminController {
 
     
     public void handleSubmit() {   
-        Connection.beginTransaction();
-        
         view.hideErrorMessage();
         
         // Form validation start
@@ -40,7 +37,8 @@ public class AdminController {
         account.setEngineerAccess( view.isEngineerSelected() );
         account.setAdminAccess( view.isAdminSelected() );
         
-        Connection.commitTransaction();
+        AccountDAO.update(account);
+        
         
         JOptionPane.showMessageDialog(view, "Alterações salvas.");
         view.clearForm();
@@ -50,8 +48,12 @@ public class AdminController {
     public void handleSearchAccount(){
         this.account = frmAccountFind.getAccount("_ANY");
         
-        if( account == null ) return;
+        if( account == null ){
+            view.setDeleteAccountButtonEnable(false);
+            return;
+        }
         
+        view.setDeleteAccountButtonEnable(true);
         view.setAccountName( account.getName() );
         view.uncheckAll();
         if( account.isClient() )    view.check("client");

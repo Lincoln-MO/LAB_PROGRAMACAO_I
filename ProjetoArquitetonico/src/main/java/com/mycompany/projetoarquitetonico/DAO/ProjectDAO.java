@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,19 +23,31 @@ import javax.persistence.Query;
  * @author yurit
  */
 @Entity(name = "project")
-public class ProjectDAO extends GenericDAO{
+public class ProjectDAO{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
+    @Column(nullable = false)
     private String name;
+    
+    @Column(nullable = false)
     private String startDate;
+    
     @ManyToOne
     private AccountDAO responsible;
+    
     @OneToOne
     private TerrainDAO terrain;
+    
+    @Column(nullable = true)
     private String expenseTableString;
+    
     @Lob
+    @Column(nullable = true)
     private byte[] model3DData = null;
+    
+    @Column(nullable = true)
     private String model3DFileName = null;
     
     
@@ -155,32 +168,6 @@ public class ProjectDAO extends GenericDAO{
         return this.model3DFileName != null;
     }
     
-    
-    @Override
-    public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Object load(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Object findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     
     /**
      * @return the id
