@@ -4,6 +4,7 @@ package com.mycompany.projetoarquitetonico.Controllers;
 import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
+import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
 import com.mycompany.projetoarquitetonico.models.entities.Account;
 import javax.swing.JOptionPane;
 
@@ -12,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author lincoln
  */
-public class AdminController {
+public class AdminController{
     private final frmAdmin view;
     private Account account = null;
     
@@ -22,27 +23,31 @@ public class AdminController {
     }
 
     
-    public void handleSubmit() {   
-        view.hideErrorMessage();
+    public void handleSubmit(){
+        try{
+            view.hideErrorMessage();
         
-        // Form validation start
-        if( account == null ){
-            view.showError("Conta inválida", "account");
-            return;
+            // Form validation start
+            if( account == null ){
+                view.showError("Conta inválida", "account");
+                return;
+            }
+            // Form validation end
+
+            account = AccountDAO.findByCPF( account.getCpf() );
+
+            account.setClientAccess( view.isClientSelected() );
+            account.setEngineerAccess( view.isEngineerSelected() );
+            account.setAdminAccess( view.isAdminSelected() );
+
+            AccountDAO.update(account);
+
+
+            JOptionPane.showMessageDialog(view, "Alterações salvas.");
+            view.clearForm();
+        }catch (ConnectionException e){
+            JOptionPane.showMessageDialog(view, "Ocorreu um erro.");
         }
-        // Form validation end
-        
-        account = AccountDAO.findByCPF( account.getCpf() );
-        
-        account.setClientAccess( view.isClientSelected() );
-        account.setEngineerAccess( view.isEngineerSelected() );
-        account.setAdminAccess( view.isAdminSelected() );
-        
-        AccountDAO.update(account);
-        
-        
-        JOptionPane.showMessageDialog(view, "Alterações salvas.");
-        view.clearForm();
     }
     
     
@@ -77,11 +82,16 @@ public class AdminController {
     
     
     public void handleDeleteAccount(){
-        int confirm = JOptionPane.showConfirmDialog(view, "Deseja realmente excluir a conta?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            account.makeInactive();
-            view.clearForm();
-            JOptionPane.showMessageDialog(view, "Conta excluida");
+        try{
+            int confirm = JOptionPane.showConfirmDialog(view, "Deseja realmente excluir a conta?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                account.setActive(false);
+                AccountDAO.update(account);
+                view.clearForm();
+                JOptionPane.showMessageDialog(view, "Conta excluida");
+            }
+        }catch (ConnectionException e){
+            JOptionPane.showMessageDialog(view, "Ocorreu um erro.");
         }
     }
 }

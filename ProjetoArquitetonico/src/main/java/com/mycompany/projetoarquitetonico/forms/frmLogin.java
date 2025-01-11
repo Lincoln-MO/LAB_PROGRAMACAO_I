@@ -82,6 +82,7 @@ public class frmLogin extends javax.swing.JFrame {
         txtLogin = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Login (CPF)");
 

@@ -79,6 +79,7 @@ public final class frmProjectHistory extends javax.swing.JDialog {
     
     public void clearProjectList(){
         comboProjectModel.removeAllElements();
+        projects = new ArrayList<>();
     }
     
     
@@ -146,6 +147,7 @@ public final class frmProjectHistory extends javax.swing.JDialog {
         jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Cliente");
 

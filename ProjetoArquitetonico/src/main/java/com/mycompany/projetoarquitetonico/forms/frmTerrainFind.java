@@ -1,9 +1,11 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 
-import com.mycompany.projetoarquitetonico.models.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.Controllers.AccountFindController;
+import com.mycompany.projetoarquitetonico.Controllers.TerrainFindController;
+import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
 import com.mycompany.projetoarquitetonico.models.entities.Terrain;
-import java.util.List;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -11,28 +13,53 @@ import java.util.List;
  * @author yurit
  */
 public class frmTerrainFind extends javax.swing.JDialog {
-    private Terrain selectedTerrain;
-    private List<Terrain> foundTerrains = null;
-
+    private static TerrainFindController controller;
+    
     
     public frmTerrainFind(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controller = new TerrainFindController(this);
     }
     
     
     public static Terrain getTerrain(){
-        Terrain result;
-        frmTerrainFind frm = new frmTerrainFind(null, true);
-        frm.setVisible(true);
+        frmTerrainFind view = new frmTerrainFind(null, true);
+        view.setVisible(true);
         
-         // returns when frm is not visible
-        result = frm.getSelectedTerrain();
-        frm.dispose();
+        Terrain result = view.getController().getSelectedTerrain();
         return result;
     }
 
     
+    public TerrainFindController getController(){
+        return frmTerrainFind.controller;
+    }
+    
+    
+    public int getSelectedIndex(){
+        return comboTerrains.getSelectedIndex();
+    }
+    
+    
+    public String getSearchText(){
+        return txtSearch.getText();
+    }
+    
+    
+    public void clearComboItems(){
+        comboTerrains.removeAllItems();
+    }
+    
+    
+    public void addComboItem(String item){
+        comboTerrains.addItem(item);
+    }
+    
+    
+    public void setFoundTerrainsCounterText(String text){
+        txtFoundTerrainsCounter.setText(text);
+    }
     
     
     /**
@@ -54,6 +81,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
         btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         btnSelectTerrain.setText("Selecionar");
         btnSelectTerrain.addActionListener(new java.awt.event.ActionListener() {
@@ -135,12 +163,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
 
     
     private void btnSelectTerrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTerrainActionPerformed
-        int id = comboTerrains.getSelectedIndex();
-        
-        if( id >= 0) this.selectedTerrain = this.foundTerrains.get(id);
-        else this.selectedTerrain = null;
-        
-        this.setVisible(false); // need this for frmTerrainFind.getTerrain() 
+        controller.handleSelectTerrain();
     }//GEN-LAST:event_btnSelectTerrainActionPerformed
 
     
@@ -150,29 +173,18 @@ public class frmTerrainFind extends javax.swing.JDialog {
 
     
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        String search = txtSearch.getText();
-        this.foundTerrains = TerrainDAO.search(search);
-        
-        comboTerrains.removeAllItems();
-        if( search.equals("") ){
-            txtFoundTerrainsCounter.setText("0");
-            return;
-        }
-        
-        txtFoundTerrainsCounter.setText( String.valueOf( this.foundTerrains.size() ));
-        for( Terrain terr : this.foundTerrains ){
-            comboTerrains.addItem(terr.getName() + " : " + terr.getLocation());
+        try{
+            controller.handleTextType();
+        }catch (ConnectionException e){
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro.");
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-
-    public Terrain getSelectedTerrain(){
-        return this.selectedTerrain;
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

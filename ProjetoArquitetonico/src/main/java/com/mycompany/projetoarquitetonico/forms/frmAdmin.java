@@ -149,7 +149,7 @@ public final class frmAdmin extends javax.swing.JFrame {
         lblErrorMessage = new javax.swing.JLabel();
         btnDeleteAccount = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblLoginName.setText("Logado como: XXX.XXX.XXX-XX");
 

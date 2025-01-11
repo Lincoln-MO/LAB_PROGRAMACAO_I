@@ -82,7 +82,7 @@ public class AccountDAO{
     }
     
     
-    public static void makeInactive(Account acc){
+    public static void makeInactive(Account acc) throws ConnectionException{
         acc.setActive(false);
         
         AccountDAO dao = new AccountDAO(acc);
@@ -93,7 +93,7 @@ public class AccountDAO{
     }
     
     
-    public static void makeActive(Account acc){
+    public static void makeActive(Account acc) throws ConnectionException{
         acc.setActive(true);
         
         AccountDAO dao = new AccountDAO(acc);
@@ -123,7 +123,7 @@ public class AccountDAO{
     }
     
     
-    public static Account find(String cpf, String password){
+    public static Account find(String cpf, String password) throws ConnectionException{
         List<AccountDAO> result;
         
         Connection.beginTransaction();
@@ -145,7 +145,7 @@ public class AccountDAO{
     }
     
     
-    public static List<Account> findAllByName(String name){
+    public static List<Account> findAllByName(String name) throws ConnectionException{
         List<AccountDAO> queryResult;
         List<Account> result = new ArrayList<Account>();
         
@@ -167,7 +167,7 @@ public class AccountDAO{
     }
     
     
-    public static List<Account> findAllByCPF(String cpf){
+    public static List<Account> findAllByCPF(String cpf) throws ConnectionException{
         List<AccountDAO> queryResult;
         List<Account> result = new ArrayList<Account>();
         
@@ -189,7 +189,7 @@ public class AccountDAO{
     }
     
     
-    public static List<Account> findAllByNameOrCPF(String search){
+    public static List<Account> findAllByNameOrCPF(String search) throws ConnectionException{
         List<AccountDAO> queryResult;
         List<Account> result = new ArrayList<Account>();
         
@@ -212,7 +212,7 @@ public class AccountDAO{
     }
     
     
-    public static List<Account> findAllByNameOrCPF(String search, String accountType){
+    public static List<Account> findAllByNameOrCPF(String search, String accountType) throws ConnectionException{
         List<AccountDAO> queryResult;
         List<Account> result = new ArrayList<>();
         
@@ -242,7 +242,7 @@ public class AccountDAO{
     }
     
     
-    public static Account findByCPF(String cpf){
+    public static Account findByCPF(String cpf) throws ConnectionException{
         Connection.beginTransaction();
         
         String sql = "SELECT account FROM account account WHERE cpf = :cpf";
@@ -261,7 +261,7 @@ public class AccountDAO{
     }
     
     
-    public static Account findById(int id){
+    public static Account findById(int id) throws ConnectionException{
         Connection.beginTransaction();
         Account result = getPersistentById(id).toAccount();
         Connection.commitTransaction();
@@ -270,7 +270,7 @@ public class AccountDAO{
     }
     
     
-    public static AccountDAO getPersistentById(int id){
+    public static AccountDAO getPersistentById(int id) throws ConnectionException{
         //Connection.beginTransaction();
         
         String sql = "SELECT account FROM account account WHERE id = :id";
@@ -289,7 +289,7 @@ public class AccountDAO{
     }
 
     
-    public static void save(Account account){
+    public static void save(Account account) throws ConnectionException{
         AccountDAO dao = new AccountDAO(account);
         
         Connection.beginTransaction();
@@ -302,7 +302,7 @@ public class AccountDAO{
     }
     
     
-    public static void update(Account account){
+    public static void update(Account account) throws ConnectionException{
         Connection.beginTransaction();
         
         Connection.merge(new AccountDAO(account) );

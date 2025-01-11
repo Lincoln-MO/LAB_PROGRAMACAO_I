@@ -5,10 +5,12 @@ import com.mycompany.projetoarquitetonico.models.DAO.ProjectDAO;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectHistory;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
+import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
 import com.mycompany.projetoarquitetonico.models.entities.Account;
 import com.mycompany.projetoarquitetonico.models.entities.Project;
 import com.mycompany.projetoarquitetonico.utils.View3DModel;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 
 public class ProjectHistoryController {
@@ -29,15 +31,17 @@ public class ProjectHistoryController {
         frmProjectRegistration frm = new frmProjectRegistration(null, true);
         frm.getController().editProject(selectedProject);
         frm.setVisible(true);
-        
         // reloads the projects when the edit form is closed
+        view.clearTable();
+        view.clearProjectList();
         loadProjectList();
     }
     
     
     public void handleFindAccount(){
         account = frmAccountFind.getAccount( "client" );
-
+        view.clearProjectList();
+        view.clearTable();
         if( account != null ){
             view.setClientName( account.getName());
             loadProjectList();
@@ -55,12 +59,15 @@ public class ProjectHistoryController {
     
     
     public void loadProjectList(){
-        this.projects = ProjectDAO.findAllByUser(account);
+        try{
+            this.projects = ProjectDAO.findAllByUser(account);
 
-        for( Project p : projects ){
-            view.addProject(p);
+            for( Project p : projects ){
+                view.addProject(p);
+            }
+        }catch (ConnectionException e){
+            JOptionPane.showMessageDialog(view, "Ocorreu um erro.");
         }
-        
     }
     
     

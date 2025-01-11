@@ -1,11 +1,13 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
+
 import com.mycompany.projetoarquitetonico.forms.frmViewClientFeedback;
-import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
 import com.mycompany.projetoarquitetonico.models.DAO.FeedbackDAO;
 import com.mycompany.projetoarquitetonico.models.entities.Feedback;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -18,13 +20,13 @@ public final class ViewClientFeedbackController {
     int selectedFeedbackId;
     
     
-    public ViewClientFeedbackController(frmViewClientFeedback frm){
+    public ViewClientFeedbackController(frmViewClientFeedback frm) throws ConnectionException{
         this.view = frm;
         loadFeedbacks();
     }
     
     
-    public void loadFeedbacks(){
+    public void loadFeedbacks() throws ConnectionException{
         view.clearForm();
         feedbacks = new ArrayList<>();
         
@@ -53,12 +55,18 @@ public final class ViewClientFeedbackController {
     
     
     public void handleMarkAsReaded(){
-        Feedback fb = feedbacks.get(selectedFeedbackId);
-        fb.setActive(false);
-        FeedbackDAO.update(fb);
-        view.setMarkAsReadedButtonEnabled(false);
-        
-        // updates the feedback list
-        loadFeedbacks();
+        try{
+            Feedback fb = feedbacks.get(selectedFeedbackId);
+            fb.setActive(false);
+            FeedbackDAO.update(fb);
+            view.setMarkAsReadedButtonEnabled(false);
+
+            JOptionPane.showMessageDialog(view, "Feedback marcado como lido.");
+
+            // updates the feedback list
+            loadFeedbacks();
+        }catch (ConnectionException e){
+            JOptionPane.showMessageDialog(view, "Ocorreu um erro.");
+        }
     }
 }

@@ -39,6 +39,7 @@ public class frmEngineer extends javax.swing.JFrame {
         btnClientFeedback = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btnRegisterProject.setText("Cadastro de projetos");
         btnRegisterProject.addActionListener(new java.awt.event.ActionListener() {

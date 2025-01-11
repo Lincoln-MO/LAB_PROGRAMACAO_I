@@ -44,12 +44,12 @@ public class TerrainDAO{
     }
     
     
-    public static Terrain findById(int id){
+    public static Terrain findById(int id) throws ConnectionException{
         return Connection.getEntityManager().find(TerrainDAO.class, id).toTerrain();
     }
     
     
-    public static void save(Terrain terrain){
+    public static void save(Terrain terrain) throws ConnectionException{
         TerrainDAO terr = new TerrainDAO(terrain);
         
         Connection.beginTransaction();
@@ -65,7 +65,7 @@ public class TerrainDAO{
     }
     
     
-    public static List<Terrain> search(String search){
+    public static List<Terrain> search(String search) throws ConnectionException{
         List<TerrainDAO> queryResult;
         List<Terrain> result = new ArrayList<>();
         
@@ -91,7 +91,7 @@ public class TerrainDAO{
     }
     
     
-    public static List<TerrainDAO> FindByOwner(AccountDAO owner){
+    public static List<TerrainDAO> FindByOwner(AccountDAO owner) throws ConnectionException{
         List<TerrainDAO> result;
         
         String sql = "SELECT terrain FROM terrain terrain WHERE "+

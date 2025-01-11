@@ -4,6 +4,7 @@ package com.mycompany.projetoarquitetonico.models.DAO;
 import com.mycompany.projetoarquitetonico.models.entities.Account;
 import com.mycompany.projetoarquitetonico.models.entities.Project;
 import com.mycompany.projetoarquitetonico.models.entities.Terrain;
+import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -76,7 +77,7 @@ public class ProjectDAO{
     }
     
     
-    public static void save(Project project){
+    public static void save(Project project) throws ConnectionException{
         ProjectDAO proj = new ProjectDAO(project);
         
         Connection.beginTransaction();
@@ -92,7 +93,7 @@ public class ProjectDAO{
     }
     
     
-    public static void update(Project project){
+    public static void update(Project project) throws ConnectionException{
         ProjectDAO proj = new ProjectDAO(project);
         
         Connection.beginTransaction();
@@ -108,7 +109,7 @@ public class ProjectDAO{
     }
     
     
-    public static Project findById(int id){
+    public static Project findById(int id) throws ConnectionException{
         ProjectDAO result;
         
         Connection.beginTransaction();
@@ -124,7 +125,7 @@ public class ProjectDAO{
     }
     
     
-    public static List<Project> findAllByTerrain(Terrain terrain){
+    public static List<Project> findAllByTerrain(Terrain terrain) throws ConnectionException{
         List<ProjectDAO> queryResult;
         List<Project> result = new ArrayList<>();
         
@@ -148,7 +149,7 @@ public class ProjectDAO{
     }
     
     
-    public static List<Project> findAllByUser(Account account){
+    public static List<Project> findAllByUser(Account account) throws ConnectionException{
         List<Project> result = new ArrayList<>();
         
         // not good

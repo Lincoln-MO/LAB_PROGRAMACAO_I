@@ -35,7 +35,7 @@ public class FeedbackDAO{
     }
     
     
-    public FeedbackDAO(Feedback feedback){
+    public FeedbackDAO(Feedback feedback) throws ConnectionException{
         Connection.beginTransaction();
         AccountDAO persistentAccount = AccountDAO.getPersistentById(feedback.getAuthor().getId());
         Connection.commitTransaction();
@@ -47,7 +47,7 @@ public class FeedbackDAO{
     }
     
     
-    public static void update(Feedback feedback){
+    public static void update(Feedback feedback) throws ConnectionException{
         FeedbackDAO dao = new FeedbackDAO(feedback);
         
         Connection.beginTransaction();
@@ -58,7 +58,7 @@ public class FeedbackDAO{
     }
     
             
-    public static List<Feedback> findAll(){
+    public static List<Feedback> findAll() throws ConnectionException{
         List<FeedbackDAO> queryResult;
         List<Feedback> result = new ArrayList<>();
         
@@ -80,7 +80,7 @@ public class FeedbackDAO{
     }
     
     
-    public static void save(Feedback feedback){
+    public static void save(Feedback feedback) throws ConnectionException{
         FeedbackDAO fb = new FeedbackDAO(feedback);
         Connection.beginTransaction();
         Connection.persist( fb );

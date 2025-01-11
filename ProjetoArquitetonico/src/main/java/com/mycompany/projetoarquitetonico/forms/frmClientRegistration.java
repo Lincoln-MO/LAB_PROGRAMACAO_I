@@ -119,6 +119,7 @@ public class frmClientRegistration extends javax.swing.JDialog {
         txtEmail = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Nome");
 

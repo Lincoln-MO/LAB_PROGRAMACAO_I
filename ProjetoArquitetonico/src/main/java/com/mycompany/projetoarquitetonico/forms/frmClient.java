@@ -49,6 +49,7 @@ public class frmClient extends javax.swing.JFrame {
         btnProjects = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btnSendFeedback.setText("Enviar feedback");
         btnSendFeedback.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +113,6 @@ public class frmClient extends javax.swing.JFrame {
         controller.openFeedbackForm();
     }//GEN-LAST:event_btnSendFeedbackActionPerformed
 
-    
     
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         controller.logout();

@@ -1,53 +1,81 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 
-import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.Controllers.AccountFindController;
 import com.mycompany.projetoarquitetonico.models.entities.Account;
-import java.util.List;
 
 
 /**
  *
  * @author yurit
  */
-public class frmAccountFind extends javax.swing.JDialog {
-    private String accountType;
-    private Account selectedAccount;
-    private List<Account> foundAccounts = null;
+public class frmAccountFind extends javax.swing.JDialog{
+    private static AccountFindController controller;
     
 
     public frmAccountFind(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.accountType = "";
+        controller = new AccountFindController(this);
     }
     
     
     public static Account getAccount(String accountType){
-        Account result;
-        frmAccountFind frm = new frmAccountFind(null, true);
-        frm.setAccountType(accountType);
-        frm.setVisible(true);
+        frmAccountFind view = new frmAccountFind(null, true);
+        view.setVisible(true);
         
-        // returns when frm is not visible
-        result = frm.getSelectedAccount();
-        frm.dispose();
+        Account result = view.getController().getSelectedAccount();
         return result;
     }
 
     
+    public AccountFindController getController(){
+        return frmAccountFind.controller;
+    }
+    
+    
     public void setAccountType(String accountType){
-        this.accountType = accountType;
+        controller.setAccountType(accountType);
     }
     
     
     public Account getSelectedAccount(){
-        return this.selectedAccount;
+        return controller.getSelectedAccount();
     }
     
     
+    public int getSelectedIndex(){
+        return comboAccount.getSelectedIndex();
+    }
     
     
+    public String getNameText(){
+        return txtName.getText();
+    }
+    
+    
+    public String getSearchText(){
+        return txtName.getText();
+    }
+    
+    
+    public void clearComboItems(){
+        comboAccount.removeAllItems();
+    }
+    
+    
+    public void setFoundAccountsCounterText(String text){
+        txtFoundAccountsCounter.setText(text);
+    }
+    
+    
+    public void addComboItem(String item){
+        comboAccount.addItem(item);
+    }
+
+    
+    
+            
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +95,7 @@ public class frmAccountFind extends javax.swing.JDialog {
         txtFoundAccountsCounter = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         btnSelectAccount.setText("Selecionar");
         btnSelectAccount.addActionListener(new java.awt.event.ActionListener() {
@@ -148,16 +177,7 @@ public class frmAccountFind extends javax.swing.JDialog {
 
     
     private void btnSelectAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectAccountActionPerformed
-        int id = comboAccount.getSelectedIndex();
-        
-        if( id >= 0 ) this.selectedAccount = this.foundAccounts.get(id);
-        else this.selectedAccount = null;
-        
-        /*
-        need this for frmAccountFind.getAccount()
-        (returns the selected account when the form is not visible)
-        */
-        this.setVisible(false);
+        controller.handleSelectAccount();
     }//GEN-LAST:event_btnSelectAccountActionPerformed
 
     
@@ -167,26 +187,14 @@ public class frmAccountFind extends javax.swing.JDialog {
 
     
     private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
-        String search = txtName.getText();
-        this.foundAccounts = AccountDAO.findAllByNameOrCPF(search, this.accountType);
-        
-        comboAccount.removeAllItems();
-        if( search.equals("") ){
-            txtFoundAccountsCounter.setText("0");
-            return;
-        }
-        
-        txtFoundAccountsCounter.setText( String.valueOf( this.foundAccounts.size() ));
-        for( Account acc : this.foundAccounts ){
-            comboAccount.addItem(acc.getName() + " : " + acc.getCpf());
-        }
+        controller.handleTextType();
     }//GEN-LAST:event_txtNameKeyReleased
 
     
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
-    
+      
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

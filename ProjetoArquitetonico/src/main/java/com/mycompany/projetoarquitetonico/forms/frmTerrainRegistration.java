@@ -95,6 +95,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
         txtTerrainArea = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Nome do terreno");
 

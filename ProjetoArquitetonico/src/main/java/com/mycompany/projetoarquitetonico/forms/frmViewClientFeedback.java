@@ -2,6 +2,8 @@ package com.mycompany.projetoarquitetonico.forms;
 
 
 import com.mycompany.projetoarquitetonico.Controllers.ViewClientFeedbackController;
+import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -15,8 +17,12 @@ public final class frmViewClientFeedback extends javax.swing.JDialog {
     public frmViewClientFeedback(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        controller = new ViewClientFeedbackController(this);
-        //setMarkAsReadedButtonEnabled(false);
+        try{
+            controller = new ViewClientFeedbackController(this);
+        }catch (ConnectionException e){
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro.");
+            dispose();
+        }
     }
 
     
@@ -70,6 +76,7 @@ public final class frmViewClientFeedback extends javax.swing.JDialog {
         btnMarkAsReaded = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Feedback");
 
