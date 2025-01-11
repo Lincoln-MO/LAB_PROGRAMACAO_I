@@ -1,20 +1,21 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.ProjectDAO;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectHistory;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
+import com.mycompany.projetoarquitetonico.models.entities.Account;
+import com.mycompany.projetoarquitetonico.models.entities.Project;
 import com.mycompany.projetoarquitetonico.utils.View3DModel;
 import java.util.List;
 
 
 public class ProjectHistoryController {
     private final frmProjectHistory view;
-    private AccountDAO account = null;
-    private List<ProjectDAO> projects = null;
-    private ProjectDAO selectedProject = null;
+    private Account account = null;
+    private List<Project> projects = null;
+    private Project selectedProject = null;
     
     
     public ProjectHistoryController(frmProjectHistory view) {
@@ -29,11 +30,14 @@ public class ProjectHistoryController {
         frm.getController().editProject(selectedProject);
         frm.setVisible(true);
         
+        // reloads the projects when the edit form is closed
+        loadProjectList();
     }
     
     
     public void handleFindAccount(){
         account = frmAccountFind.getAccount( "client" );
+
         if( account != null ){
             view.setClientName( account.getName());
             loadProjectList();
@@ -52,15 +56,15 @@ public class ProjectHistoryController {
     
     public void loadProjectList(){
         this.projects = ProjectDAO.findAllByUser(account);
-        
-        for( ProjectDAO p : projects ){
+
+        for( Project p : projects ){
             view.addProject(p);
         }
         
     }
     
     
-    public void setAccount(AccountDAO account){
+    public void setAccount(Account account){
         this.account = account;
         view.setClientName(account.getCpf());
     }

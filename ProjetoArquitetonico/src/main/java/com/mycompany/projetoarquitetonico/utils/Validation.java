@@ -80,6 +80,11 @@ public class Validation {
     }
     
     
+    public static boolean isEmailValid(String email){
+        return email.matches("[A-Za-z0-9._]*+\\@[A-Za-z0-9]*+\\.[A-Za-z0-9]*");
+    }
+    
+    
     /*
     This date validation method is the type of shit some dumbass could implement
     in a very important system without anybody fucking noticing, until the whole

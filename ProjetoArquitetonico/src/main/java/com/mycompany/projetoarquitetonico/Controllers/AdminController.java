@@ -1,9 +1,10 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
+import com.mycompany.projetoarquitetonico.models.entities.Account;
 import javax.swing.JOptionPane;
 
 
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class AdminController {
     private final frmAdmin view;
-    private AccountDAO account = null;
+    private Account account = null;
     
     
     public AdminController(frmAdmin view) {
@@ -47,13 +48,21 @@ public class AdminController {
     
     public void handleSearchAccount(){
         this.account = frmAccountFind.getAccount("_ANY");
+        view.hideErrorMessage();
         
         if( account == null ){
             view.setDeleteAccountButtonEnable(false);
             return;
         }
         
-        view.setDeleteAccountButtonEnable(true);
+        if( !account.isActive() ){
+            view.showError("A conta está marcada como desativada", "");
+            view.setControlsEnabled(false);
+        }else{
+            view.setControlsEnabled(true);
+            view.setDeleteAccountButtonEnable(true);
+        }
+        
         view.setAccountName( account.getName() );
         view.uncheckAll();
         if( account.isClient() )    view.check("client");

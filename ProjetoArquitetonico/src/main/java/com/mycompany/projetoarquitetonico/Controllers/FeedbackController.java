@@ -1,8 +1,9 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
 
-import com.mycompany.projetoarquitetonico.DAO.FeedbackDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.FeedbackDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClientFeedback;
+import com.mycompany.projetoarquitetonico.models.entities.Feedback;
 import javax.swing.JOptionPane;
 
 
@@ -22,7 +23,7 @@ public class FeedbackController {
             return;
         }
         
-        FeedbackDAO feedback = new FeedbackDAO();
+        Feedback feedback = new Feedback();
         
         feedback.setMessage( message );
         feedback.setAuthor( LoginController.getAccount() );

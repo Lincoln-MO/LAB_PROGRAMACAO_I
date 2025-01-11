@@ -106,6 +106,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
 
         jLabel2.setText("Proprietário (CPF)");
 
+        txtOwnerCPF.setEditable(false);
         txtOwnerCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtOwnerCPFActionPerformed(evt);

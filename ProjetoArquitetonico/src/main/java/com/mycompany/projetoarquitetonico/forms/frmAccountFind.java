@@ -1,7 +1,8 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.entities.Account;
 import java.util.List;
 
 
@@ -11,8 +12,8 @@ import java.util.List;
  */
 public class frmAccountFind extends javax.swing.JDialog {
     private String accountType;
-    private AccountDAO selectedAccount;
-    private List<AccountDAO> foundAccounts = null;
+    private Account selectedAccount;
+    private List<Account> foundAccounts = null;
     
 
     public frmAccountFind(java.awt.Frame parent, boolean modal) {
@@ -22,8 +23,8 @@ public class frmAccountFind extends javax.swing.JDialog {
     }
     
     
-    public static AccountDAO getAccount(String accountType){
-        AccountDAO result;
+    public static Account getAccount(String accountType){
+        Account result;
         frmAccountFind frm = new frmAccountFind(null, true);
         frm.setAccountType(accountType);
         frm.setVisible(true);
@@ -40,7 +41,7 @@ public class frmAccountFind extends javax.swing.JDialog {
     }
     
     
-    public AccountDAO getSelectedAccount(){
+    public Account getSelectedAccount(){
         return this.selectedAccount;
     }
     
@@ -152,7 +153,11 @@ public class frmAccountFind extends javax.swing.JDialog {
         if( id >= 0 ) this.selectedAccount = this.foundAccounts.get(id);
         else this.selectedAccount = null;
         
-        this.setVisible(false); // need this for frmAccountFind.getAccount() 
+        /*
+        need this for frmAccountFind.getAccount()
+        (returns the selected account when the form is not visible)
+        */
+        this.setVisible(false);
     }//GEN-LAST:event_btnSelectAccountActionPerformed
 
     
@@ -172,7 +177,7 @@ public class frmAccountFind extends javax.swing.JDialog {
         }
         
         txtFoundAccountsCounter.setText( String.valueOf( this.foundAccounts.size() ));
-        for( AccountDAO acc : this.foundAccounts ){
+        for( Account acc : this.foundAccounts ){
             comboAccount.addItem(acc.getName() + " : " + acc.getCpf());
         }
     }//GEN-LAST:event_txtNameKeyReleased

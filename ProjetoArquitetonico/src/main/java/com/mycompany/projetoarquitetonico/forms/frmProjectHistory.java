@@ -2,7 +2,7 @@ package com.mycompany.projetoarquitetonico.forms;
 
 
 import com.mycompany.projetoarquitetonico.Controllers.ProjectHistoryController;
-import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
+import com.mycompany.projetoarquitetonico.models.entities.Project;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -17,7 +17,7 @@ public final class frmProjectHistory extends javax.swing.JDialog {
     private final ProjectHistoryController controller;
     private final DefaultTableModel tableModel;
     private final DefaultComboBoxModel comboProjectModel;
-    private List<ProjectDAO> projects = null;
+    private List<Project> projects = null;
     
     
     public frmProjectHistory(java.awt.Frame parent, boolean modal) {
@@ -60,7 +60,7 @@ public final class frmProjectHistory extends javax.swing.JDialog {
     }
     
     
-    public ProjectDAO getSelectedProject(){
+    public Project getSelectedProject(){
         int id = comboProject.getSelectedIndex();
         
         if( id < 0 ) return null;   // if nothing is selected
@@ -92,7 +92,7 @@ public final class frmProjectHistory extends javax.swing.JDialog {
     }
     
     
-    public void addProject(ProjectDAO project){
+    public void addProject(Project project){
         this.projects.add(project);
         
         /*

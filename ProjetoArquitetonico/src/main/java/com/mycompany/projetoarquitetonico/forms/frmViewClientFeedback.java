@@ -1,29 +1,53 @@
 package com.mycompany.projetoarquitetonico.forms;
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.FeedbackDAO;
-import java.util.List;
+
+import com.mycompany.projetoarquitetonico.Controllers.ViewClientFeedbackController;
 
 
 /**
  *
  * @author yurit
  */
-public class frmViewClientFeedback extends javax.swing.JDialog {
-    List<FeedbackDAO> feedbacks;
+public final class frmViewClientFeedback extends javax.swing.JDialog {
+    ViewClientFeedbackController controller;
+
     
     public frmViewClientFeedback(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        feedbacks = FeedbackDAO.findAll();
-        
-        for( FeedbackDAO fb : feedbacks ){
-            String authorName = AccountDAO.findById( fb.getAuthor().getId() ).getName();
-            comboFeedback.addItem(fb.getId() + " - " + authorName);
-        }
+        controller = new ViewClientFeedbackController(this);
+        //setMarkAsReadedButtonEnabled(false);
     }
 
+    
+    public void clearForm(){
+        txtMessage.setText("");
+        comboFeedback.removeAllItems();
+    }
+    
+    
+    public void setMarkAsReadedButtonEnabled(boolean state){
+        btnMarkAsReaded.setEnabled(state);
+    }
+    
+    public void setMessageText(String message){
+        txtMessage.setText(message);
+    }
+    
+    
+    public int getSelectedFeedbackIndex(){
+        return comboFeedback.getSelectedIndex();
+    }
+    
+    
+    public void setSelectedFeedbackIndex(int id){
+        comboFeedback.setSelectedIndex(id);
+    }
+    
+    
+    public void addFeedback(String name){
+        comboFeedback.addItem(name);
+    }
     
     
     
@@ -43,14 +67,15 @@ public class frmViewClientFeedback extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtMessage = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        btnMarkAsReaded = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Feedback");
 
-        comboFeedback.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboFeedbackActionPerformed(evt);
+        comboFeedback.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                comboFeedbackMouseReleased(evt);
             }
         });
 
@@ -65,6 +90,13 @@ public class frmViewClientFeedback extends javax.swing.JDialog {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnMarkAsReaded.setText("Marcar como lido");
+        btnMarkAsReaded.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMarkAsReadedActionPerformed(evt);
             }
         });
 
@@ -83,7 +115,8 @@ public class frmViewClientFeedback extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnMarkAsReaded)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -99,25 +132,36 @@ public class frmViewClientFeedback extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnMarkAsReaded))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
-    private void comboFeedbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFeedbackActionPerformed
-        int id = comboFeedback.getSelectedIndex();
-        txtMessage.setText( feedbacks.get(id).getMessage() );
-    }//GEN-LAST:event_comboFeedbackActionPerformed
+    
+    private void btnMarkAsReadedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarkAsReadedActionPerformed
+        controller.handleMarkAsReaded();        
+    }//GEN-LAST:event_btnMarkAsReadedActionPerformed
 
+    private void comboFeedbackMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboFeedbackMouseReleased
+        if( comboFeedback.getItemCount() == 0 ) return;
+        controller.handleFeedbackSelection();
+    }//GEN-LAST:event_comboFeedbackMouseReleased
+
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMarkAsReaded;
     private javax.swing.JComboBox<String> comboFeedback;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

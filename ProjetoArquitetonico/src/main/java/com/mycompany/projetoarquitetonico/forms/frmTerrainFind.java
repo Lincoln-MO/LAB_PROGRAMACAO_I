@@ -1,7 +1,8 @@
 package com.mycompany.projetoarquitetonico.forms;
 
 
-import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.models.entities.Terrain;
 import java.util.List;
 
 
@@ -10,8 +11,8 @@ import java.util.List;
  * @author yurit
  */
 public class frmTerrainFind extends javax.swing.JDialog {
-    private TerrainDAO selectedTerrain;
-    private List<TerrainDAO> foundTerrains = null;
+    private Terrain selectedTerrain;
+    private List<Terrain> foundTerrains = null;
 
     
     public frmTerrainFind(java.awt.Frame parent, boolean modal) {
@@ -20,15 +21,15 @@ public class frmTerrainFind extends javax.swing.JDialog {
     }
     
     
-    public static TerrainDAO getTerrain(){
+    public static Terrain getTerrain(){
+        Terrain result;
         frmTerrainFind frm = new frmTerrainFind(null, true);
         frm.setVisible(true);
         
-        // how can something this awful work so great
-        while (frm.isVisible()){}
+         // returns when frm is not visible
+        result = frm.getSelectedTerrain();
         frm.dispose();
-        
-        return frm.getSelectedTerrain();
+        return result;
     }
 
     
@@ -159,7 +160,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
         }
         
         txtFoundTerrainsCounter.setText( String.valueOf( this.foundTerrains.size() ));
-        for( TerrainDAO terr : this.foundTerrains ){
+        for( Terrain terr : this.foundTerrains ){
             comboTerrains.addItem(terr.getName() + " : " + terr.getLocation());
         }
     }//GEN-LAST:event_txtSearchKeyReleased
@@ -169,7 +170,7 @@ public class frmTerrainFind extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelActionPerformed
 
 
-    public TerrainDAO getSelectedTerrain(){
+    public Terrain getSelectedTerrain(){
         return this.selectedTerrain;
     }
     

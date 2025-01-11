@@ -18,6 +18,7 @@ public final class frmAdmin extends javax.swing.JFrame {
         this.controller = new AdminController(this);
         this.setDeleteAccountButtonEnable(false);
         lblErrorMessage.setVisible(false);
+        this.setControlsEnabled(true);
     }
     
     
@@ -49,6 +50,16 @@ public final class frmAdmin extends javax.swing.JFrame {
         uncheckAll();
         hideErrorMessage();
         setDeleteAccountButtonEnable(false);
+    }
+    
+    
+    public void setControlsEnabled(boolean state){
+        txtSearch.setEnabled(state);
+        checkAdmin.setEnabled(state);
+        checkClient.setEnabled(state);
+        checkEngineer.setEnabled(state);
+        btnDeleteAccount.setEnabled(state);
+        btnSave.setEnabled(state);
     }
     
     public void setAccountName(String name){

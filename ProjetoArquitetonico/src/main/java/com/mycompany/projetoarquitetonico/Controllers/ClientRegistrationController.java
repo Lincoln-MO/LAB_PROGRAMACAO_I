@@ -1,9 +1,9 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClientRegistration;
-import com.mycompany.projetoarquitetonico.models.Account;
+import com.mycompany.projetoarquitetonico.models.entities.Account;
 import com.mycompany.projetoarquitetonico.utils.Validation;
 import javax.swing.JOptionPane;
 
@@ -30,6 +30,7 @@ public class ClientRegistrationController {
         view.hideErrorMessage();
         
         String name = view.getNameText();
+        String email = view.getEmailText();
         String cpf = view.getCPFText();
         String birthDate = view.getBirthDateText();
         String password = view.getPasswordText();
@@ -43,6 +44,11 @@ public class ClientRegistrationController {
         // Form validation stat
         if( !Validation.isNameValid( name ) ){
             view.showError("Nome inválido", "name");
+            return;
+        }
+        
+        if( !Validation.isEmailValid( email )){
+            view.showError("Email inválido", "email");
             return;
         }
         
@@ -79,8 +85,8 @@ public class ClientRegistrationController {
         acc.setBirthDate(birthDate);
         acc.setPassword(password);
         acc.setSex(sex);
-        acc.setIsClient(true);
-        acc.setIsActive(true);
+        acc.setClientAccess(true);
+        acc.setActive(true);
         
         AccountDAO.save(acc);
         

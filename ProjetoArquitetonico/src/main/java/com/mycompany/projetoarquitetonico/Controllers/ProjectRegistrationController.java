@@ -1,13 +1,17 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
-import com.mycompany.projetoarquitetonico.DAO.ProjectDAO;
-import com.mycompany.projetoarquitetonico.DAO.TerrainDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.ProjectDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.TerrainDAO;
 import com.mycompany.projetoarquitetonico.forms.frmFileChooser;
 import com.mycompany.projetoarquitetonico.forms.frmAccountFind;
 import com.mycompany.projetoarquitetonico.forms.frmProjectRegistration;
 import com.mycompany.projetoarquitetonico.forms.frmTerrainFind;
+import com.mycompany.projetoarquitetonico.models.entities.Account;
+import com.mycompany.projetoarquitetonico.models.entities.Project;
+import com.mycompany.projetoarquitetonico.models.entities.Terrain;
+import com.mycompany.projetoarquitetonico.utils.SendEmail;
 import com.mycompany.projetoarquitetonico.utils.Validation;
 import javax.swing.JOptionPane;
 
@@ -16,8 +20,8 @@ public class ProjectRegistrationController {
     private int projectId = -1;   // used in project editing
     private String projectName = null;
     private String startDate = null;
-    private AccountDAO responsible = null;
-    private TerrainDAO terrain = null;
+    private Account responsible = null;
+    private Terrain terrain = null;
     private String model3DFilePath = null;
     private String expenseTableString = null;
     private final frmProjectRegistration view;
@@ -67,12 +71,12 @@ public class ProjectRegistrationController {
         // Form validation end
         
         // Save/update project
-        ProjectDAO p;
+        Project p;
         // if projectId >= 0 then is on edit mode
         if( projectId >= 0){
             p = ProjectDAO.findById(projectId);
         }else{
-            p = new ProjectDAO();
+            p = new Project();
         }
         
         p.setName(projectName);
@@ -85,15 +89,30 @@ public class ProjectRegistrationController {
             p.set3DModelFromFile( model3DFilePath );
         }
         
+        String dialogMessage, emailTitle, emailMessage;
         if( projectId >= 0){    
             ProjectDAO.update(p); // edit mode
-            JOptionPane.showMessageDialog(view, "Alterações salvas.");
+            dialogMessage = "Alterações salvas.";
+            emailTitle = "Cadastro de projeto";
+            emailMessage = "Seu projeto recebeu uma ou mais modificações.";
         }else{
             ProjectDAO.save(p); // register mode
-            JOptionPane.showMessageDialog(view, "Projeto cadastrado.");
+            dialogMessage = "Projeto cadastrado.";
+            emailTitle = "Alteração no projeto";
+            emailMessage = "Foi cadastrado um novo projeto em seu nome.";
         }
         
         view.clearForm();
+        
+        if(
+                SendEmail.SendMessage(
+                emailTitle, 
+                emailMessage,
+                terrain.getOwner().getEmail())){
+            JOptionPane.showMessageDialog(view, dialogMessage + " Cliente notificado por email.");
+        }else{
+            JOptionPane.showMessageDialog(view, dialogMessage + " Não foi possível notificar o cliente por email.");
+        }
     }
     
     
@@ -107,13 +126,12 @@ public class ProjectRegistrationController {
     }
     
     
-    public void editProject(ProjectDAO project){
+    public void editProject(Project project){
         System.out.println("\n\nedit\n\n");
         this.projectId = project.getId();
         this.projectName = project.getName();
         this.startDate = project.getStartDate();
         this.responsible = project.getResponsible();
-        System.out.println(project.getResponsible().getCpf());
         this.terrain = project.getTerrain();
         this.expenseTableString = project.getExpenseTableString();
         
@@ -127,7 +145,7 @@ public class ProjectRegistrationController {
     
     
     public void handleResponsibleFind(){
-        AccountDAO resp = frmAccountFind.getAccount("engineer");
+        Account resp = frmAccountFind.getAccount("engineer");
         this.responsible = resp;
         
         if( resp != null ) view.setResponsibleCPF(resp.getCpf());
@@ -136,7 +154,7 @@ public class ProjectRegistrationController {
     
     
     public void handleTerrainFind(){
-        TerrainDAO ter = frmTerrainFind.getTerrain();
+        Terrain ter = frmTerrainFind.getTerrain();
         this.terrain = ter;
         
         if( ter != null) view.setTerrainName(ter.getName());
@@ -165,22 +183,22 @@ public class ProjectRegistrationController {
     }
 
 
-    public AccountDAO getResponsible() {
+    public Account getResponsible() {
         return responsible;
     }
 
 
-    public void setResponsible(AccountDAO responsible) {
+    public void setResponsible(Account responsible) {
         this.responsible = responsible;
     }
 
 
-    public TerrainDAO getTerrain() {
+    public Terrain getTerrain() {
         return terrain;
     }
 
 
-    public void setTerrain(TerrainDAO terrain) {
+    public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
     }
 

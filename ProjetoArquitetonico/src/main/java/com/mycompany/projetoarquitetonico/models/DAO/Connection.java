@@ -1,4 +1,4 @@
-package com.mycompany.projetoarquitetonico.DAO;
+package com.mycompany.projetoarquitetonico.models.DAO;
 
 
 import javax.persistence.*;
@@ -49,7 +49,7 @@ public class Connection {
     }
     
     
-    public static void commitTransaction(){
+public static void commitTransaction(){
         System.out.println("commit");
         manager.getTransaction().commit();
         manager.close();

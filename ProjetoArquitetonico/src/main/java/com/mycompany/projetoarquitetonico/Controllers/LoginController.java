@@ -1,18 +1,19 @@
 package com.mycompany.projetoarquitetonico.Controllers;
 
 
-import com.mycompany.projetoarquitetonico.DAO.AccountDAO;
+import com.mycompany.projetoarquitetonico.models.DAO.AccountDAO;
 import com.mycompany.projetoarquitetonico.forms.frmClient;
 import com.mycompany.projetoarquitetonico.forms.frmEngineer;
 import com.mycompany.projetoarquitetonico.forms.frmAdmin;
 import com.mycompany.projetoarquitetonico.forms.frmLogin;
+import com.mycompany.projetoarquitetonico.models.entities.Account;
 import com.mycompany.projetoarquitetonico.utils.Validation;
 import javax.swing.JOptionPane;
 
 
 public class LoginController{
     private static frmLogin view;
-    private static AccountDAO account;
+    private static Account account;
     private static String cpf;
     private static String password;
     private static String accountType;
@@ -126,7 +127,7 @@ public class LoginController{
     /**
      * @return the account
      */
-    public static AccountDAO getAccount() {
+    public static Account getAccount() {
         return account;
     }
 }

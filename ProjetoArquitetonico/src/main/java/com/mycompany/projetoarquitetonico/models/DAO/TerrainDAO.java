@@ -1,7 +1,8 @@
-package com.mycompany.projetoarquitetonico.DAO;
+package com.mycompany.projetoarquitetonico.models.DAO;
 
 
-import com.mycompany.projetoarquitetonico.models.Terrain;
+import com.mycompany.projetoarquitetonico.models.entities.Terrain;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class TerrainDAO{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private AccountDAO owner;
     
     @Column(nullable = false)
@@ -35,33 +36,39 @@ public class TerrainDAO{
     
     
     public TerrainDAO(Terrain terrain){
+        if(terrain.getId() >= 0) this.id = terrain.getId();
         this.name = terrain.getName();
         this.area = terrain.getArea();
         this.location = terrain.getLocation();
-        this.owner = terrain.getOwner();
+        this.owner = new AccountDAO( terrain.getOwner() );
     }
     
     
-    public static TerrainDAO findById(int id){
-        return Connection.getEntityManager().find(TerrainDAO.class, id);
+    public static Terrain findById(int id){
+        return Connection.getEntityManager().find(TerrainDAO.class, id).toTerrain();
     }
     
     
-    public static void save(TerrainDAO terrain){
+    public static void save(Terrain terrain){
+        TerrainDAO terr = new TerrainDAO(terrain);
+        
         Connection.beginTransaction();
-        
+
         // makes the terrain.owner persistent 
-        terrain.owner = Connection.getEntityManager().find(AccountDAO.class, terrain.owner.getId());
+        AccountDAO accDAO = AccountDAO.getPersistentById(terr.getOwner().getId());
+        terr.setOwner(accDAO);
         
-        Connection.persist(terrain);
+        Connection.persist(terr);
 
         Connection.commitTransaction();
         System.out.println("Persist");
     }
     
     
-    public static List<TerrainDAO> search(String search){
-        List<TerrainDAO> result;
+    public static List<Terrain> search(String search){
+        List<TerrainDAO> queryResult;
+        List<Terrain> result = new ArrayList<>();
+        
         
         Connection.beginTransaction();
         
@@ -71,6 +78,30 @@ public class TerrainDAO{
         Query query = Connection.getEntityManager().createQuery(sql);
         query.setParameter("name", (search + "%"));   // "%" for the LIKE operator
         query.setParameter("location", (search + "%"));
+        
+        queryResult = query.getResultList();
+        
+        Connection.commitTransaction();
+        
+        for( TerrainDAO dao : queryResult ){
+            result.add( dao.toTerrain() );
+        }
+        
+        return result;
+    }
+    
+    
+    public static List<TerrainDAO> FindByOwner(AccountDAO owner){
+        List<TerrainDAO> result;
+        
+        String sql = "SELECT terrain FROM terrain terrain WHERE "+
+                "(owner_id = :id)";
+
+        Connection.beginTransaction();
+        
+        Query query = Connection.getEntityManager().createQuery(sql);
+        query.setParameter("id", owner.getId());
+        
         result = query.getResultList();
         
         Connection.commitTransaction();
@@ -79,89 +110,55 @@ public class TerrainDAO{
     }
     
     
-    public static List<TerrainDAO> FindByOwner(AccountDAO owner){
-        String sql = "SELECT terrain FROM terrain terrain WHERE "+
-                "(owner_id = id)";
-
-        Query query = Connection.getEntityManager().createQuery(sql);
-        query.setParameter("id", owner.getId());
+    public Terrain toTerrain(){
+        Terrain result = new Terrain();
         
-        return query.getResultList();
+        result.setId(id);
+        result.setName(name);
+        result.setOwner(owner.toAccount() );
+        result.setArea(area);
+        result.setLocation(location);
+        
+        return result;
     }
-    
-    
-    /**
-     * @return the id
-     */
+
     public Integer getId() {
         return id;
     }
-    
 
-    /**
-     * @return the owner
-     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public AccountDAO getOwner() {
         return owner;
     }
 
-    
-    /**
-     * @param owner the owner to set
-     */
     public void setOwner(AccountDAO owner) {
         this.owner = owner;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
-    
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
-    
 
-    /**
-     * @return the area
-     */
     public String getArea() {
         return area;
     }
 
-    
-    /**
-     * @param area the area to set
-     */
     public void setArea(String area) {
         this.area = area;
     }
 
-    
-    /**
-     * @return the location
-     */
     public String getLocation() {
         return location;
     }
-    
 
-    /**
-     * @param location the location to set
-     */
     public void setLocation(String location) {
         this.location = location;
-    }
-    
-
-    int getID() {
-        return this.id;
     }
 }

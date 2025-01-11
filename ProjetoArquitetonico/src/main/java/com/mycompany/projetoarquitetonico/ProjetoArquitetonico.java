@@ -2,7 +2,7 @@ package com.mycompany.projetoarquitetonico;
 
 
 import com.mycompany.projetoarquitetonico.Controllers.*;
-import com.mycompany.projetoarquitetonico.DAO.Connection;
+import com.mycompany.projetoarquitetonico.models.DAO.Connection;
 
 
 public class ProjetoArquitetonico {

@@ -99,6 +99,26 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     }
     
     
+    public String getTableString(){
+        int width = tableModel.getColumnCount();
+        int height = tableModel.getRowCount();
+        String tableString = "";
+        
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                tableString += tableModel.getValueAt(h, w);
+                if( h < height){
+                    tableString += "\t";
+                }
+            }
+            tableString += "\n";
+        }
+        
+        System.out.println(tableString);
+        return tableString;
+    }
+    
+    
     public void setExpenseTable(String tableString){
         // add rows in the table
         for( String row : tableString.split("\n") ){
@@ -136,26 +156,6 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
     
     public String getStartDateText(){
         return txtStartDate.getText();
-    }
-    
-    
-    public String getTableString(){
-        int width = tableModel.getColumnCount();
-        int height = tableModel.getRowCount();
-        String tableString = "";
-        
-        for(int h = 0; h < height; h++){
-            for(int w = 0; w < width; w++){
-                tableString += tableModel.getValueAt(h, w);
-                if( h < height){
-                    tableString += "\t";
-                }
-            }
-            tableString += "\n";
-        }
-        
-        System.out.println(tableString);
-        return tableString;
     }
     
     
