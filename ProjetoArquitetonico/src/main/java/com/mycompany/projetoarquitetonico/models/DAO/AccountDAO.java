@@ -297,8 +297,6 @@ public class AccountDAO{
         Connection.persist( dao );
         
         Connection.commitTransaction();
-        
-        System.out.println("Persist");
     }
     
     

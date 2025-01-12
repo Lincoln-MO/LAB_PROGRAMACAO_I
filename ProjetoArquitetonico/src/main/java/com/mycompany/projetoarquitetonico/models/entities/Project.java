@@ -1,5 +1,6 @@
 package com.mycompany.projetoarquitetonico.models.entities;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -128,7 +129,6 @@ public class Project {
             this.setModel3DFilePath(filePath);
 
         } catch (IOException e) {
-            System.out.println(e.toString());
         }
     }
 
@@ -141,14 +141,12 @@ public class Project {
             fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(this.getModel3DData());
         } catch (Exception ex) {
-            System.out.println(ex.toString());
         }finally {
             try {
                 if (fileOutputStream != null) {
                     fileOutputStream.close();
                 }
             } catch (IOException e) {
-                System.out.println(e.toString());
             }
         }
         return path;

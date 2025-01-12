@@ -61,7 +61,6 @@ public class TerrainDAO{
         Connection.persist(terr);
 
         Connection.commitTransaction();
-        System.out.println("Persist");
     }
     
     

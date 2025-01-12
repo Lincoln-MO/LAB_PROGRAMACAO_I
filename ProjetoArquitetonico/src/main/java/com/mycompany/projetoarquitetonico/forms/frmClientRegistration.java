@@ -44,6 +44,7 @@ public class frmClientRegistration extends javax.swing.JDialog {
     
     public void clearForm(){
         txtName.setText("");
+        txtEmail.setText("");
         txtCPF.setText("");
         txtBirthDate.setText("");
         txtPassword.setText("");

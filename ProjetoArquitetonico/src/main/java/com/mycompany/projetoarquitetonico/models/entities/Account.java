@@ -1,5 +1,6 @@
 package com.mycompany.projetoarquitetonico.models.entities;
 
+
 import com.mycompany.projetoarquitetonico.models.DAO.TerrainDAO;
 import java.util.List;
 

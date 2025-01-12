@@ -4,7 +4,6 @@ package com.mycompany.projetoarquitetonico.Controllers;
 import com.mycompany.projetoarquitetonico.forms.frmClient;
 import com.mycompany.projetoarquitetonico.forms.frmClientFeedback;
 import com.mycompany.projetoarquitetonico.forms.frmProjectHistory;
-import com.mycompany.projetoarquitetonico.models.DAO.ConnectionException;
 import javax.swing.JOptionPane;
 
 

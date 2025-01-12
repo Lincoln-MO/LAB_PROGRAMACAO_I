@@ -10,11 +10,9 @@ import org.apache.commons.mail.SimpleEmail;
  * @author yurit
  */
 public class SendEmail {
-    public static boolean SendMessage(String subject, String message, String target){
-        System.out.println("email\n\t" + target + "\n\t" + subject + "\n\t" + message);
-        
-        String EmailRemetente = "<seuEmail>@gmail.com";
-        String senhaEmailRemetente = "senhaApp-gerada-no-conta-google";
+    public static boolean SendMessage(String subject, String message, String target){        
+        String EmailRemetente = "@gmail.com";
+        String senhaEmailRemetente = "";
         
         SimpleEmail email = new SimpleEmail();
         email.setHostName("smtp.gmail.com");

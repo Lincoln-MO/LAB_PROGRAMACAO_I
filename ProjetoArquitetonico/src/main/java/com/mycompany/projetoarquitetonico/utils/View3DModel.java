@@ -17,11 +17,9 @@ public class View3DModel {
     // no penguin support
     public static void openFromFile(String filePath){
         String command = String.format("%s %s", viewerPath, filePath);
-        System.out.println(command);
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {
-            System.out.println(ex.toString());
         }
     }
 }

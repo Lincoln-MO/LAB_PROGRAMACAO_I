@@ -114,12 +114,13 @@ public final class frmProjectRegistration extends javax.swing.JDialog {
             tableString += "\n";
         }
         
-        System.out.println(tableString);
         return tableString;
     }
     
     
     public void setExpenseTable(String tableString){
+        if( tableString.isEmpty() || tableString.isBlank() ) return;
+        
         // add rows in the table
         for( String row : tableString.split("\n") ){
             String[] args = row.split("\t");

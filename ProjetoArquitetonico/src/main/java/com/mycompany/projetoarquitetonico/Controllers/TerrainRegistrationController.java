@@ -60,10 +60,18 @@ public class TerrainRegistrationController {
 
             view.clearForm();
 
+            // email content
+            String subject = "Terreno cadastrado";
+            String message = "Um novo terreno foi cadastrado em seu nome.\n"
+                    +"Nome: " + terrainName +
+                    "\nÁrea: " + terrainArea +
+                    "\nLocalização: " + terrainLocation;
+            
+            // sends the email
             if(
                     SendEmail.SendMessage(
-                    "Terreno cadastrado", 
-                    "Um novo terreno foi cadastrado em seu nome",
+                    subject, 
+                    message,
                     terrainOwner.getEmail())){
                 JOptionPane.showMessageDialog(view, "Terreno cadastrado. Cliente notificado por email.");
             }else{

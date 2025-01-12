@@ -52,7 +52,6 @@ public class ProjectHistoryController {
     public void handleView3DModel(){
         if( selectedProject != null ){
             String path = selectedProject.exportTemp3DModel();
-            System.out.println(path);
             View3DModel.openFromFile(path);
         }
     }
@@ -87,7 +86,6 @@ public class ProjectHistoryController {
         
         // add rows in the table (if it's not empty)
         String tableString = selectedProject.getExpenseTableString();
-        System.out.println("\n\n\nts: " + tableString);
         if( tableString.equals("") ) return;
         
         for( String row : tableString.split("\n") ){

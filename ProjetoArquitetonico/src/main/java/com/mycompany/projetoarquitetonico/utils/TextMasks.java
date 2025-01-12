@@ -1,7 +1,6 @@
 package com.mycompany.projetoarquitetonico.utils;
 
 
-import java.text.NumberFormat;
 import java.text.ParseException;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
@@ -19,7 +18,6 @@ public class TextMasks {
             mask.setPlaceholderCharacter('X');
             mask.install( txtField );
         } catch (ParseException ex) {
-            System.out.println(ex.toString());
         }
     }
     
@@ -31,7 +29,6 @@ public class TextMasks {
             mask.setPlaceholderCharacter('-');
             mask.install( txtField );
         } catch (ParseException ex) {
-            System.out.println(ex.toString());
         }
     }
     

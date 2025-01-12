@@ -35,7 +35,7 @@ public class frmTerrainRegistration extends javax.swing.JDialog {
             default -> System.out.println("Unknown error type: " + errorType);
         }
     }
-    
+
     
     public void hideErrorMessage(){
         lblErrorMessage.setVisible(false);

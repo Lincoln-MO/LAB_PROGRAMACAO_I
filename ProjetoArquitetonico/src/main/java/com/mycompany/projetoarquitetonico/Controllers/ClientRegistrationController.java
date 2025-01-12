@@ -87,6 +87,7 @@ public class ClientRegistrationController {
             acc.setBirthDate(birthDate);
             acc.setPassword(password);
             acc.setSex(sex);
+            acc.setEmail(email);
             acc.setClientAccess(true);
             acc.setActive(true);
 

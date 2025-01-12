@@ -89,29 +89,33 @@ public class ProjectRegistrationController {
                 p.set3DModelFromFile( model3DFilePath );
             }
 
-            String dialogMessage, emailTitle, emailMessage;
+            String dialogMessage, subject;
             if( projectId >= 0){    
                 ProjectDAO.update(p); // edit mode
                 dialogMessage = "Alterações salvas.";
-                emailTitle = "Cadastro de projeto";
-                emailMessage = "Seu projeto recebeu uma ou mais modificações.";
+                subject = "Seu projeto recebeu uma ou mais modificações.";
             }else{
                 ProjectDAO.save(p); // register mode
                 dialogMessage = "Projeto cadastrado.";
-                emailTitle = "Alteração no projeto";
-                emailMessage = "Foi cadastrado um novo projeto em seu nome.";
+                subject = "Foi cadastrado um novo projeto em seu nome.";
             }
 
             view.clearForm();
 
+            String message =
+                    "Nome: " + projectName +
+                    "\nData de início: " + startDate +
+                    "\nResponsável: " + responsible.getName() +
+                    "\nTerreno: " + terrain.getName();
+            
             if(
                 SendEmail.SendMessage(
-                    emailTitle, 
-                    emailMessage,
+                    subject, 
+                    message,
                     terrain.getOwner().getEmail())){
-                JOptionPane.showMessageDialog(view, dialogMessage + " Cliente notificado por email.");
+                JOptionPane.showMessageDialog(view, dialogMessage + "Cliente notificado por email.");
             }else{
-                JOptionPane.showMessageDialog(view, dialogMessage + " Não foi possível notificar o cliente por email.");
+                JOptionPane.showMessageDialog(view, dialogMessage + "Não foi possível notificar o cliente por email.");
             }
             view.dispose();
         }catch (ConnectionException e){
